@@ -35,6 +35,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   Name: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
+  Pets: { type: Array },
 });
 
 // async function run() {
@@ -52,11 +53,11 @@ const petSchema = new Schema({
   Age: { type: Number },
   Avatar: { type: String },
   Notes: { type: String },
-  Weight: { type: Number, required: true },
-  Breed: { type: String, required: true },
-  LastVisit: { type: Date, required: true },
-  ScheduledEvents: { type: String, required: true },
-  VetID: { type: String, required: true },
+  Weight: { type: Number },
+  Breed: { type: String },
+  LastVisit: { type: Date },
+  ScheduledEvents: { type: String },
+  AssignedVet: { type: Object },
 });
 
 const Pets = mongoose.model('Pets', petSchema);

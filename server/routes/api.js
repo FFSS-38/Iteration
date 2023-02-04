@@ -1,73 +1,20 @@
 const express = require('express');
 const { Users, Pets } = require('../database.js');
-const starWarsController = require('../controllers/Controller');
 const mongoose = require('mongoose');
+const userController = require('../controllers/userController');
+const petsController = require('../controllers/petsController');
 const router = express.Router();
 
-// router.get('/testroute', (req, res) => {
-//   console.log('hello from lol');
-//   Users.find({})
-//     .then((userlist) => {
-//       console.log('hello from 9999');
-//       return res.status(200).json(userlist);
-//     })
-//     .catch((err) => {
-//       console.log('ERROR ERROR', err);
-//       return res.status(500).json({
-//         message: 'An error occurred while processing the request',
-//         error: err
-//       });
-//     });
-// });
-
-// router.get('/testroute', (req, res) => {
-//   console.log('hello from lol');
-//   Users.find({})
-//     .then((userlist) => {
-//       // console.log("hi from first chain")
-//       console.log('hello from 9999');
-//       return res.status(200).json(userlist);
-//     })
-//     .catch((err) => {
-//       next({
-//         log: 'ERROR ERROR',
-//         message: { err: err },
-//       });
-//     });
-// });
-
-router.post('/testroute', (req, res) => {
-  Users.create({ Name: 'CREATE2', Password: '1234' })
-    .then((userlist) => {
-      console.log('hello from 9999');
-      console.log(userlist);
-      return res.status(200).json(userlist);
-    })
-    .catch((err) => {
-      console.log('ERROR ERROR', err);
-      return res.status(500).json({
-        message: 'An error occurred while processing the request',
-        error: err,
-      });
-    });
+router.post('/users', userController.createUser, (req, res) => {
+  res.status(200).json(res.locals.userlist);
 });
 
-router.get('/testroute', (req, res) => {
-  console.log('hello from lol');
-  console.log(Users);
-  Users.find({})
-    .then((userlist) => {
-      console.log('hello from 9999');
-      console.log(userlist);
-      return res.status(200).json(userlist);
-    })
-    .catch((err) => {
-      console.log('ERROR ERROR', err);
-      return res.status(500).json({
-        message: 'An error occurred while processing the request',
-        error: err,
-      });
-    });
+router.get('/users', userController.getUser, (req, res) => {
+  res.status(200).json(res.locals.userlist);
+});
+
+router.post('/pets', petsController.createUser, (req, res) => {
+  res.status(200).json(res.locals.newPet);
 });
 
 module.exports = router;
