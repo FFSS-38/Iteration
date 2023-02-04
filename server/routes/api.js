@@ -1,22 +1,20 @@
 const express = require('express');
-const Users = require('../database.js');
-const starWarsController = require('../controllers/Controller');
+const { Users, Pets } = require('../database.js');
 const mongoose = require('mongoose');
+const userController = require('../controllers/userController');
+const petsController = require('../controllers/petsController');
 const router = express.Router();
 
-router.get('/testroute', (req, res) => {
-  console.log('hello from lol');
-  Users.find({})
-    .then((userlist) => {
-      // console.log("hi from first chain")
-      res.send(userlist), console.log('hello from 9999');
-    })
-    .catch((err) => {
-      next({
-        log: 'ERROR ERROR',
-        message: { err: err },
-      });
-    });
+router.post('/users', userController.createUser, (req, res) => {
+  res.status(200).json(res.locals.userlist);
+});
+
+router.get('/users', userController.getUser, (req, res) => {
+  res.status(200).json(res.locals.userlist);
+});
+
+router.post('/pets', petsController.createUser, (req, res) => {
+  res.status(200).json(res.locals.newPet);
 });
 
 module.exports = router;

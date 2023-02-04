@@ -1,10 +1,10 @@
 import React, { Component, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import AdCreator from './components/AdCreator';
+// import AdCreator from './components/AdCreator';
 
-import Header from './components/Header';
-import Overview from './components/Overview';
-import Footer from './components/Footer';
+// import Header from './components/Header';
+// import Overview from './components/Overview';
+// import Footer from './components/Footer';
 
 import './styles.css';
 
@@ -15,19 +15,7 @@ const App = (props) => {
   }
   return (
     <div className='router'>
-      <Header />
-      {flag === true ? (
-        <>
-          <button onClick={() => handleClick(false)}>Hide Saved Ads</button>
-          <Overview />
-        </>
-      ) : (
-        <>
-          <button onClick={() => handleClick(true)}>Show Saved Ads</button>
-        </>
-      )}
-      <AdCreator />
-      <Footer />
+      <h1>Hello Good peopleeeez</h1>
     </div>
   );
 };
