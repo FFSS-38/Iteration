@@ -1,0 +1,2 @@
+Question:
+    - does avatar selection occur within pet creation card or is it its own card
