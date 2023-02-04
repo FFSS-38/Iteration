@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css?family=Rosario&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two&display=swap');
+
+body {
+  background-color: rgba(119, 212, 252, 0.2);
+  font-family: Rosario, Arial, Helvetica, sans-serif;
+}
+h1 {
+  font-family: 'Lobster Two';
+  margin-bottom: 15px;
+}
+h2 {
+  font-family: 'Lobster Two';
+}
+h3 {
+  margin-top: 0;
+}
+input {
+  width: 250px;
+  margin-left: 10px;
+  border-radius: 5px;
+  border-style: none;
+}
+input:focus {
+  box-shadow: rgba(0, 0, 0, 0.75) 7px 6px 5px -5px;
+  border-style: none;
+}
+article {
+  margin: 12px 15px;
+  padding: 25px 30px 25px 30px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.75) 7px 6px 11px -10px;
+  background-color: rgba(119, 212, 252, 0.5);
+}
+article:hover {
+  margin: 12px 15px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.75) 7px 6px 11px -5px;
+}
+
+button {
+  margin: 25px 0px 0px 0px;
+  padding: 0.7em 1.5em 0.7em 1.5em;
+  font-weight: 500;
+  background-color: transparent;
+  border-color: #77d4fc;
+  border-style: solid;
+  border-radius: 5px;
+  letter-spacing: 0.4px;
+}
+button:hover {
+  padding: 0.7em 1.5em 0.7em 1.5em;
+  font-weight: 500;
+  background-color: #77d4fc;
+  border-color: #77d4fc;
+  border-style: solid;
+  color: white;
+  border-radius: 5px;
+  letter-spacing: 0.4px;
+}
+.tagline {
+  font-family: rosario;
+  font-size: 1.2em;
+  margin-top: 0;
+}
+.overviewItem {
+  height: 100px;
+  width: 100px;
+  background-color: red;
+}
+
+.adContainer {
+  margin: 5vh 0 2vh 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 95vw;
+}
+
+.logo {
+  width: 10vw;
+  position: absolute;
+  left: 15px;
+  max-height: 15vh;
+}
+
+.header {
+  background-color: #77d4fc;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: -10px;
+  top: -10px;
+  align-items: center;
+  padding: 25px 10px 25px 10px;
+  width: 100vw;
+  height: 15vh;
+}
+
+.verticalWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.verticalWrapleft {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+.card_createad {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.codeDisplay {
+  width: 70vw;
+  margin: 60px 15vw 80px 15vw;
+  background-color: lightgrey;
+  border-radius: 15px;
+  border-style: dashed;
+  border-color: grey;
+  border-width: 1px;
+  padding: 2em;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 4em;
+}
+.pageHeader {
+  margin-left: 20px;
+}
+
+.btnSecondary {
+  margin-top: 10px;
+  margin-left: 45px;
+}
+.mainSection {
+  margin-bottom: 5vh;
+}
+.createAd {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #77d4fc;
+  min-width: 10px;
+}
+.createCharFields {
+  margin: 5px 10px;
+}
+.hiddenCharFields {
+  display: none;
+}
+.charCard > .hidden-child-wrapper {
+  visibility: hidden;
+  display: flex;
+  flex-direction: row;
+}
+.charCard:hover > .hidden-child-wrapper {
+  visibility: visible;
+}
+.hidden-child-green {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: aquamarine;
+  width: 50%;
+  height: 40px;
+}
+.hidden-child-red {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: coral;
+  width: 50%;
+  height: 40px;
+}
+.icons {
+  height: 25px;
+}
+.charCard {
+  width: 18vw;
+  min-width: 200px;
+}
