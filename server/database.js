@@ -10,26 +10,42 @@ const client = new MongoClient(
     serverApi: ServerApiVersion.v1,
   }
 );
-async function run() {
-  try {
-    await client.connect();
-    const database = client.db('Wonderpets');
-    const collection = database.collection('Users');
-    const docCount = await collection.countDocuments({});
-    console.log('doc count' + docCount);
-    // perform actions using client
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+
+mongoose
+  .connect(
+    'mongodb+srv://cluster0.g3hjzks.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority',
+    {
+      sslKey: credentials,
+      sslCert: credentials,
+      serverApi: ServerApiVersion.v1,
+    }
+    // {
+    //   // options for the connect method to parse the URI
+    //   useNewUrlParser: true,
+    //   useUnifiedTopology: true,
+    //   // sets the name of the DB that our collections are part of
+    //   dbName: 'Wonderpets',
+    // }
+  )
+  .then(() => console.log('Connected to Mongo DB.'))
+  .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  Name: { type: String, required: true },
+  Name: { type: String, required: true, unique: true },
+  Password: { type: String, required: true },
 });
+
+// async function run() {
+//   // try {
+//   await client.connect();
+//   const database = client.db('Wonderpets');
+//   const collection = database.collection('Users');
+//   const docCount = await collection.countDocuments({});
+
+// }
+// run().catch(console.dir);
 
 const petSchema = new Schema({
   Name: { type: String, required: true },
