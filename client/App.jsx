@@ -34,6 +34,7 @@ class App extends Component {
       user: {},
       currentPet: {},
       isDataLoaded: false, 
+      failedLoginAttempt: false,
     };
     
 
@@ -47,14 +48,29 @@ class App extends Component {
 
   
   attemptLogin = () => { }
-  choosePet = () => { } // loading data for the chosen pet will happen in ComponentDidMount 
+  // ? Are we using OAuth? If not, send POST request with userName and password in request body
+    // on response:
+    // is user is not authenticated
+        // setState failedLoginAttempt set to true (this triggers conditional rendering of "please try again or sign up"); 
+    // if user is authenticated, server should redirect to the /create endpoint (this will trigger this route?) and send user document
+      // setState: state.failedLoginAttempt to false (this returns to default, conditionally rendered div will not render) 
+      // setState: state.user assigned value of response obj body (user document data)
+  choosePet = () => { } 
+    //GET request for data corresponding to chosen pet ID; 
+      // setState: state.currentPet assigned to response obj body (this should be chosen pet's pet document data from DB)
   createPet = () => { }
+    // POST request with req.body containing all inputted text 
+      // if successful, send back updated user data 
+        // setState: state.user assigned value of user data (this will cause page to re-render with new pet added to ChooseCreatePetPage)
+  createEvent = () => { }
+    // POST request with req.body containing inputted event data
+      // if successful, send back updated current pet document data
+        // setState: state.currentPet assigned to new pet data
   
-  
-      // updateCreatePetInfo: => takes in input name and updates associated key with user input?
-      // create conditional for scheduledEvents => this should push input value to scheduledEvents array
-        // how do we delete or update specific scheduledEvents?
-        // Where is vetID created? Is it just vet's name? 
+  // Questions: 
+    // how to implement delete functionality for pets, pet attributes, and events?
+    // when editing an already-existing pet, how to populate all of the input fields with values from currentPet state?
+    // Is it okay that all of these API requests are occuring in state methods rather than onComponentDidMount? Will there be rendering/synchronicity issues?
 
   render() {
     if (!this.state.IsDataLoaded)
