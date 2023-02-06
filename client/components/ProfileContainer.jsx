@@ -10,8 +10,9 @@ class ProfileContainer extends Component {
     return (
       <container>
         <div className='avatarContainer'>
-          {/*replace with avatar filestring I assume*/}
-          Avatar goes here
+          <div>
+            <img className='avatarImage' src={this.avatarURL ?? ''}></img>
+          </div>
         </div>
 
         <div className='petAttribute'>

@@ -35,13 +35,14 @@ class CreateUpdatePet extends Component {
   render() {
     //console.log(currentPet);
     this.action = 'Create';
-    if (this.props.currentPet) {
+    if (Object.hasOwn(this.props.currentPet, name)) {
       // change to hasOwn to see if the pet has a defined name?
       this.petName = this.props.currentPet.petName;
       this.age = this.props.currentPet.age;
       this.breed = this.props.currentPet.breed;
       this.weight = this.props.currentPet.weight;
       this.vetID = this.props.currentPet.vetID;
+      this.avatarURL = this.props.currentPet.avatar;
       // trying to set a flag for whether we're updating or creating??
       this.action = 'Update';
     }
@@ -85,10 +86,24 @@ class CreateUpdatePet extends Component {
             />{' '}
             lbs.
           </div>
-          Vet:{' '}
-          <input type='text' id='newPetVet' value={this.vetID ?? ''} required />
+          <div>
+            Vet:{' '}
+            <input
+              type='text'
+              id='newPetVet'
+              value={this.vetID ?? ''}
+              required
+            />
+          </div>
+          <div>
+            Image URL:{' '}
+            <input type='text' id='newAvatarUrl' value={this.avatarURL ?? ''} />
+          </div>
+          <div>
+            <img className='avatarImage' src={this.avatarURL ?? ''}></img>
+          </div>
+          <button className='createUpdatePetButton'>{this.action}</button>
         </div>
-        <button className='createUpdatePetButton'>Submit</button>
       </div>
     );
   }
