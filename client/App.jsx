@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Switch, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import LoginSignupPage from './components/LoginSignupPage';
 import HomePage from './components/HomePage';
 import ChooseCreatePetPage from './components/ChooseCreatePetPage';
+import CreateUpdatePet from './components/CreateUpdatePet';
 
 /*
       // Pet schema: {
@@ -20,7 +21,7 @@ import ChooseCreatePetPage from './components/ChooseCreatePetPage';
       
       user {
         userName: ""
-        arrayofPets: []
+        arrayofPets: [] // contains petID
       }
 */
 
@@ -32,9 +33,11 @@ class App extends Component {
 
     this.state = {
       user: {},
-      currentPet: {},
-      isDataLoaded: false,
+      petList: [], // an array that contains objects (each pet's data)
+      currentPet: {}, // could be index that corresponds to index of pet
+      // isDataLoaded: false,
       failedLoginAttempt: false,
+      // chosenPet: 0, // this will be petID
     };
 
     // this is where we bind methods to this
@@ -46,14 +49,30 @@ class App extends Component {
   attemptLogin = () => {};
   // ? Are we using OAuth? If not, send POST request with userName and password in request body
   // on response:
-  // is user is not authenticated
-  // setState failedLoginAttempt set to true (this triggers conditional rendering of "please try again or sign up");
-  // if user is authenticated, server should redirect to the /create endpoint (this will trigger this route?) and send user document
-  // setState: state.failedLoginAttempt to false (this returns to default, conditionally rendered div will not render)
-  // setState: state.user assigned value of response obj body (user document data)
-  choosePet = () => {};
+  //   is user is not authenticated
+  //    setState: failedLoginAttempt set to true (this triggers conditional rendering of "please try again or sign up");
+  //  if user is authenticated, server should redirect to the /create endpoint (this will trigger this route?) and send user document
+  //    setState: state.failedLoginAttempt to false (this returns to default, conditionally rendered div will not render)
+  //    setState: state.user assigned value of response obj body (user document data)
+  //    setState: state.petList assigned value of response obj body (list of pets)
+
+  choosePet = (petID) => {
+    //petID of chosen pet needs to be passed in to this function
+    fetch(`/getPetInfo?petId=${petID}`) //clarify this endpoint - I know this isn't secure. Do we care?
+      .then((res) => res.json())
+      .then((petInfo) => {
+        const currentPet = Object.assign({}, petInfo); //creates new copy of pet obj
+        return this.setState({ currentPet: currentPet }); // ** DOUBLE CHECK
+      })
+      .catch((err) => console.log('err in returning chosen pet data'));
+  };
   //GET request for data corresponding to chosen pet ID;
   // setState: state.currentPet assigned to response obj body (this should be chosen pet's pet document data from DB)
+  // COMPONENT DID MOUNT PLAN (NOT USING)
+  // setState: state.chosenPet = selected pet ID
+  //   redirect to home page (this will trigger componentDidMount, which sends fetch request to get pet data for chosenPet
+  //
+
   createPet = () => {};
   // POST request with req.body containing all inputted text
   // if successful, send back updated user data
@@ -80,6 +99,7 @@ class App extends Component {
     return (
       <div className='router'>
         <main>
+          <h1>Wunderpets</h1>
           <Routes>
             <Route
               exact
@@ -116,7 +136,7 @@ class App extends Component {
               exact
               path='/create'
               element={
-                <ChooseCreatePetPage
+                <CreateUpdatePet
                   // get user from state so we can list their pet(s)
                   user={this.state.user}
                   // if updating pet, current pet props will be needed; get them from state
@@ -128,6 +148,11 @@ class App extends Component {
                   createPet={this.state.createPet}
                 />
               }
+            />
+            <Route
+              exact
+              path='/choose'
+              element={<ChooseCreatePetPage user={this.state.user} />}
             />
           </Routes>
         </main>
