@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const apiRouter = require('./routes/api');
 
@@ -85,8 +85,14 @@ app.use('*', (req, res) => {
  * Global error handler
  */
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).send({ error: err });
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(PORT, () => {
