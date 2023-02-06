@@ -58,6 +58,7 @@ const petSchema = new Schema({
   LastVisit: { type: Date },
   ScheduledEvents: { type: String },
   AssignedVet: { type: Object },
+  Owner: { type: String, required: true },
 });
 
 const Pets = mongoose.model('Pets', petSchema);
