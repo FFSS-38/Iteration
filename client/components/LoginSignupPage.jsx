@@ -5,13 +5,15 @@ import React, { Component } from 'react';
 
 //only push loginattempt method, push failedLoginAttempt property
 class LoginSignupPage extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       userNameValue: '',
       passwordValue: '',
     };
+    console.log('this.attemptLogin', this.attemptLogin);
+    console.log('this.props.login', this.props.attemptLogin);
   }
   render() {
     if (!this.props.failedLoginAttempt) {
@@ -43,11 +45,11 @@ class LoginSignupPage extends Component {
             Login
           </button>
           <button
-            onClick={(e) => {
-              const username = this.state.userNameValue;
-              const password = this.state.passwordValue;
-              return this.props.signUp(username, password);
-            }}
+          // onClick={(e) => {
+          //   const username = this.state.userNameValue;
+          //   const password = this.state.passwordValue;
+          //   return this.props.signUp(username, password);
+          // }}
           >
             Sign Up
           </button>

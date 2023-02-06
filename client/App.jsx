@@ -49,18 +49,21 @@ class App extends Component {
   attemptLogin = (username, password) => {
     // by request of the backend team, parameterize username
     // send pw in body of request
-    const endpoint = `/connect/${username}`;
+    const endpoint = `/connect/`;
     fetch(endpoint, {
+      body: { Name: username, Password: password },
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      password: password,
     })
       .then((res) => res.json())
       .then((data) => {
         // successful login gives response array: [{userdoc}, [petListwithpetobj]]
         if (Array.isArray(data)) {
+          console.log('successful login data: ' + JSON.stringify(data));
           this.setState({ user: data[0] });
+          console.log(this.state.user);
           this.setState({ petList: data[1] });
+          console.log(this.state.petList);
         } else {
           // alert with response string to clarify the problem
           this.setState({ failedLoginAttempt: true });
@@ -80,6 +83,13 @@ class App extends Component {
   choosePet = (e) => {
     // console.log click event for testing purposes
     console.log(e);
+    // an awkward loop to find the chosen pet is the price of one GET request upon login:
+    for (let pet of this.state.petList) {
+      if (pet._id === e.target.id) {
+        console.log('pet match found: ' + pet.name + ' ' + pet._id);
+        this.setState({ currentPet: pet });
+      }
+    }
   };
   // ** the below code is not relevant any longer for current plan.
   //petID of chosen pet needs to be passed in to this function
@@ -133,6 +143,7 @@ class App extends Component {
               element={
                 // if user data is nonexistent, route to login page
                 // otherwise, go to pet selection page
+
                 // this.state.user ? (
                 //   <ChooseCreatePetPage
                 //     // state = user object; array of their pets is property of that object
@@ -142,7 +153,7 @@ class App extends Component {
                 // ) :
                 // (
                 <LoginSignupPage
-                  attemptLogin={this.state.attemptLogin}
+                  attemptLogin={this.attemptLogin}
                   failedLoginAttempt={this.state.failedLoginAttempt}
                 />
                 // )
@@ -184,10 +195,17 @@ class App extends Component {
               exact
               path='/choose'
               element={
-                <ChooseCreatePetPage
-                  user={this.state.user}
-                  choose={() => this.choosePet(e)}
-                />
+                this.state.failedLoginAttempt ? (
+                  <LoginSignupPage
+                    attemptLogin={this.attemptLogin}
+                    failedLoginAttempt={this.state.failedLoginAttempt}
+                  />
+                ) : (
+                  <ChooseCreatePetPage
+                    user={this.state.user}
+                    choose={() => this.choosePet(e)}
+                  />
+                )
               }
             />
           </Routes>
