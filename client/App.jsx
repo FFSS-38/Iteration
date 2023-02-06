@@ -60,9 +60,9 @@ class App extends Component {
         // successful login gives response array: [{userdoc}, [petListwithpetobj]]
         if (Array.isArray(data)) {
           console.log('successful login data: ' + JSON.stringify(data));
-          this.setState({ user: data[0] });
+          this.setState({ user: Object.assign({}, data[0]) });
           console.log(this.state.user);
-          this.setState({ petList: data[1] });
+          this.setState({ petList: data[1].slice() });
           console.log(this.state.petList);
         } else {
           // alert with response string to clarify the problem
@@ -91,24 +91,30 @@ class App extends Component {
       }
     }
   };
-  // ** the below code is not relevant any longer for current plan.
-  //petID of chosen pet needs to be passed in to this function
-  //   fetch(`/getPetInfo?petId=${petID}`) //clarify this endpoint - I know this isn't secure. Do we care?
-  //     .then((res) => res.json())
-  //     .then((petInfo) => {
-  //       const currentPet = Object.assign({}, petInfo); //creates new copy of pet obj
-  //       return this.setState({ currentPet: currentPet }); // ** DOUBLE CHECK
-  //     })
-  //     .catch((err) => console.log('err in returning chosen pet data'));
-  // };
-  //GET request for data corresponding to chosen pet ID;
-  // setState: state.currentPet assigned to response obj body (this should be chosen pet's pet document data from DB)
-  // COMPONENT DID MOUNT PLAN (NOT USING)
-  // setState: state.chosenPet = selected pet ID
-  //   redirect to home page (this will trigger componentDidMount, which sends fetch request to get pet data for chosenPet
-  //
 
-  createPet = () => {};
+  createOrUpdatePet = (action) => {
+    console.log(action);
+    const requestBody = {
+      Name: document.querySelector('#newPetName').value,
+      Breed: document.querySelector('#newPetBreed').value,
+      Age: document.querySelector('#newPetAge').value,
+      Weight: document.querySelector('#newPetWeight').value,
+      AssignedVet: document.querySelector('#newPetVet').value,
+      Avatar: document.querySelector('#newAvatarURL').value,
+    };
+    // depending on action from create/update page, make post or patch request
+    if (action === 'Create') {
+      fetch('/', {
+        body: requestBody,
+        method: actiion === 'Create' ? 'POST' : 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('stored to db: ' + data);
+        });
+    }
+  };
   // POST request with req.body containing all inputted text
   // if successful, send back updated user data
   // setState: state.user assigned value of user data (this will cause page to re-render with new pet added to ChooseCreatePetPage)
@@ -116,11 +122,6 @@ class App extends Component {
   // POST request with req.body containing inputted event data
   // if successful, send back updated current pet document data
   // setState: state.currentPet assigned to new pet data
-
-  // Questions:
-  // how to implement delete functionality for pets, pet attributes, and events?
-  // when editing an already-existing pet, how to populate all of the input fields with values from currentPet state?
-  // Is it okay that all of these API requests are occuring in state methods rather than onComponentDidMount? Will there be rendering/synchronicity issues?
 
   render() {
     console.log('rendering app');
@@ -187,7 +188,7 @@ class App extends Component {
                   // method to set currentpet in state
                   // method to create new pet in user's acct
                   choosePet={this.state.choosePet}
-                  createPet={this.state.createPet}
+                  createOrUpdatePet={this.state.createOrUpdatePet}
                 />
               }
             />

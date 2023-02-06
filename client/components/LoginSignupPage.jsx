@@ -13,7 +13,7 @@ class LoginSignupPage extends Component {
       passwordValue: '',
     };
     console.log('this.attemptLogin', this.attemptLogin);
-    console.log('this.props.login', this.props.attemptLogin);
+    // console.log('this.props.login', this.props.attemptLogin);
   }
   render() {
     if (!this.props.failedLoginAttempt) {
@@ -77,7 +77,7 @@ class LoginSignupPage extends Component {
             value={this.state.passwordValue}
             onChange={(e) => this.setState({ passwordValue: e.target.value })}
           />
-          <Link to='/create' className='linkToCreate'>
+          <Link to='/choose' className='linkToChoose'>
             <button
               onClick={(e) => {
                 const username = this.state.userNameValue;
@@ -88,7 +88,7 @@ class LoginSignupPage extends Component {
               Login
             </button>
           </Link>
-          <Link to='/create' className='linkToCreate'>
+          <Link to='/choose' className='linkToChoose'>
             <button
               onClick={(e) => {
                 const username = this.state.userNameValue;
