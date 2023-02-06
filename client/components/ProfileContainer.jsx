@@ -6,6 +6,7 @@ import PetAttributeCard from './cards/PetAttributeCard.jsx';
 
 class ProfileContainer extends Component {
   render() {
+    console.log('hi from profile');
     return (
       <container>
         <div className='avatarContainer'>

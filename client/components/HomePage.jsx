@@ -17,7 +17,7 @@ class HomePage extends Component {
 
     // adding some dummy text to make sure things are rendering even without data from db
     return (
-      <container className='homepageContainer'>
+      <div className='homepageContainer'>
         <div className='petNameBanner'>{currentPet.name}'s Homepage</div>
         <ProfileContainer
           className='profileContainer'
@@ -37,7 +37,7 @@ class HomePage extends Component {
           className='notebookContainer'
           notes={currentPet.notes}
         />
-      </container>
+      </div>
     );
   }
 }

@@ -85,7 +85,7 @@ class App extends Component {
               exact
               // landing route - condition render depending on whether user is logged in
               path='/landing'
-              element={() =>
+              element={
                 // if user data is nonexistent, route to login page
                 // otherwise, go to pet selection page
                 this.state.user ? (
@@ -104,18 +104,18 @@ class App extends Component {
               // what's the endpoint for different pets from the same user? parameterized names?
               // change as needed
               path='/home'
-              element={() => (
+              element={
                 <HomePage
                   user={this.state.user}
                   // object with all records for currently selected pet
                   currentPet={this.state.currentPet}
                 />
-              )}
+              }
             />
             <Route
               exact
               path='/create'
-              element={() => (
+              element={
                 <ChooseCreatePetPage
                   // get user from state so we can list their pet(s)
                   user={this.state.user}
@@ -127,7 +127,7 @@ class App extends Component {
                   choosePet={this.state.choosePet}
                   createPet={this.state.createPet}
                 />
-              )}
+              }
             />
           </Routes>
         </main>

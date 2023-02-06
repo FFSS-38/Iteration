@@ -15,19 +15,26 @@ class ScheduleContainer extends Component {
     );
   };
 
+  // test object to make sure we can render -- remove once fetch is successful
+  // ALSO remove, at that point, "this" from instances of "this.events" below
+  events = [
+    { dateTime: Date.now(), details: 'event 1' },
+    { dateTime: Date.now() + 100000, details: 'event 2' },
+  ];
+
   render() {
     // datetime formatting and naming tbd
-
+    console.log('hi from sched container');
     // sort schedule items by date
     // shallow copy list of events because I'm afraid of trying to sort state in place
-    let events = [...this.props.schedule];
-    events.sort((a, b) => {
+    //let events = this.props.schedule.slice();
+    this.events.sort((a, b) => {
       return b.dateTime - a.dateTime;
     });
 
     // make a renderable list of schedule item components
     const eventList = [];
-    events.forEach((el) => eventList.push(this.renderScheduleItem(el)));
+    this.events.forEach((el) => eventList.push(this.renderScheduleItem(el)));
     console.log(eventList);
 
     return (
