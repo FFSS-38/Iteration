@@ -49,18 +49,21 @@ class App extends Component {
   attemptLogin = (username, password) => {
     // by request of the backend team, parameterize username
     // send pw in body of request
-    const endpoint = `/connect/${username}`;
+    const endpoint = `/connect/`;
     fetch(endpoint, {
+      body: { Name: username, Password: password },
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      password: password,
     })
       .then((res) => res.json())
       .then((data) => {
         // successful login gives response array: [{userdoc}, [petListwithpetobj]]
         if (Array.isArray(data)) {
-          this.setState({ user: data[0] });
-          this.setState({ petList: data[1] });
+          console.log('successful login data: ' + JSON.stringify(data));
+          this.setState({ user: Object.assign({}, data[0]) });
+          console.log(this.state.user);
+          this.setState({ petList: data[1].slice() });
+          console.log(this.state.petList);
         } else {
           // alert with response string to clarify the problem
           this.setState({ failedLoginAttempt: true });
@@ -80,25 +83,38 @@ class App extends Component {
   choosePet = (e) => {
     // console.log click event for testing purposes
     console.log(e);
+    // an awkward loop to find the chosen pet is the price of one GET request upon login:
+    for (let pet of this.state.petList) {
+      if (pet._id === e.target.id) {
+        console.log('pet match found: ' + pet.name + ' ' + pet._id);
+        this.setState({ currentPet: pet });
+      }
+    }
   };
-  // ** the below code is not relevant any longer for current plan.
-  //petID of chosen pet needs to be passed in to this function
-  //   fetch(`/getPetInfo?petId=${petID}`) //clarify this endpoint - I know this isn't secure. Do we care?
-  //     .then((res) => res.json())
-  //     .then((petInfo) => {
-  //       const currentPet = Object.assign({}, petInfo); //creates new copy of pet obj
-  //       return this.setState({ currentPet: currentPet }); // ** DOUBLE CHECK
-  //     })
-  //     .catch((err) => console.log('err in returning chosen pet data'));
-  // };
-  //GET request for data corresponding to chosen pet ID;
-  // setState: state.currentPet assigned to response obj body (this should be chosen pet's pet document data from DB)
-  // COMPONENT DID MOUNT PLAN (NOT USING)
-  // setState: state.chosenPet = selected pet ID
-  //   redirect to home page (this will trigger componentDidMount, which sends fetch request to get pet data for chosenPet
-  //
 
-  createPet = () => {};
+  createOrUpdatePet = (action) => {
+    console.log(action);
+    const requestBody = {
+      Name: document.querySelector('#newPetName').value,
+      Breed: document.querySelector('#newPetBreed').value,
+      Age: document.querySelector('#newPetAge').value,
+      Weight: document.querySelector('#newPetWeight').value,
+      AssignedVet: document.querySelector('#newPetVet').value,
+      Avatar: document.querySelector('#newAvatarURL').value,
+    };
+    // depending on action from create/update page, make post or patch request
+    if (action === 'Create') {
+      fetch('/', {
+        body: requestBody,
+        method: actiion === 'Create' ? 'POST' : 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('stored to db: ' + data);
+        });
+    }
+  };
   // POST request with req.body containing all inputted text
   // if successful, send back updated user data
   // setState: state.user assigned value of user data (this will cause page to re-render with new pet added to ChooseCreatePetPage)
@@ -106,11 +122,6 @@ class App extends Component {
   // POST request with req.body containing inputted event data
   // if successful, send back updated current pet document data
   // setState: state.currentPet assigned to new pet data
-
-  // Questions:
-  // how to implement delete functionality for pets, pet attributes, and events?
-  // when editing an already-existing pet, how to populate all of the input fields with values from currentPet state?
-  // Is it okay that all of these API requests are occuring in state methods rather than onComponentDidMount? Will there be rendering/synchronicity issues?
 
   render() {
     console.log('rendering app');
@@ -133,6 +144,7 @@ class App extends Component {
               element={
                 // if user data is nonexistent, route to login page
                 // otherwise, go to pet selection page
+
                 // this.state.user ? (
                 //   <ChooseCreatePetPage
                 //     // state = user object; array of their pets is property of that object
@@ -142,7 +154,7 @@ class App extends Component {
                 // ) :
                 // (
                 <LoginSignupPage
-                  attemptLogin={this.state.attemptLogin}
+                  attemptLogin={this.attemptLogin}
                   failedLoginAttempt={this.state.failedLoginAttempt}
                 />
                 // )
@@ -176,7 +188,7 @@ class App extends Component {
                   // method to set currentpet in state
                   // method to create new pet in user's acct
                   choosePet={this.state.choosePet}
-                  createPet={this.state.createPet}
+                  createOrUpdatePet={this.state.createOrUpdatePet}
                 />
               }
             />
@@ -184,10 +196,17 @@ class App extends Component {
               exact
               path='/choose'
               element={
-                <ChooseCreatePetPage
-                  user={this.state.user}
-                  choose={() => this.choosePet(e)}
-                />
+                this.state.failedLoginAttempt ? (
+                  <LoginSignupPage
+                    attemptLogin={this.attemptLogin}
+                    failedLoginAttempt={this.state.failedLoginAttempt}
+                  />
+                ) : (
+                  <ChooseCreatePetPage
+                    user={this.state.user}
+                    choose={() => this.choosePet(e)}
+                  />
+                )
               }
             />
           </Routes>

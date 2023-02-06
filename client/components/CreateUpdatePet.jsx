@@ -102,7 +102,10 @@ class CreateUpdatePet extends Component {
           <div>
             <img className='avatarImage' src={this.avatarURL ?? ''}></img>
           </div>
-          <button className='createUpdatePetButton'>{this.action}</button>
+          <button className='createUpdatePetButton'>
+            {' '}
+            onClick={this.props.createOrUpdatePet(this.action)} {this.action}
+          </button>
         </div>
       </div>
     );
