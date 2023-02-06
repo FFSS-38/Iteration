@@ -46,7 +46,28 @@ class App extends Component {
     this.createPet = this.createPet.bind(this);
   }
 
-  attemptLogin = () => {};
+  attemptLogin = (username, password) => {
+    // by request of the backend team, parameterize username
+    // send pw in body of request
+    const endpoint = `/connect/${username}`;
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      password: password,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // successful login gives response array: [{userdoc}, [petListwithpetobj]]
+        if (Array.isArray(data)) {
+          this.setState({ user: data[0] });
+          this.setState({ petList: data[1] });
+        } else {
+          // alert with response string to clarify the problem
+          this.setState({ failedLoginAttempt: true });
+        }
+      });
+  };
+
   // ? Are we using OAuth? If not, send POST request with userName and password in request body
   // on response:
   //   is user is not authenticated
@@ -56,16 +77,20 @@ class App extends Component {
   //    setState: state.user assigned value of response obj body (user document data)
   //    setState: state.petList assigned value of response obj body (list of pets)
 
-  choosePet = (petID) => {
-    //petID of chosen pet needs to be passed in to this function
-    fetch(`/getPetInfo?petId=${petID}`) //clarify this endpoint - I know this isn't secure. Do we care?
-      .then((res) => res.json())
-      .then((petInfo) => {
-        const currentPet = Object.assign({}, petInfo); //creates new copy of pet obj
-        return this.setState({ currentPet: currentPet }); // ** DOUBLE CHECK
-      })
-      .catch((err) => console.log('err in returning chosen pet data'));
+  choosePet = (e) => {
+    // console.log click event for testing purposes
+    console.log(e);
   };
+  // ** the below code is not relevant any longer for current plan.
+  //petID of chosen pet needs to be passed in to this function
+  //   fetch(`/getPetInfo?petId=${petID}`) //clarify this endpoint - I know this isn't secure. Do we care?
+  //     .then((res) => res.json())
+  //     .then((petInfo) => {
+  //       const currentPet = Object.assign({}, petInfo); //creates new copy of pet obj
+  //       return this.setState({ currentPet: currentPet }); // ** DOUBLE CHECK
+  //     })
+  //     .catch((err) => console.log('err in returning chosen pet data'));
+  // };
   //GET request for data corresponding to chosen pet ID;
   // setState: state.currentPet assigned to response obj body (this should be chosen pet's pet document data from DB)
   // COMPONENT DID MOUNT PLAN (NOT USING)
@@ -108,15 +133,19 @@ class App extends Component {
               element={
                 // if user data is nonexistent, route to login page
                 // otherwise, go to pet selection page
-                this.state.user ? (
-                  <ChooseCreatePetPage
-                    // state = user object; array of their pets is property of that object
-                    user={this.state.user}
-                    // no state necessary for login/signup
-                  />
-                ) : (
-                  <LoginSignupPage attemptLogin={this.state.attemptLogin} />
-                )
+                // this.state.user ? (
+                //   <ChooseCreatePetPage
+                //     // state = user object; array of their pets is property of that object
+                //     user={this.state.user}
+                //     // no state necessary for login/signup
+                //   />
+                // ) :
+                // (
+                <LoginSignupPage
+                  attemptLogin={this.state.attemptLogin}
+                  failedLoginAttempt={this.state.failedLoginAttempt}
+                />
+                // )
               }
             />
             <Route
@@ -136,6 +165,8 @@ class App extends Component {
               exact
               path='/create'
               element={
+                // if failedLoginAttempt is true, then redirect to /landing
+                // else render CreateUpdatePet
                 <CreateUpdatePet
                   // get user from state so we can list their pet(s)
                   user={this.state.user}
@@ -152,7 +183,12 @@ class App extends Component {
             <Route
               exact
               path='/choose'
-              element={<ChooseCreatePetPage user={this.state.user} />}
+              element={
+                <ChooseCreatePetPage
+                  user={this.state.user}
+                  choose={() => this.choosePet(e)}
+                />
+              }
             />
           </Routes>
         </main>
