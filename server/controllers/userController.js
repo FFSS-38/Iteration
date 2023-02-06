@@ -5,37 +5,36 @@ const userController = {};
 const { Users, Pets } = require('../database.js');
 
 userController.createUser = (req, res, next) => {
-  Users.create({ Name: 'CREATE2', Password: '1234' })
-    .then((userlist) => {
-      console.log('hello from 9999');
-      console.log(userlist);
-      res.locals.userlist = userlist;
+  console.log(req.body);
+  Users.create({ Name: req.body.Name, Password: req.body.Password })
+    .then((user) => {
+      res.locals.user = user;
       return next();
     })
     .catch((err) => {
-      console.log('ERROR ERROR', err);
-      return res.status(500).json({
-        message: 'An error occurred while processing the request',
-        error: err,
+      next({
+        log: 'userController.createUser encountering error',
+        message: { err: 'Could not create user' },
       });
     });
 };
 
 userController.getUser = (req, res, next) => {
-  console.log('hello from lol');
-  console.log(Users);
-  Users.find({})
-    .then((userlist) => {
-      console.log('hello from 9999');
-      console.log(userlist);
-      res.locals.userlist = userlist;
+  Users.find({ Name: req.params.users })
+    .then((user) => {
+      if (!user) {
+        return next({
+          log: 'userController.getUser tried to find user that doesnt exist',
+          message: { err: 'That name is not in the database' },
+        });
+      }
+      res.locals.user = user;
       return next();
     })
     .catch((err) => {
-      console.log('ERROR ERROR', err);
-      return res.status(500).json({
-        message: 'An error occurred while processing the request',
-        error: err,
+      next({
+        log: 'userController.getUser failed',
+        message: { err: 'Could not retrive user that you asked for' },
       });
     });
 };
