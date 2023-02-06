@@ -38,4 +38,31 @@ userController.getUser = (req, res, next) => {
       });
     });
 };
+
+userController.getUserUltimate = (req, res, next) => {
+  Users.findOne({ Name: req.body.Name })
+    .then((user) => {
+      if (!user) {
+        return next({
+          log: 'userController.getUserUltimate tried to find user that doesnt exist',
+          message: { err: 'That name is not in the database' },
+        });
+      }
+      console.log(user);
+      console.log('user.Password ' + user.Password);
+      console.log('body.Password ' + req.body.Password);
+      if (user.Password !== req.body.Password) {
+        return res.status(401).json('wrong password');
+      }
+      res.locals.user = user;
+      return next();
+    })
+    .catch((err) => {
+      next({
+        log: 'userController.getUserUltimate failed',
+        message: { err: 'Could not retrive user that you asked for' },
+      });
+    });
+};
+
 module.exports = userController;

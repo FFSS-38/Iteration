@@ -50,4 +50,13 @@ router.delete('/pets/:pets', petsController.deletePet, (req, res) => {
   return res.status(200).json(res.locals.deletedPet);
 });
 
+router.post(
+  '/connect/',
+  userController.getUserUltimate,
+  petsController.getPetUltimate,
+  (req, res) => {
+    return res.status(200).json([res.locals.user, res.locals.returnedPets]);
+  }
+);
+
 module.exports = router;

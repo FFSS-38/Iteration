@@ -6,7 +6,18 @@ const { Users, Pets } = require('../database.js');
 const petsController = {};
 
 petsController.createPet = (req, res, next) => {
-  Pets.create({ Name: req.body.Name })
+  Pets.create({
+    Name: req.body.Name,
+    Age: req.body.Age,
+    Avatar: req.body.Avatar,
+    Notes: req.body.Notes,
+    Weight: req.body.Weight,
+    Breed: req.body.Breed,
+    LastVisit: req.body.LastVisit,
+    ScheduledEvents: req.body.ScheduledEvents,
+    AssignedVet: req.body.AssignedVet,
+    Owner: req.body.Owner,
+  })
     .then((pet) => {
       res.locals.newPet = pet;
       return next();
@@ -14,7 +25,7 @@ petsController.createPet = (req, res, next) => {
     .catch((err) => {
       next({
         log: 'petsController.createPet encountering error',
-        message: { err: 'Could not create user' },
+        message: { err: 'Could not create pet' },
       });
     });
 };
@@ -93,6 +104,29 @@ petsController.updatePet = (req, res, next) => {
       next({
         log: 'petsController.updatePet failed',
         message: { err: 'Could not update pet' },
+      });
+    });
+};
+
+//get Pet by params or Owner??
+petsController.getPetUltimate = (req, res, next) => {
+  Pets.find({ Owner: res.locals.user._id })
+    .then((pets) => {
+      if (!pets) {
+        return next({
+          log: 'petsController.getPetUltimate encountered error',
+          message: {
+            err: 'Those petse are  not in the database with said ownerID',
+          },
+        });
+      }
+      res.locals.returnedPets = pets;
+      return next();
+    })
+    .catch((err) => {
+      next({
+        log: 'petsController.getPetUltimate failed',
+        message: { err: 'Could not retrive pets that you asked for' },
       });
     });
 };
