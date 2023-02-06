@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 
 //only push loginattempt method, push failedLoginAttempt property
 class LoginSignupPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       userNameValue: '',
@@ -75,24 +75,28 @@ class LoginSignupPage extends Component {
             value={this.state.passwordValue}
             onChange={(e) => this.setState({ passwordValue: e.target.value })}
           />
-          <button
-            onClick={(e) => {
-              const username = this.state.userNameValue;
-              const password = this.state.passwordValue;
-              return this.props.attemptLogin(username, password);
-            }}
-          >
-            Login
-          </button>
-          <button
-            onClick={(e) => {
-              const username = this.state.userNameValue;
-              const password = this.state.passwordValue;
-              return this.props.signUp(username, password);
-            }}
-          >
-            Sign Up
-          </button>
+          <Link to='/create' className='linkToCreate'>
+            <button
+              onClick={(e) => {
+                const username = this.state.userNameValue;
+                const password = this.state.passwordValue;
+                return this.props.attemptLogin(username, password);
+              }}
+            >
+              Login
+            </button>
+          </Link>
+          <Link to='/create' className='linkToCreate'>
+            <button
+              onClick={(e) => {
+                const username = this.state.userNameValue;
+                const password = this.state.passwordValue;
+                return this.props.signUp(username, password);
+              }}
+            >
+              Sign Up
+            </button>
+          </Link>
         </div>
       );
     }

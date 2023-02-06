@@ -7,9 +7,10 @@ class ChooseCreatePetPage extends Component {
   // function to render a single pet choice card
   renderPetCard = (pet) => {
     return (
+      // double-check formatting of pet id
       <div className='choosePetCard'>
         <div className='choosePetImage'>
-          <img src={pet.avatar}></img>
+          <img src={pet.avatar} id={pet._id} onClick={this.props.choose}></img>
         </div>
         <div className='choosePetName'>{pet.name}</div>
       </div>
@@ -18,7 +19,6 @@ class ChooseCreatePetPage extends Component {
 
   render() {
     // make an array of pet card divs
-
     const petCards = [];
     for (let el of this.props.user.petList) {
       petCards.push(renderPetCard(el));
