@@ -1,6 +1,6 @@
 {
-  "name": "soloads",
-  "version": "1.0.0",
+  "name": "ffss",
+  "version": "2.0.0",
   "description": "",
   "main": "./client/index.js",
   "scripts": {
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GIjack2001/SoloAds.git"
+    "url": "git+https://github.com/FFSS-38/Iteration.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Irina, Rebecca, Nicholas, Ahmed",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GIjack2001/SoloAds/issues"
+    "url": "https://github.com/FFSS-38/Iteration.git"
   },
-  "homepage": "https://github.com/GIjack2001/SoloAds#readme",
+  "homepage": "https://github.com/FFSS-38/Iteration.git",
   "devDependencies": {
     "dayjs": "^1.11.7",
     "eslint": "^8.33.0",
