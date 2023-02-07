@@ -9,12 +9,9 @@ petsController.createPet = (req, res, next) => {
   Pets.create({
     Name: req.body.Name,
     Age: req.body.Age,
-    Avatar: req.body.Avatar,
-    Notes: req.body.Notes,
     Weight: req.body.Weight,
     Breed: req.body.Breed,
     LastVisit: req.body.LastVisit,
-    ScheduledEvents: req.body.ScheduledEvents,
     AssignedVet: req.body.AssignedVet,
     Owner: req.body.Owner,
   })
@@ -77,12 +74,9 @@ petsController.updatePet = (req, res, next) => {
     {
       Name: req.body.Name,
       Age: req.body.Age,
-      Avatar: req.body.Avatar,
-      Notes: req.body.Notes,
       Weight: req.body.Weight,
       Breed: req.body.Breed,
       LastVisit: req.body.LastVisit,
-      ScheduledEvents: req.body.ScheduledEvents,
       AssignedVet: req.body.AssignedVet,
     },
     //returns the new updated pet
@@ -108,7 +102,8 @@ petsController.updatePet = (req, res, next) => {
     });
 };
 
-//get Pet by params or Owner??
+//returns pets for specific user
+//WN: get Pet by params or Owner??
 petsController.getPetUltimate = (req, res, next) => {
   Pets.find({ Owner: res.locals.user._id })
     .then((pets) => {
@@ -116,7 +111,7 @@ petsController.getPetUltimate = (req, res, next) => {
         return next({
           log: 'petsController.getPetUltimate encountered error',
           message: {
-            err: 'Those petse are  not in the database with said ownerID',
+            err: 'Those pets are  not in the database with said ownerID',
           },
         });
       }
