@@ -39,6 +39,7 @@ userController.getUser = (req, res, next) => {
     });
 };
 
+//checks if User and password matches up in db
 userController.getUserUltimate = (req, res, next) => {
   console.log('in user ultimate ' + JSON.stringify(req.body));
   Users.findOne({ Name: req.body.Name })
