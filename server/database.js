@@ -2,33 +2,33 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const credentials = './server/X509-cert-3638548484308457929.pem';
-const client = new MongoClient(
-  'mongodb+srv://cluster0.g3hjzks.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority',
-  {
-    sslKey: credentials,
-    sslCert: credentials,
-    serverApi: ServerApiVersion.v1,
-  }
-);
+// const client = new MongoClient(
+//   'mongodb+srv://cluster0.g3hjzks.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority',
+//   {
+//     sslKey: credentials,
+//     sslCert: credentials,
+//     serverApi: ServerApiVersion.v1,
+//   }
+// );
 
-mongoose
-  .connect(
-    'mongodb+srv://cluster0.g3hjzks.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority',
-    {
-      sslKey: credentials,
-      sslCert: credentials,
-      serverApi: ServerApiVersion.v1,
-    }
-    // {
-    //   // options for the connect method to parse the URI
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
-    //   // sets the name of the DB that our collections are part of
-    //   dbName: 'Wonderpets',
-    // }
-  )
-  .then(() => console.log('Connected to Mongo DB.'))
-  .catch((err) => console.log(err));
+// mongoose
+//   .connect(
+//     'mongodb+srv://cluster0.g3hjzks.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority',
+//     {
+//       sslKey: credentials,
+//       sslCert: credentials,
+//       serverApi: ServerApiVersion.v1,
+//     }
+//     // {
+//     //   // options for the connect method to parse the URI
+//     //   useNewUrlParser: true,
+//     //   useUnifiedTopology: true,
+//     //   // sets the name of the DB that our collections are part of
+//     //   dbName: 'Wonderpets',
+//     // }
+//   )
+//   .then(() => console.log('Connected to Mongo DB.'))
+//   .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
 

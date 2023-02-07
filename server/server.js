@@ -7,6 +7,13 @@ const apiRouter = require('./routes/api');
 // const userController = require('./controllers/userController');
 // const cookieController = require('./controllers/cookieController');
 // const sessionController = require('./controllers/sessionController');
+const mongoURI =
+  'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0';
+mongoose.connect(mongoURI);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => console.log('Connected to MongoDB'));
 
 const PORT = 3000;
 
