@@ -2,14 +2,22 @@ const express = require('express');
 const path = require('path');
 //const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+
+const petRouter = require('./routes/petRouter');
+const userRouter = require('./routes/userRouter');
 const apiRouter = require('./routes/api');
 
-// const userController = require('./controllers/userController');
 // const cookieController = require('./controllers/cookieController');
 // const sessionController = require('./controllers/sessionController');
+const mongoURI =
+  'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0';
+mongoose.connect(mongoURI);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => console.log('Connected to MongoDB'));
 
 const PORT = 3000;
-
 const app = express();
 
 // const mongoURI =
@@ -20,7 +28,6 @@ const app = express();
 
 /**
  * Automatically parse urlencoded body content and form data from incoming requests and place it
- * in req.body
  */
 app.use(express.json());
 app.use(express.urlencoded());
@@ -42,26 +49,18 @@ app.get('/', (req, res) => {
   //console.log('working');
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
+
+app.use('/pet', petRouter);
+app.use('/user', userRouter);
 app.use('/api', apiRouter);
+
 /**
  * signup
+ * signup.html does not exist atm, translate into new componenet? -RK
  */
 app.get('/signup', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/signup.html'));
 });
-
-// app.post('/signup', userController.createUser , (req, res) => {
-//   // what should happen here on successful sign up?
-
-// });
-
-/**
- * login
- */
-// app.post('/login', userController.verifyUser, (req, res) => {
-//   // what should happen here on successful log in?
-
-// });
 
 // /**
 // * Authorized routes
