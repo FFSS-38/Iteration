@@ -31,11 +31,73 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    //
+    // const petSchema = new Schema({
+    //   Name: { type: String, required: true },
+    //   Age: { type: Number },
+    //   Avatar: { type: String },
+    //   Notes: { type: String },
+    //   Weight: { type: Number },
+    //   Breed: { type: String },
+    //   LastVisit: { type: Date },
+    //   ScheduledEvents: { type: String },
+    //   AssignedVet: { type: Object },
+    //   Owner: { type: String, required: true },
+    // });
+
+    //These state properties are hard-coded in because of last-minute troubles with mongoDB - ideally these state properties would be empty initially
     this.state = {
-      user: {},
-      petList: [], // an array that contains objects (each pet's data)
-      currentPet: {}, // could be index that corresponds to index of pet
-      // isDataLoaded: false,
+      user: {
+        _id: '63deb75993ddb845fa889e0a',
+        Name: 'Pierre',
+        Password: 'Jacquemin',
+      },
+      petList: [
+        {
+          _id: '63e1523fa559f05e7fe59fcb',
+          Age: 17,
+          Breed: 'Belgium Cat',
+          Avatar: 'http://localhost:3000/client/images/cat1.png',
+          Notes: 'Seems to have kitty dementia',
+          Weight: 3451,
+          Name: 'Eden',
+          Owner: '63e1213bcb9b9423d0ba43a7',
+          __v: 0,
+        },
+        {
+          _id: '63e153d4a559f05e7fe59fd4',
+          Name: 'Simba',
+          Breed: 'Basic Cat',
+          Avatar: 'http://localhost:3000/client/images/cat2.png',
+          Weight: 2000,
+          Age: 15,
+          Notes: 'Ate 2.5 feet of yarn on Saturday, seems fine though',
+          Owner: '63e1213bcb9b9423d0ba43a7',
+          __v: 0,
+        },
+        {
+          _id: '63e1562d5f1fe419944e6baf',
+          Name: 'Zola',
+          Breed: 'Shiba Inu',
+          Avatar: 'http://localhost:3000/client/images/dog3.png',
+          Weight: 2000,
+          Owner: '63e1213bcb9b9423d0ba43a7',
+          __v: 0,
+        },
+      ], // an array that contains objects (each pet's data)
+      currentPet: {
+        _id: '63e153d4a559f05e7fe59fd4',
+        Name: 'Simba',
+        Breed: 'Basic Cat',
+        Weight: 2000,
+        Age: 15,
+        Notes: 'Ate 2.5 feet of yarn on Saturday, seems fine though',
+        Owner: '63e1213bcb9b9423d0ba43a7',
+        lastVisit: 'Dec 14, 2022',
+        VetID: 'Dr. Tucker, Stratford Hills Veterinary Center',
+        __v: 0,
+      },
+
       failedLoginAttempt: false,
       // chosenPet: 0, // this will be petID
     };
@@ -43,35 +105,10 @@ class App extends Component {
     // this is where we bind methods to this
     this.attemptLogin = this.attemptLogin.bind(this);
     this.choosePet = this.choosePet.bind(this);
-    this.createPet = this.createPet.bind(this);
+    this.createOrUpdatePet = this.createOrUpdatePet.bind(this);
   }
 
-  attemptLogin = (username, password) => {
-    // by request of the backend team, parameterize username
-    // send pw in body of request
-    const endpoint = `/connect/`;
-    fetch(endpoint, {
-      body: { Name: username, Password: password },
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // successful login gives response array: [{userdoc}, [petListwithpetobj]]
-        if (Array.isArray(data)) {
-          console.log('successful login data: ' + JSON.stringify(data));
-          this.setState({ user: data[0] });
-          console.log(this.state.user);
-          this.setState({ petList: data[1] });
-          console.log(this.state.petList);
-        } else {
-          // alert with response string to clarify the problem
-          this.setState({ failedLoginAttempt: true });
-        }
-      });
-  };
-
-  // ? Are we using OAuth? If not, send POST request with userName and password in request body
+  // attemptLogin: send POST request with userName and password in request body
   // on response:
   //   is user is not authenticated
   //    setState: failedLoginAttempt set to true (this triggers conditional rendering of "please try again or sign up");
@@ -79,6 +116,35 @@ class App extends Component {
   //    setState: state.failedLoginAttempt to false (this returns to default, conditionally rendered div will not render)
   //    setState: state.user assigned value of response obj body (user document data)
   //    setState: state.petList assigned value of response obj body (list of pets)
+  attemptLogin = (username, password) => {
+    console.log(username + '  ' + password);
+    // by request of the backend team, parameterize username
+    // send pw in body of request
+    const endpoint = `http://localhost:3000/api/connect/`;
+    fetch(endpoint, {
+      method: 'POST',
+      //mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ Name: username, Password: password }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // successful login gives response array: [{userdoc}, [petListwithpetobj]]
+        if (Array.isArray(data)) {
+          // const newUser = Object.assign({}, data[0]);
+          // console.log('new User? ' + newUser);
+          this.setState({ user: data[0] });
+          console.log(this.state.user);
+          this.setState({ petList: data[1] });
+          console.log(this.state.petList);
+          this.setState({ failedLoginAttempt: false });
+        } else {
+          // alert with response string to clarify the problem
+          this.setState({ failedLoginAttempt: true });
+        }
+      });
+  };
 
   choosePet = (e) => {
     // console.log click event for testing purposes
@@ -91,24 +157,30 @@ class App extends Component {
       }
     }
   };
-  // ** the below code is not relevant any longer for current plan.
-  //petID of chosen pet needs to be passed in to this function
-  //   fetch(`/getPetInfo?petId=${petID}`) //clarify this endpoint - I know this isn't secure. Do we care?
-  //     .then((res) => res.json())
-  //     .then((petInfo) => {
-  //       const currentPet = Object.assign({}, petInfo); //creates new copy of pet obj
-  //       return this.setState({ currentPet: currentPet }); // ** DOUBLE CHECK
-  //     })
-  //     .catch((err) => console.log('err in returning chosen pet data'));
-  // };
-  //GET request for data corresponding to chosen pet ID;
-  // setState: state.currentPet assigned to response obj body (this should be chosen pet's pet document data from DB)
-  // COMPONENT DID MOUNT PLAN (NOT USING)
-  // setState: state.chosenPet = selected pet ID
-  //   redirect to home page (this will trigger componentDidMount, which sends fetch request to get pet data for chosenPet
-  //
 
-  createPet = () => {};
+  createOrUpdatePet = (action) => {
+    console.log(action);
+    const requestBody = {
+      Name: document.querySelector('#newPetName').value,
+      Breed: document.querySelector('#newPetBreed').value,
+      Age: document.querySelector('#newPetAge').value,
+      Weight: document.querySelector('#newPetWeight').value,
+      AssignedVet: document.querySelector('#newPetVet').value,
+      Avatar: document.querySelector('#newAvatarURL').value,
+    };
+    // depending on action from create/update page, make post or patch request
+    if (action === 'Create') {
+      fetch('/pets/', {
+        body: requestBody,
+        method: action === 'Create' ? 'POST' : 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('stored to db: ' + data);
+        });
+    }
+  };
   // POST request with req.body containing all inputted text
   // if successful, send back updated user data
   // setState: state.user assigned value of user data (this will cause page to re-render with new pet added to ChooseCreatePetPage)
@@ -116,11 +188,6 @@ class App extends Component {
   // POST request with req.body containing inputted event data
   // if successful, send back updated current pet document data
   // setState: state.currentPet assigned to new pet data
-
-  // Questions:
-  // how to implement delete functionality for pets, pet attributes, and events?
-  // when editing an already-existing pet, how to populate all of the input fields with values from currentPet state?
-  // Is it okay that all of these API requests are occuring in state methods rather than onComponentDidMount? Will there be rendering/synchronicity issues?
 
   render() {
     console.log('rendering app');
@@ -154,7 +221,7 @@ class App extends Component {
                 // (
                 <LoginSignupPage
                   attemptLogin={this.attemptLogin}
-                  failedLoginAttempt={this.state.failedLoginAttempt}
+                  failedLoginAttempt={this.failedLoginAttempt}
                 />
                 // )
               }
@@ -186,8 +253,8 @@ class App extends Component {
                   currentPet={this.state.currentPet}
                   // method to set currentpet in state
                   // method to create new pet in user's acct
-                  choosePet={this.state.choosePet}
-                  createPet={this.state.createPet}
+                  choosePet={this.choosePet}
+                  createOrUpdatePet={this.createOrUpdatePet}
                 />
               }
             />
@@ -195,17 +262,17 @@ class App extends Component {
               exact
               path='/choose'
               element={
-                this.state.failedLoginAttempt ? (
-                  <LoginSignupPage
-                    attemptLogin={this.attemptLogin}
-                    failedLoginAttempt={this.state.failedLoginAttempt}
-                  />
-                ) : (
-                  <ChooseCreatePetPage
-                    user={this.state.user}
-                    choose={() => this.choosePet(e)}
-                  />
-                )
+                // this.state.failedLoginAttempt ? (
+                //   <LoginSignupPage
+                //     attemptLogin={this.attemptLogin}
+                //     failedLoginAttempt={this.state.failedLoginAttempt}
+                //   />
+                // ) : (
+                <ChooseCreatePetPage
+                  petList={this.state.petList}
+                  choose={() => this.choosePet(e)}
+                />
+                // )
               }
             />
           </Routes>

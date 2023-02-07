@@ -40,6 +40,7 @@ userController.getUser = (req, res, next) => {
 };
 
 userController.getUserUltimate = (req, res, next) => {
+  console.log('in user ultimate ' + JSON.stringify(req.body));
   Users.findOne({ Name: req.body.Name })
     .then((user) => {
       if (!user) {

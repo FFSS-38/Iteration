@@ -1,37 +1,9 @@
 import React, { Component } from 'react';
 
-// I don't think this will be used - all of this functionality will be put into onClick methods
-
 //This should fetch data from appropriate user upon successful login
 // this should set state to equal the data returned from fetch request
 // data to be returned: userData
 class CreateUpdatePet extends Component {
-  componentDidMount() {
-    // if there is a current pet, load its data into the relevant fields
-    // remember that we're updating rather than creating a pet
-    // fetch('getUserInfo') // => /username?userName=
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log('data from choose/create pet: ', data);
-    //   })
-    // this is where this.setState({}) is used to redefine state to retrieved data
-    // .then((characters, favs = {}) => {
-    //   const { characterIds, charactersById, nicknames, fav_foods } =
-    //     this.formatCharacters(characters);
-    //   return this.setState({
-    //     fetchedChars: true,
-    //     characterIds,
-    //     charactersById,
-    //     favs,
-    //     nicknames,
-    //     fav_foods,
-    //   });
-    // })
-    // .catch((err) =>
-    //   console.log('App.componentDidMount: get characters: ERROR: ', err)
-    // );
-  }
-
   render() {
     //console.log(currentPet);
     this.action = 'Create';
@@ -46,6 +18,8 @@ class CreateUpdatePet extends Component {
       // trying to set a flag for whether we're updating or creating??
       this.action = 'Update';
     }
+
+    // Something we learned the hard way: In React, if you give an HTML text input a value, that value becomes part of state. You can't type into the test field without an onChange or something
     console.log('hi from pet creator');
     console.log('action: ', this.action);
     return (
@@ -58,7 +32,7 @@ class CreateUpdatePet extends Component {
             <input
               type='text'
               id='newPetName'
-              value={this.petName ?? ''}
+              // value={this.petName ?? ''}
               required
             />
           </div>
@@ -67,7 +41,7 @@ class CreateUpdatePet extends Component {
             <input
               type='text'
               id='newPetBreed'
-              value={this.breed ?? ''}
+              // value={this.breed ?? ''}
               placeholder='E.g. Cat, Dog, Russian Blue, Corgi'
               required
             />
@@ -81,7 +55,7 @@ class CreateUpdatePet extends Component {
             <input
               type='text'
               id='newPetWeight'
-              value={this.weight ?? ''}
+              // value={this.weight ?? ''}
               required
             />{' '}
             lbs.
@@ -91,7 +65,7 @@ class CreateUpdatePet extends Component {
             <input
               type='text'
               id='newPetVet'
-              value={this.vetID ?? ''}
+              // value={this.vetID ?? ''}
               required
             />
           </div>
@@ -102,7 +76,12 @@ class CreateUpdatePet extends Component {
           <div>
             <img className='avatarImage' src={this.avatarURL ?? ''}></img>
           </div>
-          <button className='createUpdatePetButton'>{this.action}</button>
+          <a href='http://localhost:3001/home'>
+            <button className='createUpdatePetButton'>
+              {' '}
+              {/* onClick={this.props.createOrUpdatePet(this.action)} {this.action} */}
+            </button>
+          </a>
         </div>
       </div>
     );

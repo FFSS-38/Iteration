@@ -6,29 +6,40 @@ class ChooseCreatePetPage extends Component {
 
   // function to render a single pet choice card
   renderPetCard = (pet) => {
+    console.log(JSON.stringify(pet));
     return (
       // double-check formatting of pet id
       <div className='choosePetCard'>
         <div className='choosePetImage'>
-          <img src={pet.avatar} id={pet._id} onClick={this.props.choose}></img>
+          <a className='petLink' href='http://localhost:3001/home'>
+            <img
+              className='petAvatar'
+              src={pet.Avatar}
+              id={pet._id}
+              onClick={this.props.choose}
+            ></img>
+          </a>
         </div>
-        <div className='choosePetName'>{pet.name}</div>
+        <div className='choosePetName'>{pet.Name}</div>
       </div>
     );
   };
 
   render() {
+    console.log(this.props.petList);
     // make an array of pet card divs
     const petCards = [];
-    for (let el of this.props.user.petList) {
-      petCards.push(renderPetCard(el));
+    for (let el of this.props.petList) {
+      petCards.push(this.renderPetCard(el));
     }
 
     return (
       <div className='petChoiceMenu'>
-        <div className='banner'>Choose your pet</div>
-        <div>{petCards}</div>
-        <button>Add a pet</button>
+        <div className='petBanner'>Choose your pet</div>
+        <div className='petImages'>{petCards}</div>
+        <a href='http://localhost:3001/create'>
+          <button>Add a pet</button>
+        </a>
       </div>
     );
   }
