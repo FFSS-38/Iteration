@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+const options = { year: 'numeric', month: 'long', day: 'numeric' };
+const date1 = new Date();
+const date2 = new Date('December 17, 2023 03:24:00');
+
 class ScheduleContainer extends Component {
   renderScheduleItem = (item) => {
     // const currentTime = Date.now();
     return (
       // add a variable for styling past events differently?
-      <div className='scheduleItem'>
+      <div className='scheduleItem' key={item}>
         <div className='dateTime'>{item.dateTime}</div>
         <div className='eventDetails'>{item.details}</div>
         {/* add onclick functionality to delete schedule item*/}
@@ -17,9 +21,13 @@ class ScheduleContainer extends Component {
 
   // test object to make sure we can render -- remove once fetch is successful
   // ALSO remove, at that point, "this" from instances of "this.events" below
+
   events = [
-    { dateTime: Date.now(), details: 'event 1' },
-    { dateTime: Date.now() + 100000, details: 'event 2' },
+    {
+      dateTime: date1.toLocaleString(undefined, options),
+      details: 'event 1',
+    },
+    { dateTime: date2.toLocaleString(undefined, options), details: 'event 2' },
   ];
 
   render() {
@@ -38,8 +46,8 @@ class ScheduleContainer extends Component {
     console.log(eventList);
 
     return (
-      <div>
-        <div>Schedule rendering</div>
+      <div className='homeCategory'>
+        <h2>Schedule rendering</h2>
         <div>{eventList}</div>
       </div>
     );

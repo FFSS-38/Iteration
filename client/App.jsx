@@ -31,11 +31,73 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    //
+    // const petSchema = new Schema({
+    //   Name: { type: String, required: true },
+    //   Age: { type: Number },
+    //   Avatar: { type: String },
+    //   Notes: { type: String },
+    //   Weight: { type: Number },
+    //   Breed: { type: String },
+    //   LastVisit: { type: Date },
+    //   ScheduledEvents: { type: String },
+    //   AssignedVet: { type: Object },
+    //   Owner: { type: String, required: true },
+    // });
+
+    //These state properties are hard-coded in because of last-minute troubles with mongoDB - ideally these state properties would be empty initially
     this.state = {
-      user: {},
-      petList: [], // an array that contains objects (each pet's data)
-      currentPet: {}, // could be index that corresponds to index of pet
-      // isDataLoaded: false,
+      user: {
+        _id: '63deb75993ddb845fa889e0a',
+        Name: 'Pierre',
+        Password: 'Jacquemin',
+      },
+      petList: [
+        {
+          _id: '63e1523fa559f05e7fe59fcb',
+          Age: 17,
+          Breed: 'Belgium Cat',
+          Avatar: 'http://localhost:3000/client/images/cat1.png',
+          Notes: 'Seems to have kitty dementia',
+          Weight: 3451,
+          Name: 'Eden',
+          Owner: '63e1213bcb9b9423d0ba43a7',
+          __v: 0,
+        },
+        {
+          _id: '63e153d4a559f05e7fe59fd4',
+          Name: 'Simba',
+          Breed: 'Basic Cat',
+          Avatar: 'http://localhost:3000/client/images/cat2.png',
+          Weight: 2000,
+          Age: 15,
+          Notes: 'Ate 2.5 feet of yarn on Saturday, seems fine though',
+          Owner: '63e1213bcb9b9423d0ba43a7',
+          __v: 0,
+        },
+        {
+          _id: '63e1562d5f1fe419944e6baf',
+          Name: 'Zola',
+          Breed: 'Shiba Inu',
+          Avatar: 'http://localhost:3000/client/images/dog3.png',
+          Weight: 2000,
+          Owner: '63e1213bcb9b9423d0ba43a7',
+          __v: 0,
+        },
+      ], // an array that contains objects (each pet's data)
+      currentPet: {
+        _id: '63e153d4a559f05e7fe59fd4',
+        Name: 'Simba',
+        Breed: 'Basic Cat',
+        Weight: 2000,
+        Age: 15,
+        Notes: 'Ate 2.5 feet of yarn on Saturday, seems fine though',
+        Owner: '63e1213bcb9b9423d0ba43a7',
+        lastVisit: 'Dec 14, 2022',
+        VetID: 'Dr. Tucker, Stratford Hills Veterinary Center',
+        __v: 0,
+      },
+
       failedLoginAttempt: false,
       // chosenPet: 0, // this will be petID
     };
@@ -43,35 +105,10 @@ class App extends Component {
     // this is where we bind methods to this
     this.attemptLogin = this.attemptLogin.bind(this);
     this.choosePet = this.choosePet.bind(this);
-    this.createPet = this.createPet.bind(this);
+    this.createOrUpdatePet = this.createOrUpdatePet.bind(this);
   }
 
-  attemptLogin = (username, password) => {
-    // by request of the backend team, parameterize username
-    // send pw in body of request
-    const endpoint = `/connect/`;
-    fetch(endpoint, {
-      body: { Name: username, Password: password },
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // successful login gives response array: [{userdoc}, [petListwithpetobj]]
-        if (Array.isArray(data)) {
-          console.log('successful login data: ' + JSON.stringify(data));
-          this.setState({ user: Object.assign({}, data[0]) });
-          console.log(this.state.user);
-          this.setState({ petList: data[1].slice() });
-          console.log(this.state.petList);
-        } else {
-          // alert with response string to clarify the problem
-          this.setState({ failedLoginAttempt: true });
-        }
-      });
-  };
-
-  // ? Are we using OAuth? If not, send POST request with userName and password in request body
+  // attemptLogin: send POST request with userName and password in request body
   // on response:
   //   is user is not authenticated
   //    setState: failedLoginAttempt set to true (this triggers conditional rendering of "please try again or sign up");
@@ -79,6 +116,35 @@ class App extends Component {
   //    setState: state.failedLoginAttempt to false (this returns to default, conditionally rendered div will not render)
   //    setState: state.user assigned value of response obj body (user document data)
   //    setState: state.petList assigned value of response obj body (list of pets)
+  attemptLogin = (username, password) => {
+    console.log(username + '  ' + password);
+    // by request of the backend team, parameterize username
+    // send pw in body of request
+    const endpoint = `http://localhost:3000/api/connect/`;
+    fetch(endpoint, {
+      method: 'POST',
+      //mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ Name: username, Password: password }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // successful login gives response array: [{userdoc}, [petListwithpetobj]]
+        if (Array.isArray(data)) {
+          // const newUser = Object.assign({}, data[0]);
+          // console.log('new User? ' + newUser);
+          this.setState({ user: data[0] });
+          console.log(this.state.user);
+          this.setState({ petList: data[1] });
+          console.log(this.state.petList);
+          this.setState({ failedLoginAttempt: false });
+        } else {
+          // alert with response string to clarify the problem
+          this.setState({ failedLoginAttempt: true });
+        }
+      });
+  };
 
   choosePet = (e) => {
     // console.log click event for testing purposes
@@ -104,9 +170,9 @@ class App extends Component {
     };
     // depending on action from create/update page, make post or patch request
     if (action === 'Create') {
-      fetch('/', {
+      fetch('/pets/', {
         body: requestBody,
-        method: actiion === 'Create' ? 'POST' : 'PATCH',
+        method: action === 'Create' ? 'POST' : 'PATCH',
         headers: { 'Content-Type': 'application/json' },
       })
         .then((res) => res.json())
@@ -155,7 +221,7 @@ class App extends Component {
                 // (
                 <LoginSignupPage
                   attemptLogin={this.attemptLogin}
-                  failedLoginAttempt={this.state.failedLoginAttempt}
+                  failedLoginAttempt={this.failedLoginAttempt}
                 />
                 // )
               }
@@ -187,8 +253,8 @@ class App extends Component {
                   currentPet={this.state.currentPet}
                   // method to set currentpet in state
                   // method to create new pet in user's acct
-                  choosePet={this.state.choosePet}
-                  createOrUpdatePet={this.state.createOrUpdatePet}
+                  choosePet={this.choosePet}
+                  createOrUpdatePet={this.createOrUpdatePet}
                 />
               }
             />
@@ -196,17 +262,17 @@ class App extends Component {
               exact
               path='/choose'
               element={
-                this.state.failedLoginAttempt ? (
-                  <LoginSignupPage
-                    attemptLogin={this.attemptLogin}
-                    failedLoginAttempt={this.state.failedLoginAttempt}
-                  />
-                ) : (
-                  <ChooseCreatePetPage
-                    user={this.state.user}
-                    choose={() => this.choosePet(e)}
-                  />
-                )
+                // this.state.failedLoginAttempt ? (
+                //   <LoginSignupPage
+                //     attemptLogin={this.attemptLogin}
+                //     failedLoginAttempt={this.state.failedLoginAttempt}
+                //   />
+                // ) : (
+                <ChooseCreatePetPage
+                  petList={this.state.petList}
+                  choose={() => this.choosePet(e)}
+                />
+                // )
               }
             />
           </Routes>
