@@ -397,10 +397,10 @@ const App = () => {
         <main>
           <h1>Wunderpets</h1>
           <Routes>
-            {/* <Route
+            <Route
               exact
               // landing route - condition render depending on whether user is logged in
-              path="/landing"
+              path="/"
               element={
                 // if user data is nonexistent, route to login page
                 // otherwise, go to pet selection page
@@ -414,7 +414,7 @@ const App = () => {
                 // ) :
                 // (
                 <LoginSignupPage
-                  attemptLogin={this.attemptLogin}
+                  attemptLogin={attemptLogin}
                   failedLoginAttempt={failedLoginAttempt}
                 />
                 // )
@@ -427,9 +427,9 @@ const App = () => {
               path="/home"
               element={
                 <HomePage
-                  user={this.state.user}
+                  user={user}
                   // object with all records for currently selected pet
-                  currentPet={this.state.currentPet}
+                  currentPet={currentPet}
                 />
               }
             />
@@ -441,17 +441,17 @@ const App = () => {
                 // else render CreateUpdatePet
                 <CreateUpdatePet
                   // get user from state so we can list their pet(s)
-                  user={this.state.user}
+                  user={user}
                   // if updating pet, current pet props will be needed; get them from state
                   // if creating a new pet, currentpet won't matter
-                  currentPet={this.state.currentPet}
+                  currentPet={currentPet}
                   // method to set currentpet in state
                   // method to create new pet in user's acct
-                  choosePet={this.choosePet}
-                  createOrUpdatePet={this.createOrUpdatePet}
+                  choosePet={choosePet}
+                  createOrUpdatePet={createOrUpdatePet}
                 />
               }
-            /> */}
+            />
             <Route
               exact
               path="/choose"
