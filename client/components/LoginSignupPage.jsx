@@ -22,24 +22,24 @@ class LoginSignupPage extends Component {
   render() {
     // if (!this.props.failedLoginAttempt) {
     return (
-      <div className='login'>
+      <div className="login">
         <label>Username</label>
         <input
-          type='text'
-          id='inputUsername'
-          name='username'
+          type="text"
+          id="inputUsername"
+          name="username"
           value={this.state.userNameValue}
           onChange={(e) => this.setState({ userNameValue: e.target.value })}
         />
         <label>Password</label>
         <input
-          type='text'
-          id='inputPassword'
-          name='password'
+          type="text"
+          id="inputPassword"
+          name="password"
           value={this.state.passwordValue}
           onChange={(e) => this.setState({ passwordValue: e.target.value })}
         />
-        <a href='http://localhost:3001/choose'>
+        <a href="http://localhost:3001/choose">
           <button>Login</button>
         </a>
         <button

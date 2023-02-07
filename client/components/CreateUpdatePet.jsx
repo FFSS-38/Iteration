@@ -24,14 +24,14 @@ class CreateUpdatePet extends Component {
     console.log('action: ', this.action);
     return (
       <div>
-        <div className='banner'>{this.action} Pet Profile</div>
-        <div className='petInputs'>
+        <div className="banner">{this.action} Pet Profile</div>
+        <div className="petInputs">
           <div>Owner: {this.props.user.name}</div>
           <div>
             Name:{' '}
             <input
-              type='text'
-              id='newPetName'
+              type="text"
+              id="newPetName"
               // value={this.petName ?? ''}
               required
             />
@@ -39,22 +39,22 @@ class CreateUpdatePet extends Component {
           <div>
             Breed:{' '}
             <input
-              type='text'
-              id='newPetBreed'
+              type="text"
+              id="newPetBreed"
               // value={this.breed ?? ''}
-              placeholder='E.g. Cat, Dog, Russian Blue, Corgi'
+              placeholder="E.g. Cat, Dog, Russian Blue, Corgi"
               required
             />
           </div>
           <div>
-            Age: <input type='age' id='newPetAge' value={this.age ?? ''} />{' '}
+            Age: <input type="age" id="newPetAge" value={this.age ?? ''} />{' '}
             years
           </div>
           <div>
             Weight:{' '}
             <input
-              type='text'
-              id='newPetWeight'
+              type="text"
+              id="newPetWeight"
               // value={this.weight ?? ''}
               required
             />{' '}
@@ -63,21 +63,21 @@ class CreateUpdatePet extends Component {
           <div>
             Vet:{' '}
             <input
-              type='text'
-              id='newPetVet'
+              type="text"
+              id="newPetVet"
               // value={this.vetID ?? ''}
               required
             />
           </div>
           <div>
             Image URL:{' '}
-            <input type='text' id='newAvatarUrl' value={this.avatarURL ?? ''} />
+            <input type="text" id="newAvatarUrl" value={this.avatarURL ?? ''} />
           </div>
           <div>
-            <img className='avatarImage' src={this.avatarURL ?? ''}></img>
+            <img className="avatarImage" src={this.avatarURL ?? ''}></img>
           </div>
-          <a href='http://localhost:3001/home'>
-            <button className='createUpdatePetButton'>
+          <a href="http://localhost:3001/home">
+            <button className="createUpdatePetButton">
               {' '}
               {/* onClick={this.props.createOrUpdatePet(this.action)} {this.action} */}
             </button>

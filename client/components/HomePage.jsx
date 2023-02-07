@@ -19,10 +19,10 @@ class HomePage extends Component {
     const currentPet = this.props.currentPet;
     // adding some dummy text to make sure things are rendering even without data from db
     return (
-      <div className='homepageContainer'>
-        <div className='petNameBanner'>{currentPet.Name}'s Homepage</div>
+      <div className="homepageContainer">
+        <div className="petNameBanner">{currentPet.Name}'s Homepage</div>
         <ProfileContainer
-          className='profileContainer'
+          className="profileContainer"
           age={currentPet.Age}
           avatar={currentPet.Avatar}
           breed={currentPet.Breed}
@@ -33,11 +33,11 @@ class HomePage extends Component {
           weight={currentPet.Weight}
         />
         <ScheduleContainer
-          className='scheduleContainer'
+          className="scheduleContainer"
           schedule={currentPet.scheduledEvents}
         />
         <NotebookContainer
-          className='notebookContainer'
+          className="notebookContainer"
           notes={currentPet.notes}
         />
       </div>

@@ -4,7 +4,13 @@
 body {
   min-height: 100vh;
   padding: 3rem;
-  background: linear-gradient(74deg, rgba(174,207,84,1) 0%, rgba(255,155,0,1) 39%, rgba(255,242,234,1) 72%, rgba(0,156,223,1) 100%);
+  background: linear-gradient(
+    74deg,
+    rgba(174, 207, 84, 1) 0%,
+    rgba(255, 155, 0, 1) 39%,
+    rgba(255, 242, 234, 1) 72%,
+    rgba(0, 156, 223, 1) 100%
+  );
   font-family: Rosario, Arial, Helvetica, sans-serif;
 }
 h1 {
@@ -190,10 +196,9 @@ button:hover {
   background-color: rgba(255, 255, 255, 0.75);
   margin: 25px 25px 0px 25px;
   border-radius: 10px;
-  padding : 25px;
-  
+  padding: 25px;
 }
-.scheduleItem{
+.scheduleItem {
   border-color: #ff9b00;
   border-style: solid;
   border-radius: 20px;
@@ -203,13 +208,13 @@ button:hover {
   padding: 25px 30px;
 }
 
-.petNameBanner{
+.petNameBanner {
   font-weight: 600;
   font-size: 1.2em;
   padding: 0px 25px;
 }
 
-.petImages{
+.petImages {
   margin: 50px;
   display: flex;
   flex-direction: row;
@@ -219,18 +224,18 @@ button:hover {
   justify-content: space-between;
 }
 
-.choosePetCard{
+.choosePetCard {
   width: 30%;
   height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.petAvatar{
+.petAvatar {
   width: 40%;
 }
 
-.choosePetImage{
+.choosePetImage {
   height: auto;
   display: flex;
   flex-direction: row;
@@ -239,7 +244,7 @@ button:hover {
   margin-bottom: 20px;
 }
 
-.petLink{
+.petLink {
   height: auto;
   display: flex;
   flex-direction: row;
@@ -247,7 +252,7 @@ button:hover {
   justify-content: center;
 }
 
-.choosePetName{
+.choosePetName {
   font-family: 'lobster two';
   font-size: large;
 }

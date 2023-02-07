@@ -10,9 +10,9 @@ class ScheduleContainer extends Component {
     // const currentTime = Date.now();
     return (
       // add a variable for styling past events differently?
-      <div className='scheduleItem' key={item}>
-        <div className='dateTime'>{item.dateTime}</div>
-        <div className='eventDetails'>{item.details}</div>
+      <div className="scheduleItem" key={item}>
+        <div className="dateTime">{item.dateTime}</div>
+        <div className="eventDetails">{item.details}</div>
         {/* add onclick functionality to delete schedule item*/}
         <button>Delete Event</button>
       </div>
@@ -46,7 +46,7 @@ class ScheduleContainer extends Component {
     console.log(eventList);
 
     return (
-      <div className='homeCategory'>
+      <div className="homeCategory">
         <h2>Schedule rendering</h2>
         <div>{eventList}</div>
       </div>

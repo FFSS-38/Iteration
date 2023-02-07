@@ -199,14 +199,14 @@ class App extends Component {
     //   );
     // }
     return (
-      <div className='router'>
+      <div className="router">
         <main>
           <h1>Wunderpets</h1>
           <Routes>
             <Route
               exact
               // landing route - condition render depending on whether user is logged in
-              path='/landing'
+              path="/landing"
               element={
                 // if user data is nonexistent, route to login page
                 // otherwise, go to pet selection page
@@ -230,7 +230,7 @@ class App extends Component {
               exact
               // what's the endpoint for different pets from the same user? parameterized names?
               // change as needed
-              path='/home'
+              path="/home"
               element={
                 <HomePage
                   user={this.state.user}
@@ -241,7 +241,7 @@ class App extends Component {
             />
             <Route
               exact
-              path='/create'
+              path="/create"
               element={
                 // if failedLoginAttempt is true, then redirect to /landing
                 // else render CreateUpdatePet
@@ -260,7 +260,7 @@ class App extends Component {
             />
             <Route
               exact
-              path='/choose'
+              path="/choose"
               element={
                 // this.state.failedLoginAttempt ? (
                 //   <LoginSignupPage
