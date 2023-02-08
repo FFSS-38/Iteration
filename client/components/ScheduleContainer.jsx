@@ -30,13 +30,13 @@ const ScheduleContainer = () => {
   // sort schedule items by date
   // shallow copy list of events because I'm afraid of trying to sort state in place
   //let events = this.props.schedule.slice();
-  this.events.sort((a, b) => {
+  events.sort((a, b) => {
     return b.dateTime - a.dateTime;
   });
 
   // make a renderable list of schedule item components
   const eventList = [];
-  this.events.forEach((el) => eventList.push(this.renderScheduleItem(el)));
+  events.forEach((el) => eventList.push(renderScheduleItem(el)));
   console.log(eventList);
 
   return (
