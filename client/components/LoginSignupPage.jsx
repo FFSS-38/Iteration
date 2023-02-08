@@ -32,15 +32,11 @@ const LoginSignupPage = () => {
       <a href="http://localhost:8080/choose">
         <button>Login</button>
       </a>
-      <button
-      // onClick={(e) => {
-      //   const username = this.state.userNameValue;
-      //   const password = this.state.passwordValue;
-      //   return this.props.signUp(username, password);
-      // }}
-      >
+      <a href="http://localhost:8080/signup">
+      <button>
         Sign Up
       </button>
+      </a>
     </div>
   );
 }

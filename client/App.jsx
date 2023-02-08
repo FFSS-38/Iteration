@@ -6,61 +6,15 @@ import HomePage from './components/HomePage';
 import ChooseCreatePetPage from './components/ChooseCreatePetPage';
 import CreateUpdatePet from './components/CreateUpdatePet';
 import './styles.css';
+import SignupPage from './components/SignupPage';
 
 const App = () => {
   // initial state
-  const [user, setUser] = useState({
-    _id: '63deb75993ddb845fa889e0a',
-    Name: 'Pierre',
-    Password: 'Jacquemin',
-  });
+  const [user, setUser] = useState({});
 
-  const [petList, setPetList] = useState([
-    {
-      _id: '63e1523fa559f05e7fe59fcb',
-      Age: 17,
-      Breed: 'Belgium Cat',
-      Avatar: 'http://localhost:3000/client/images/cat1.png',
-      Notes: 'Seems to have kitty dementia',
-      Weight: 3451,
-      Name: 'Eden',
-      Owner: '63e1213bcb9b9423d0ba43a7',
-      __v: 0,
-    },
-    {
-      _id: '63e153d4a559f05e7fe59fd4',
-      Name: 'Simba',
-      Breed: 'Basic Cat',
-      Avatar: 'http://localhost:3000/client/images/cat2.png',
-      Weight: 2000,
-      Age: 15,
-      Notes: 'Ate 2.5 feet of yarn on Saturday, seems fine though',
-      Owner: '63e1213bcb9b9423d0ba43a7',
-      __v: 0,
-    },
-    {
-      _id: '63e1562d5f1fe419944e6baf',
-      Name: 'Zola',
-      Breed: 'Shiba Inu',
-      Avatar: 'http://localhost:3000/client/images/dog3.png',
-      Weight: 2000,
-      Owner: '63e1213bcb9b9423d0ba43a7',
-      __v: 0,
-    },
-  ]);
+  const [petList, setPetList] = useState([]);
 
-  const [currentPet, setCurrentPet] = useState({
-    _id: '63e153d4a559f05e7fe59fd4',
-    Name: 'Simba',
-    Breed: 'Basic Cat',
-    Weight: 2000,
-    Age: 15,
-    Notes: 'Ate 2.5 feet of yarn on Saturday, seems fine though',
-    Owner: '63e1213bcb9b9423d0ba43a7',
-    lastVisit: 'Dec 14, 2022',
-    VetID: 'Dr. Tucker, Stratford Hills Veterinary Center',
-    __v: 0,
-  });
+  const [currentPet, setCurrentPet] = useState({});
 
   const [failedLoginAttempt, setFailedLoginAttempt] = useState(false);
 
@@ -142,25 +96,22 @@ const App = () => {
           <Routes>
             <Route
               exact
-              // landing route - condition render depending on whether user is logged in
               path="/"
               element={
-                // if user data is nonexistent, route to login page
-                // otherwise, go to pet selection page
-
-                // this.state.user ? (
-                //   <ChooseCreatePetPage
-                //     // state = user object; array of their pets is property of that object
-                //     user={this.state.user}
-                //     // no state necessary for login/signup
-                //   />
-                // ) :
-                // (
                 <LoginSignupPage
                   attemptLogin={attemptLogin}
                   failedLoginAttempt={failedLoginAttempt}
                 />
-                // )
+              }
+            />
+            <Route
+              exact
+              path="/signup"
+              element={
+                <SignupPage
+                setUser={setUser}
+                setCurrentPet={setCurrentPet}
+                />
               }
             />
             <Route
