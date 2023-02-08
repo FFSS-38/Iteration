@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useState } from 'react';
 
 const ChooseCreatePetPage = ({ petList, choose }) => {
   const renderPetCard = pet => (
@@ -23,7 +24,7 @@ const ChooseCreatePetPage = ({ petList, choose }) => {
     <div className="petChoiceMenu">
       <div className="petBanner">Choose your pet</div>
       <div className="petImages">{petCards}</div>
-      <a href="http://localhost:3001/create">
+      <a href="http://localhost:8080/create">
         <button>Add a pet</button>
       </a>
     </div>
