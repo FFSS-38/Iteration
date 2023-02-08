@@ -45,6 +45,8 @@ router.get(
 router.get('/logout', userController.logOut, (req, res) => {
   return res.sendStatus(200);
 });
+
+//MISC
 // used to check active session with cookie ssid :: path='http://localhost:3000/user/checkSession'
 router.get('/checkSession', sessionController.checkSession, (req, res) => {
   return res.sendStatus(200);
@@ -58,5 +60,7 @@ router.get('/all', userController.getAllUsers, (req, res) => {
   return res.sendStatus(200);
 });
 
-router.get('/allSessions');
+router.get('/allSessions', sessionController.getAllSessions, (req, res) => {
+  return res.sendStatus(200);
+});
 module.exports = router;
