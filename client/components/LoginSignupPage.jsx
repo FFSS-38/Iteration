@@ -49,9 +49,12 @@ const LoginSignupPage = () => {
       <div className='sign-up'> 
       <a href="http://localhost:8080/choose">
         <button className='login-button'>Login</button>
-      </a>
+      </a >
+      <a href="http://localhost:8080/signup">
       <button onClick={handleClick} className='signup-button'>Sign Up</button>
+      </a >
       </div>
+      
       </div>
     </div>
   );
