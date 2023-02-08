@@ -31,7 +31,6 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetName"
-            // value={this.petName ?? ''}
             required
           />
         </div>
@@ -40,13 +39,12 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetBreed"
-            // value={this.breed ?? ''}
             placeholder="E.g. Cat, Dog, Russian Blue, Corgi"
             required
           />
         </div>
         <div>
-          Age: <input type="age" id="newPetAge" value={age ?? ''} />{' '}
+          Age: <input type="age" id="newPetAge"/>
           years
         </div>
         <div>
@@ -54,9 +52,8 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetWeight"
-            // value={this.weight ?? ''}
             required
-          />{' '}
+          />
           lbs.
         </div>
         <div>
@@ -64,21 +61,24 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetVet"
-            // value={this.vetID ?? ''}
             required
           />
         </div>
         <div>
           Image URL:{' '}
-          <input type="text" id="newAvatarUrl" value={avatarURL ?? ''} />
+          <input type="text" id="newAvatarUrl"/>
         </div>
         <div>
           <img className="avatarImage" src={avatarURL ?? ''}></img>
         </div>
-        <a href="http://localhost:3001/home">
+        <a href="http://localhost:8080/home">
           <button className="createUpdatePetButton">
-            {' '}
-            {/* onClick={this.props.createOrUpdatePet(this.action)} {this.action} */}
+            Save
+          </button>
+        </a>
+        <a href="http://localhost:8080/choose">
+          <button className="createUpdatePetButton">
+            Back
           </button>
         </a>
       </div>

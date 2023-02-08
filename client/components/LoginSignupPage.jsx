@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useState } from 'react';
 
 // this page needs to include conditional rendering of a div
@@ -19,7 +19,7 @@ const LoginSignupPage = () => {
         id="inputUsername"
         name="username"
         value={userNameValue}
-        onChange={(e) => setUserNameValue({ userNameValue: e.target.value })}
+        onChange={(e) => setUserNameValue(e.target.value)}
       />
       <label>Password</label>
       <input
@@ -27,9 +27,9 @@ const LoginSignupPage = () => {
         id="inputPassword"
         name="password"
         value={passwordValue}
-        onChange={(e) => setPasswordValue({ passwordValue: e.target.value })}
+        onChange={(e) => setPasswordValue(e.target.value)}
       />
-      <a href="http://localhost:3001/choose">
+      <a href="http://localhost:8080/choose">
         <button>Login</button>
       </a>
       <button
@@ -43,57 +43,5 @@ const LoginSignupPage = () => {
       </button>
     </div>
   );
-};
-  /*
-    {/* } else {
-      return (
-        <div>
-          <h3 id='failedLoginMessage'>
-            Please try logging in again or signing up
-          </h3>
-          <label>Username</label>
-          <input
-            type='text'
-            id='inputUsername'
-            name='username'
-            value={this.state.userNameValue}
-            onChange={(e) => this.setState({ userNameValue: e.target.value })}
-          />
-          <label>Password</label>
-          <input
-            type='text'
-            id='inputPassword'
-            name='password'
-            value={this.state.passwordValue}
-            onChange={(e) => this.setState({ passwordValue: e.target.value })}
-          />
-          <button
-            onClick={(e) => {
-              const username = this.state.userNameValue;
-              const password = this.state.passwordValue;
-              console.log('inside onClick');
-              navigate = useNavigate();
-              navigate('/choose');
-              // return this.props.attemptLogin(username, password);
-            }}
-          >
-            Login
-          </button>
-          <Link to='/choose' className='linkToChoose'>
-            <button
-              onClick={(e) => {
-                const username = this.state.userNameValue;
-                const password = this.state.passwordValue;
-                return this.props.signUp(username, password);
-              }}
-            >
-              Sign Up
-            </button>
-          </Link>
-        </div>
-      );
-    }
-  }
-} */
-
+}
 export default LoginSignupPage;
