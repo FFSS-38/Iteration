@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { useState } from 'react';
 
 const ScheduleContainer = () => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -31,7 +30,7 @@ const ScheduleContainer = () => {
   // sort schedule items by date
   // shallow copy list of events because I'm afraid of trying to sort state in place
   //let events = this.props.schedule.slice();
-  events.sort((a, b) => {
+  this.events.sort((a, b) => {
     return b.dateTime - a.dateTime;
   });
 

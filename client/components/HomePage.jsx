@@ -5,6 +5,36 @@ import ProfileContainer from './ProfileContainer';
 import ScheduleContainer from './ScheduleContainer';
 import NotebookContainer from './NotebookContainer';
 
+const HomePage = (props) => {
+  const currentPet = props.currentPet;
+  return (
+    <div className="homepageContainer">
+      <div className="petNameBanner">{currentPet.Name}'s Homepage</div>
+      <ProfileContainer
+        className="profileContainer"
+        age={currentPet.Age}
+        avatar={currentPet.Avatar}
+        breed={currentPet.Breed}
+        lastVisit={currentPet.lastVisit}
+        // owner={user.name}
+        owner={'Mr. Wunderpus'}
+        vetID={currentPet.VetID}
+        weight={currentPet.Weight}
+      />
+      <ScheduleContainer
+        className="scheduleContainer"
+        schedule={currentPet.scheduledEvents}
+      />
+      <NotebookContainer
+        className="notebookContainer"
+        notes={currentPet.notes}
+      />
+    </div>
+  );
+};
+export default HomePage;
+
+/*
 // homepage-specific methods here?
 // database call here?
 
@@ -45,32 +75,4 @@ import NotebookContainer from './NotebookContainer';
 //   }
 // }
 
-const HomePage = (props) => {
-  const currentPet = props.currentPet;
-  // adding some dummy text to make sure things are rendering even without data from db
-  return (
-    <div className="homepageContainer">
-      <div className="petNameBanner">{currentPet.Name}'s Homepage</div>
-      <ProfileContainer
-        className="profileContainer"
-        age={currentPet.Age}
-        avatar={currentPet.Avatar}
-        breed={currentPet.Breed}
-        lastVisit={currentPet.lastVisit}
-        // owner={user.name}
-        owner={'Mr. Wunderpus'}
-        vetID={currentPet.VetID}
-        weight={currentPet.Weight}
-      />
-      <ScheduleContainer
-        className="scheduleContainer"
-        schedule={currentPet.scheduledEvents}
-      />
-      <NotebookContainer
-        className="notebookContainer"
-        notes={currentPet.notes}
-      />
-    </div>
-  );
-};
-export default HomePage;
+ */
