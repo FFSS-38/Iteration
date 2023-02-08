@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import ProfileContainer from './ProfileContainer';
 import ScheduleContainer from './ScheduleContainer';
@@ -45,8 +45,7 @@ import NotebookContainer from './NotebookContainer';
 //   }
 // }
 
-const HomePage = (props) =>{
-
+const HomePage = (props) => {
   const currentPet = props.currentPet;
   // adding some dummy text to make sure things are rendering even without data from db
   return (
@@ -73,5 +72,5 @@ const HomePage = (props) =>{
       />
     </div>
   );
-}
+};
 export default HomePage;

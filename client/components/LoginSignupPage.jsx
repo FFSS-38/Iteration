@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useState } from 'react';
 
 // this page needs to include conditional rendering of a div
 // if failedLoginAttempt property in state is true, render a div that displays a message like "Please try logging in again or sign up"
@@ -7,9 +7,7 @@ import { useNavigate } from 'react-router-dom';
 // ** this page was heavily edited to still render without fetch request (mongoDB troubles!) The commented out code at the end of the file is the closest representation of what we initially had/what would work with a successful fetch request
 
 //only push loginattempt method, push failedLoginAttempt property
-
-const LoginSignupPage = (props) =>{
-
+const LoginSignupPage = () => {
   const [userNameValue, setUserNameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
