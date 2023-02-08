@@ -22,7 +22,7 @@ const CreateUpdatePet = (props) => {
   }
 
   return (
-    <div>
+    <div className='create-container'>
       <div className="banner">{action} Pet Profile</div>
       <div className="petInputs">
         <div>Owner: {props.user.name}</div>
@@ -46,7 +46,7 @@ const CreateUpdatePet = (props) => {
           />
         </div>
         <div>
-          Age: <input type="age" id="newPetAge" value={age ?? ''} />{' '}
+          Age: <input type="age" id="newPetAge" value={age}/>
           years
         </div>
         <div>
@@ -68,20 +68,21 @@ const CreateUpdatePet = (props) => {
             required
           />
         </div>
-        <div>
+        {/* <div>
           Image URL:{' '}
           <input type="text" id="newAvatarUrl" value={avatarURL ?? ''} />
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <img className="avatarImage" src={avatarURL ?? ''}></img>
-        </div>
+        </div> */}
+      </div>
         <a href="http://localhost:3001/home">
           <button className="createUpdatePetButton">
             {' '}
+            SAVE
             {/* onClick={this.props.createOrUpdatePet(this.action)} {this.action} */}
           </button>
         </a>
-      </div>
     </div>
   );
 };
