@@ -105,13 +105,13 @@ const CreatePet = ({user, setPetList, petList}) => {
         </div> */}
       </div>
       <div className='signup-buttons-box'> 
-        {/* <a href="http://localhost:8080/home"> */}
+        <a href="http://localhost:8080/home">
           <button className="createUpdatePetButton"
         onClick={() => handleClick()}
           >
             Save
           </button>
-        {/* </a> */}
+        </a>
         <a href="http://localhost:8080/choose">
           <button className="createUpdatePetButton">
             Back

@@ -1,9 +1,21 @@
 import React from 'react';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
-const DisplayPet = ({ petList , choose }) => {
+const DisplayPet = () => {
+  const [petList, setPetList] = useState([]);
 
-  
+  const handleClick = () => {
+    fetch('http://localhost:3000/user/pets', {
+      headers: {
+        'Content-Type': 'Application/JSON'
+      }
+    }) 
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+    })
+  }
 
   const renderPetCard = (pet) => (
     <div className="choosePetCard">
@@ -28,9 +40,12 @@ const DisplayPet = ({ petList , choose }) => {
       <div className="petChoiceMenu">
         <div className="petImages">{petCards}</div>
       </div>
+      <div className='pet-button-container'> 
       <a href="http://localhost:8080/create">
-      <button className='add-pet'>Add a pet</button>
+      <button className='add-pet'>Add a Pet</button>
       </a>
+      <button className='add-pet' onClick={handleClick}>Choose a Pet</button>
+      </div>
     </div>
   );
 };
