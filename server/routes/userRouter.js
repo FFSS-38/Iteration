@@ -1,36 +1,51 @@
 const express = require('express');
 const router = express.Router();
 
-const userController = require('../controllers/userControllers');
-const petController = require('../controllers/petControllers');
+const userController = require('../controllers/userController');
+// const petController = require('../controllers/petController');
+const cookieController = require('../controllers/cookieController');
+const sessionController = require('../controllers/sessionController');
 
 const cors = require('cors');
 router.use(cors({ origin: 'http://localhost:3001' }));
-//createUser :: path='/
-// http://localhost:3000/api/users/
-//send the following request : { "Name":"Pierre", "Password":"Jacquemin"}
-//response: {"Name":"Pierre","Password":"Jacquemin","Pets":[],"_id":"63e1213bcb9b9423d0ba43a7","__v":0}
-router.post('/users', userController.createUser, (req, res) => {
-  res.status(200).json(res.locals.user);
+
+// createUser :: path='http://localhost:3000/user'
+router.post(
+  '/',
+  userController.createUser,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
+    return res.status(200).json(res.locals.userid);
+  }
+);
+
+// login user, verify, set cookie :: path='http://localhost:3000/user/login'
+router.post(
+  '/login',
+  userController.verifyUser,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
+    return res.sendStatus(200);
+  }
+);
+
+// used to check active session with cookie ssid :: path='http://localhost:3000/user/checkSession'
+router.get('/checkSession', sessionController.checkSession, (req, res) => {
+  return res.sendStatus(200);
+});
+//path='http://localhost:3000/user/logout'
+router.get('/logout', userController.logOut, (req, res) => {
+  return res.sendStatus(200);
 });
 
-//getUser
-// http://localhost:3000/api/Pierre
-// response: [{"_id":"63e1213bcb9b9423d0ba43a7","Name":"Pierre","Password":"Jacquemin","Pets":[],"__v":0}]
-router.get('/:users', userController.getUser, (req, res) => {
-  res.status(200).json(res.locals.user);
+router.delete('/:userId', userController.deleteUser, (req, res) => {
+  return res.status(200).json(res.locals.user);
 });
 
-//Wunderpets Notes::
-// app.post('/signup', userController.createUser , (req, res) => {
-//   // what should happen here on successful sign up?
+router.get('/all', userController.getAllUsers, (req, res) => {
+  return res.sendStatus(200);
+});
 
-// });
-
-/**
- * login
- */
-// app.post('/login', userController.verifyUser, (req, res) => {
-//   // what should happen here on successful log in?
-
-// });
+module.exports = router;

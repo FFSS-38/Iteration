@@ -1,12 +1,12 @@
 const express = require('express');
-const db = require('../database');
+const db = require('../models/models');
 const mongoose = require('mongoose');
-const { Users, Pets } = require('../database.js');
+const { User, Pet } = require('../models/models.js');
 
-const petsController = {};
+const petController = {};
 
-petsController.createPet = (req, res, next) => {
-  Pets.create({
+petController.createPet = (req, res, next) => {
+  Pet.create({
     Name: req.body.Name,
     Age: req.body.Age,
     Weight: req.body.Weight,
@@ -28,8 +28,8 @@ petsController.createPet = (req, res, next) => {
 };
 
 //get Pet by params or Owner??
-petsController.getPet = (req, res, next) => {
-  Pets.find({ Name: req.params.pets })
+petController.getPet = (req, res, next) => {
+  Pet.find({ Name: req.params.pets })
     .then((pet) => {
       if (!pet) {
         return next({
@@ -48,8 +48,8 @@ petsController.getPet = (req, res, next) => {
     });
 };
 
-petsController.deletePet = (req, res, next) => {
-  Pets.findOneAndDelete({ Name: req.params.pets })
+petController.deletePet = (req, res, next) => {
+  Pet.findOneAndDelete({ Name: req.params.pets })
     .then((pet) => {
       if (!pet) {
         return next({
@@ -68,8 +68,8 @@ petsController.deletePet = (req, res, next) => {
     });
 };
 
-petsController.updatePet = (req, res, next) => {
-  Pets.findOneAndUpdate(
+petController.updatePet = (req, res, next) => {
+  Pet.findOneAndUpdate(
     { Name: req.params.pets },
     {
       Name: req.body.Name,
@@ -104,8 +104,8 @@ petsController.updatePet = (req, res, next) => {
 
 //returns pets for specific user
 //WN: get Pet by params or Owner??
-petsController.getPetUltimate = (req, res, next) => {
-  Pets.find({ Owner: res.locals.user._id })
+petController.getPetUltimate = (req, res, next) => {
+  Pet.find({ Owner: res.locals.user._id })
     .then((pets) => {
       if (!pets) {
         return next({
@@ -126,4 +126,4 @@ petsController.getPetUltimate = (req, res, next) => {
     });
 };
 
-module.exports = petsController;
+module.exports = petController;
