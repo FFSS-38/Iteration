@@ -145,8 +145,8 @@ h3 {
 #newPetName, 
 #newPetWeight,
 #newPetAge,
-#newPetBreed,
-#newPetVet {
+#newPetVet,
+#newPetVisit {
   border: none;
   background-color: lightblue;
   margin-top: 12px;
@@ -169,6 +169,21 @@ h3 {
 
 #newPetVet {
   margin-left: 24px;
+}
+
+.signUp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.signup-buttons-box {
+  column-gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
 }
 
 article {

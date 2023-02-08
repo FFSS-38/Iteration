@@ -109,8 +109,8 @@ const App = () => {
               path="/signup"
               element={
                 <SignupPage
+                user = {user}
                 setUser={setUser}
-                setCurrentPet={setCurrentPet}
                 />
               }
             />
@@ -136,13 +136,14 @@ const App = () => {
                 <CreateUpdatePet
                   // get user from state so we can list their pet(s)
                   user={user}
+                  setPetList = {setPetList}
                   // if updating pet, current pet props will be needed; get them from state
                   // if creating a new pet, currentpet won't matter
-                  currentPet={currentPet}
+                  // currentPet={currentPet}
                   // method to set currentpet in state
                   // method to create new pet in user's acct
-                  choosePet={choosePet}
-                  createOrUpdatePet={createOrUpdatePet}
+                  // choosePet={choosePet}
+                  // createOrUpdatePet={createOrUpdatePet}
                 />
               }
             />
