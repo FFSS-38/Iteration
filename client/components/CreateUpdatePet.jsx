@@ -5,63 +5,95 @@ import { useState } from 'react';
 // this should set state to equal the data returned from fetch request
 // data to be returned: userData
 
-const CreateUpdatePet = (props) => {
+const CreateUpdatePet = ({user, setPetList, petList}) => {
+  const [pet, setPet] = useState({});
+  const [name, setName] = useState('')
+  const [age, setAge] = useState('')
+  const [weight, setWeight] = useState('')
+  const [breed, setBreed] = useState('')
+  const [visit, setVist] = useState('')
+  const [vet, setVet] = useState('')
 
-  let action = 'Create';
-  let petName, age, breed, weight, vetID, avatarURL;
-  if (Object.hasOwn(props.currentPet, name)) {
-    // change to hasOwn to see if the pet has a defined name?
-    petName = props.currentPet.petName;
-    age = props.currentPet.age;
-    breed = props.currentPet.breed;
-    weight = props.currentPet.weight;
-    vetID = props.currentPet.vetID;
-    avatarURL = props.currentPet.avatar;
-    // trying to set a flag for whether we're updating or creating??
-    action = 'Update';
-  }
+  const handleClick = () => {
+    fetch('http://localhost:3000/pet/pets', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'Application/JSON'
+          },
+        body: JSON.stringify({
+            Name: name,
+            Age: age,
+            Weight: weight,
+            Breed: breed,
+            LastVisit: visit,
+            AssignedVet: vet,
+            Owner: user//user.FirstName can be removed
+        })
+    }) 
+    .then(resp => resp.json())
+    .then(data => {
+        setPet(data);
+    });
+    }
 
   return (
     <div className='create-container'>
-      <div className="banner">{action} Pet Profile</div>
+      <div className="banner">Pet Profile</div>
       <div className="petInputs">
-        <div>Owner: {props.user.name}</div>
+        <div>Owner: </div>
         <div>
-          Name:{' '}
+          Name:
           <input
+            id='newPetName'
             type="text"
-            id="newPetName"
             required
+            onChange={(event) => setName(event.target.value) }
           />
         </div>
         <div>
-          Breed:{' '}
+          Breed:
           <input
+            id='newPetBreed'
             type="text"
-            id="newPetBreed"
-            placeholder="E.g. Cat, Dog, Russian Blue, Corgi"
             required
+            onChange={(event) => setBreed(event.target.value)}
           />
         </div>
         <div>
-          Age: <input type="age" id="newPetAge" value={age}/>
+          Age: <input 
+          id='newPetAge'
+          type="age" 
+          onChange={(event) => setAge(event.target.value) }
+          
+          />
           years
         </div>
         <div>
-          Weight:{' '}
+          Weight:
           <input
             type="text"
-            id="newPetWeight"
+            id='newPetWeight'
             required
+            onChange={(event) => setWeight(event.target.value) }
           />
           lbs.
         </div>
         <div>
-          Vet:{' '}
+          Vet:
           <input
             type="text"
-            id="newPetVet"
+            id='newPetVet'
             required
+            onChange={(event) => setVet(event.target.value) }
+          />
+        </div>
+        <div>
+          Last Visit:
+          <input
+            type="text"
+            id='newPetVisit'
+            required
+            onChange={(event) => setVist(event.target.value) }
           />
         </div>
         {/* <div>
@@ -72,18 +104,28 @@ const CreateUpdatePet = (props) => {
           <img className="avatarImage" src={avatarURL ?? ''}></img>
         </div> */}
       </div>
-        <a href="http://localhost:3001/home">
-          <button className="createUpdatePetButton">
+      <div className='signup-buttons-box'> 
+        {/* <a href="http://localhost:8080/home"> */}
+          <button className="createUpdatePetButton"
+        onClick={() => handleClick()}
+          >
             Save
-            SAVE
           </button>
-        </a>
+        {/* </a> */}
         <a href="http://localhost:8080/choose">
           <button className="createUpdatePetButton">
             Back
           </button>
         </a>
+      </div>
     </div>
   );
 };
 export default CreateUpdatePet;
+
+
+/*#newPetBreed,
+#newPetName, 
+#newPetWeight,
+#newPetAge,
+#newPetVet */

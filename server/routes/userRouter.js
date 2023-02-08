@@ -7,7 +7,7 @@ const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 
 const cors = require('cors');
-router.use(cors({ origin: 'http://localhost:3001' }));
+router.use(cors({ origin: 'http://localhost:8080' }));
 
 // createUser :: path='http://localhost:3000/user'
 router.post(
