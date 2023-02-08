@@ -1,11 +1,13 @@
 const { User, Pet, Session } = require('../models/models');
+const { ObjectId } = require('mongodb');
+const express = require('express');
 
 const sessionController = {};
 
 sessionController.startSession = (req, res, next) => {
   console.log('Starting Session');
-  console.log('resLocals:', res.locals.userid);
-  Session.create({ cookieId: res.locals.userid })
+  console.log('resLocals:', res.locals.userObj._id);
+  Session.create({ cookieId: res.locals.userObj._id })
     .then((data) => {
       console.log('Successfully created session', data);
       next();
@@ -19,23 +21,31 @@ sessionController.startSession = (req, res, next) => {
     });
 };
 
+//matches cookie with session for active session
 sessionController.checkSession = (req, res, next) => {
+  console.log('in check session');
   //get cookie and find in db
-  const ObjectId = require('mongodb').ObjectId;
-  const id = res.cookies.ssid;
-  if (!id) {
+  const { ssid } = req.cookies;
+  console.log('ssid/cookieid', ssid);
+  if (!ssid) {
     return next({
       log: 'Error occurred in the sessionController.checkSession',
       status: 400,
       err: { err: 'No cookie found' },
     });
   }
-  const o_id = new ObjectId(id);
-  console.log('checking for session with id', id);
-  Account.find({ _id: o_id })
+  Session.findOne({ cookieId: ssid })
     .exec()
     .then((data) => {
-      console.log('session exists');
+      if (!data) {
+        return next({
+          log: 'Error occured in checkSession; session returned null',
+          status: 400,
+          err: { err: 'No session found' },
+        });
+      }
+      console.log('session exists', data);
+      return next();
     })
     .catch((err) => {
       next({
@@ -46,4 +56,10 @@ sessionController.checkSession = (req, res, next) => {
     });
 };
 
+sessionController.getAllSessions = (req, res, next) => {
+  Session.find({}).then((sessions) => {
+    console.log('All session', sessions);
+    next();
+  });
+};
 module.exports = sessionController;

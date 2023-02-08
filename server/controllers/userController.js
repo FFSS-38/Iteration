@@ -12,7 +12,7 @@ userController.createUser = (req, res, next) => {
   User.create({ FirstName, LastName, Email, Password, Pets })
     .then((user) => {
       console.log('Created new user', user);
-      res.locals.userid = user._id.toString();
+      res.locals.userObj = user;
       next();
     })
     .catch((err) => {
@@ -24,11 +24,12 @@ userController.createUser = (req, res, next) => {
     });
 };
 
+//upon login
 //checks if User and password matches up in db
 userController.verifyUser = (req, res, next) => {
   const { Email, Password } = req.body;
   //insert error handler here
-  console.log('Checking in user ultimate ');
+  console.log('Trying to verify user with, ', Password);
   User.findOne({ Email })
     .then((user) => {
       console.log('Found user info to check pw', user);
@@ -39,14 +40,14 @@ userController.verifyUser = (req, res, next) => {
           message: { err: 'Wrong Password. Try Again' },
         });
       } else {
-        res.locals.userid = user._id.toString();
+        console.log('User Verified');
+        res.locals.userObj = user;
+        return next();
       }
-      console.log('User Verified');
-      return next();
     })
     .catch((err) => {
       next({
-        log: 'userController.getUserUltimate failed',
+        log: 'userController.verifyUser failed',
         message: { err: 'Could not retrive user that you asked for' },
       });
     });
@@ -87,7 +88,7 @@ userController.getAllUsers = (req, res, next) => {
 
 //clear cookie and session
 userController.logOut = (req, res, next) => {
-  const { ssid } = res.cookies;
+  const { ssid } = req.cookies;
   if (!ssid) {
     return next({
       log: 'Error occurred in the sessionController.logOut middleware function',
@@ -97,6 +98,7 @@ userController.logOut = (req, res, next) => {
   } else {
     res.clearCookie('ssid');
     console.log('SSID Cookie cleared');
+    return next();
   }
   Session.findOneAndDelete({ cookieId: ssid })
     .then((data) => {

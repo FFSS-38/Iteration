@@ -2,9 +2,10 @@ const express = require('express');
 const db = require('../models/models');
 const mongoose = require('mongoose');
 const { User, Pet } = require('../models/models.js');
+const { ObjectId } = require('mongodb');
 
 const petController = {};
-
+//front end wants to return pet object
 petController.createPet = (req, res, next) => {
   Pet.create({
     Name: req.body.Name,
@@ -13,10 +14,10 @@ petController.createPet = (req, res, next) => {
     Breed: req.body.Breed,
     LastVisit: req.body.LastVisit,
     AssignedVet: req.body.AssignedVet,
-    Owner: req.body.Owner,
+    Owner: req.body.OwnerId, //is the _id of UserObj, can betakeben from cookie, does not need to be user input
   })
     .then((pet) => {
-      res.locals.newPet = pet;
+      res.locals.petObj = pet;
       return next();
     })
     .catch((err) => {
@@ -27,17 +28,21 @@ petController.createPet = (req, res, next) => {
     });
 };
 
-//get Pet by params or Owner??
-petController.getPet = (req, res, next) => {
-  Pet.find({ Name: req.params.pets })
-    .then((pet) => {
-      if (!pet) {
-        return next({
-          log: 'petsController.getPet encountered error',
-          message: { err: 'That pet is not in the database' },
-        });
-      }
-      res.locals.pet = pet;
+//get all pets using cookie as user identifier
+petController.getUserPets = (req, res, next) => {
+  console.log('attempting to retrieve all your pets...');
+  const { ssid } = req.cookies;
+  if (!ssid) {
+    return next({
+      log: 'Error in petController.getUserPets, when retrieving ssid',
+      status: 400,
+      message: { err: 'Error when retrieving pets.' },
+    });
+  }
+  Pet.find({ Owner: ssid })
+    .then((data) => {
+      console.log('pets collected, ', data);
+      res.locals.allPets = data; //array of documents
       return next();
     })
     .catch((err) => {
@@ -98,30 +103,6 @@ petController.updatePet = (req, res, next) => {
       next({
         log: 'petsController.updatePet failed',
         message: { err: 'Could not update pet' },
-      });
-    });
-};
-
-//returns pets for specific user
-//WN: get Pet by params or Owner??
-petController.getPetUltimate = (req, res, next) => {
-  Pet.find({ Owner: res.locals.user._id })
-    .then((pets) => {
-      if (!pets) {
-        return next({
-          log: 'petsController.getPetUltimate encountered error',
-          message: {
-            err: 'Those pets are  not in the database with said ownerID',
-          },
-        });
-      }
-      res.locals.returnedPets = pets;
-      return next();
-    })
-    .catch((err) => {
-      next({
-        log: 'petsController.getPetUltimate failed',
-        message: { err: 'Could not retrive pets that you asked for' },
       });
     });
 };
