@@ -1,9 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-const ChooseCreatePetPage = ({ petList , choose }) => {
+const DisplayPet = ({ petList , choose }) => {
 
-
+  
 
   const renderPetCard = (pet) => (
     <div className="choosePetCard">
@@ -35,4 +35,4 @@ const ChooseCreatePetPage = ({ petList , choose }) => {
   );
 };
 
-export default ChooseCreatePetPage;
+export default DisplayPet;
