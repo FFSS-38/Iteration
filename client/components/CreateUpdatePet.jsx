@@ -70,9 +70,14 @@ const CreateUpdatePet = (props) => {
         <div>
           <img className="avatarImage" src={avatarURL ?? ''}></img>
         </div>
-        <a href="http://localhost:3001/home">
+        <a href="http://localhost:8080/home">
           <button className="createUpdatePetButton">
             Save
+          </button>
+        </a>
+        <a href="http://localhost:8080/choose">
+          <button className="createUpdatePetButton">
+            Back
           </button>
         </a>
       </div>
