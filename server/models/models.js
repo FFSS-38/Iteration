@@ -13,20 +13,27 @@ const petSchema = new Schema({
   Age: { type: Number },
   Weight: { type: Number },
   Breed: { type: String },
-  LastVisit: { type: String },
-  AssignedVet: { type: String, required: true },
-  Owner: { type: Object, required: true },
+  AssignedVet: { type: String },
+  Owner: { type: String, required: true },
+});
+
+const visitSchema = new Schema({
+  Pet: { type: String, required: true }, //id
+  Date: { type: Date, required: true },
+  Description: { type: String },
+  Vet: { type: String }, //default to assignedVet in funtionality
 });
 
 const sessionSchema = new Schema({
   cookieId: { type: String, required: true, unique: true },
-  createdAt: { type: Date, expires: 30, default: Date.now },
+  createdAt: { type: Date, expires: 300, default: Date.now },
 });
 
 module.exports = {
   Pet: mongoose.model('Pet', petSchema),
   User: mongoose.model('User', userSchema),
   Session: mongoose.model('Session', sessionSchema),
+  Visit: mongoose.model('Visit', visitSchema),
 };
 
 // // Adding some notes about the database here will be helpful for future you or other developers.

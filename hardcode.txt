@@ -32,3 +32,14 @@
     "Email":"kwong.rebe@gmail.com",
     "Password": "hello"
 }
+{
+    "Name": "fabioz",
+    "Age": 2,
+    "Weight": 432,
+    "Breed":"dumb",
+    "AssignedVet":"me"
+}
+{
+    "_id":"63e4027c3d2b9d80d17f1d5b",
+    "Breed": "hungy"
+    }
