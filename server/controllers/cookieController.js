@@ -6,7 +6,8 @@ const { User, Pet } = require('../models/models');
 
 const cookieController = {};
 cookieController.setSSIDCookie = (req, res, next) => {
-  const databaseId = res.locals.userid;
+  console.log('setCook - res.locals:', res.locals.userObj);
+  const databaseId = res.locals.userObj._id.toString();
   res.cookie('ssid', databaseId, { httpOnly: true });
   return next();
 };

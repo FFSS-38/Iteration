@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
 const petRouter = require('./routes/petRouter');
@@ -29,6 +29,7 @@ const app = express();
  */
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(cookieParser());
 
 app.use('/client', express.static(path.resolve(__dirname, '../client')));
 
