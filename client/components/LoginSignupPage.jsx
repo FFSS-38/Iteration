@@ -36,7 +36,7 @@ const LoginSignupPage = () => {
         type="text"
         name="username"
         value={userNameValue}
-        onChange={(e) => setUserNameValue({ userNameValue: e.target.value })}
+        onChange={(e) => setUserNameValue(e.target.value)}
       />
       <label>Password</label>
       <input
@@ -44,7 +44,7 @@ const LoginSignupPage = () => {
         type="text"
         name="password"
         value={passwordValue}
-        onChange={(e) => setPasswordValue({ passwordValue: e.target.value })}
+        onChange={(e) => setPasswordValue(e.target.value)}
       />
       <div className='sign-up'> 
       <a href="http://localhost:8080/choose">

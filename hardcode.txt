@@ -1,11 +1,4 @@
-const express = require('express');
 
-const userController = require('../controllers/userController');
-const petController = require('../controllers/petController');
-const router = express.Router();
-
-const cors = require('cors');
-router.use(cors({ origin: 'http://localhost:3001' }));
 
 //ultimate route
 //http://localhost:3000/api/connect
@@ -34,15 +27,3 @@ router.use(cors({ origin: 'http://localhost:3001' }));
 //       }
 //   ]
 // ]
-
-//verifies user and returns user info with array of pet objects
-router.post(
-  '/connect/',
-  userController.getUserUltimate,
-  petController.getPetUltimate,
-  (req, res) => {
-    return res.status(200).json([res.locals.user, res.locals.returnedPets]);
-  }
-);
-
-module.exports = router;

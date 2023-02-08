@@ -31,7 +31,6 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetName"
-            // value={this.petName ?? ''}
             required
           />
         </div>
@@ -40,7 +39,6 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetBreed"
-            // value={this.breed ?? ''}
             placeholder="E.g. Cat, Dog, Russian Blue, Corgi"
             required
           />
@@ -54,9 +52,8 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetWeight"
-            // value={this.weight ?? ''}
             required
-          />{' '}
+          />
           lbs.
         </div>
         <div>
@@ -64,7 +61,6 @@ const CreateUpdatePet = (props) => {
           <input
             type="text"
             id="newPetVet"
-            // value={this.vetID ?? ''}
             required
           />
         </div>
@@ -78,9 +74,13 @@ const CreateUpdatePet = (props) => {
       </div>
         <a href="http://localhost:3001/home">
           <button className="createUpdatePetButton">
-            {' '}
+            Save
             SAVE
-            {/* onClick={this.props.createOrUpdatePet(this.action)} {this.action} */}
+          </button>
+        </a>
+        <a href="http://localhost:8080/choose">
+          <button className="createUpdatePetButton">
+            Back
           </button>
         </a>
     </div>

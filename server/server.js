@@ -5,12 +5,10 @@ const mongoose = require('mongoose');
 
 const petRouter = require('./routes/petRouter');
 const userRouter = require('./routes/userRouter');
-const apiRouter = require('./routes/api');
+const { User, Pet } = require('./models/models');
 
-// const cookieController = require('./controllers/cookieController');
-// const sessionController = require('./controllers/sessionController');
 const mongoURI =
-  'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0';
+  'mongodb+srv://ffssiteration:ffssiteration@cluster0.zvua8pg.mongodb.net/myFirstDatabase?appName=mongosh+1.6.2';
 mongoose.connect(mongoURI);
 
 const db = mongoose.connection;
@@ -52,7 +50,6 @@ app.get('/', (req, res) => {
 
 app.use('/pet', petRouter);
 app.use('/user', userRouter);
-app.use('/api', apiRouter);
 
 /**
  * signup
