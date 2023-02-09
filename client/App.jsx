@@ -95,12 +95,12 @@ const App = () => {
   return (
     <>
       <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <div className='router'>
+      <div className="router">
         <main>
           <Routes>
             <Route
               exact
-              path='/'
+              path="/"
               element={
                 <Login
                   attemptLogin={attemptLogin}
@@ -113,14 +113,14 @@ const App = () => {
             />
             <Route
               exact
-              path='/signup'
+              path="/signup"
               element={<SignupPage user={user} setUser={setUser} />}
             />
             <Route
               exact
               // what's the endpoint for different pets from the same user? parameterized names?
               // change as needed
-              path='/home'
+              path="/home"
               element={
                 <HomePage
                   user={user}
@@ -131,7 +131,7 @@ const App = () => {
             />
             <Route
               exact
-              path='/create'
+              path="/create"
               element={
                 // if failedLoginAttempt is true, then redirect to /landing
                 // else render CreateUpdatePet
@@ -151,7 +151,7 @@ const App = () => {
             />
             <Route
               exact
-              path='/choose'
+              path="/choose"
               element={
                 <DisplayPet
                   petList={petList}
@@ -162,7 +162,7 @@ const App = () => {
             />
             <Route
               exact
-              path='/home'
+              path="/notes"
               element={<DisplayNotes petObj={currentPet} />}
             />
           </Routes>

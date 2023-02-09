@@ -30,8 +30,8 @@ const DisplayPet = (props) => {
     >
       <div className='choosePetImage'>
         <img
-          className='petAvatar'
-          src={pet.Avatar}
+          className='petPicture'
+          src={pet.URL}
           id={pet._id}
           onClick={() => navigate('/home')}
         />

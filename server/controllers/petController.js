@@ -3,6 +3,8 @@ const db = require('../models/models');
 const { User, Pet, Visit, Note } = require('../models/models.js');
 const { ObjectId } = require('mongodb');
 const { notStrictEqual } = require('assert');
+const mongoose = require('mongoose');
+
 const petController = {};
 
 //returns petObj
@@ -130,6 +132,23 @@ petController.updatePet = (req, res, next) => {
     });
 };
 
+petController.getVisits = (req, res, next) => {
+  const { Pet } = req.body;
+  if (!Pet)
+    return next({
+      log: 'Error in getVisits, no Pet id ',
+    });
+  Visit.find({ Pet })
+    .then((visits) => {
+      console.log('got pets visits');
+      res.locals.allVisits = visits;
+      return next();
+    })
+    .catch((err) => {
+      log: 'Error when retrieving all visits';
+    });
+};
+
 petController.updateVisits = (req, res, next) => {
   const { _id, LastVisit } = req.body;
   console.log('processing request to update visits with', _id, LastVisit.Date);
@@ -175,13 +194,13 @@ petController.updateVisits = (req, res, next) => {
 
 petController.getNotes = (req, res, next) => {
   console.log('Looking for all notes...');
-  const { _id } = req.body;
+  const { Pet } = req.body;
   if (!_id) {
     return next({
       log: 'Error in petController.getNotes, when retrieving _id',
     });
   }
-  Note.find({ Pet: _id })
+  Note.find({ Pet })
     .then((notes) => {
       console.log('these are your pets notes', notes);
       res.locals.allNotes = notes;
@@ -197,29 +216,35 @@ petController.getNotes = (req, res, next) => {
 
 petController.addNote = (req, res, next) => {
   console.log('Adding new note...');
-  const { Pet, Date, Note } = req.body;
-  if (!Pet || !Date || !Note) {
+  const { Pet } = req.body;
+  const addThis = req.body.Note;
+  console.log('pet input note', Pet, Note);
+  if (!Pet || !Note) {
     return next({
       log: 'Error in petController. update notes, missing pet/date/note input',
       messgage: 'Missing input',
     });
   }
-  const date = new Date(Date);
-  const dateParsed = date.toDateString();
-  console.log('note dateparsed:', dateParsed);
-  if (isNaN(date)) {
-    console.log('Invalid date. Please use the YYYY-MM-DD format');
-    return next();
-  }
-  Note.create({ Pet, Date: dateParsed, Note })
-    .then((newNote) => {
-      console.log('Note Added:', newNote);
-      res.locals.newNote = newNote;
+  // const date = new Date(Date);
+  // // const dateParsed = date.toDateString();
+  // console.log('note dateparsed:', dateParsed);
+  // if (isNaN(date)) {
+  //   console.log('Invalid date. Please use the YYYY-MM-DD format');
+  //   return next();
+  // }
+  console.log('before creation')
+  Note.create({ Pet, Note: addThis })
+    .then((newN) => {
+      console.log('Note Added:', newN);
+      res.locals.newNote = newN;
+      return next();
     })
     .catch((err) => {
       return next({
         log: 'Error in petController.updateNotes, unable to create new note',
-        message: 'Cannot create new note',
+        message: {
+          err: 'why',
+        },
       });
     });
 };
