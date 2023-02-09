@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 
 const SignupPage = ({user , setUser}) => {
@@ -7,7 +8,7 @@ const SignupPage = ({user , setUser}) => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    console.log('user', user)
+    const navigate = useNavigate();
 
    const handleClick = () => {
     fetch('http://localhost:3000/user', {
@@ -27,6 +28,7 @@ const SignupPage = ({user , setUser}) => {
         setUser(data);
     console.log('user', user)
     })
+    navigate('/choose')
     }
 
     return(
@@ -64,14 +66,10 @@ const SignupPage = ({user , setUser}) => {
           onChange={(event) => setPassword(event.target.value)}
         />
         <div className='signup-buttons-box'>
-        <a href="http://localhost:8080/choose">
         <button className='signup-button'
         onClick={() => handleClick()}
         >Sign up</button>    
-        </a>
-        <a href="http://localhost:8080/">
-        <button className='login-button'>Back to Login</button>  
-        </a>  
+        <button className='login-button' onClick={() => navigate('/')}>Back to Login</button>  
         </div> 
         </div>
     );

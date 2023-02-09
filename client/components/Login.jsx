@@ -68,9 +68,7 @@ const Login = () => {
       />
       <div className='sign-up'> 
         <button className='login-button' onClick={handleClick}>Login</button>
-        <a href="http://localhost:8080/signup">
-          <button className='signup-button'>Sign Up</button>
-        </a >
+          <button className='signup-button' onClick={() => navigate('/signup')}>Sign Up</button>
       </div>
       
       </div>

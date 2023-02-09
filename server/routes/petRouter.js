@@ -9,7 +9,7 @@ const sessionController = require('../controllers/sessionController');
 //createPet path='http://localhost:3000/pet/create'
 router.post(
   '/create',
-  sessionController.checkSession,
+  // sessionController.checkSession,
   petController.createPet,
   (req, res) => {
     res.status(200).json(res.locals.petObj);
@@ -20,7 +20,7 @@ router.post(
 //currently does not send back updatedPet, only new instance of new Visit (lastVisit)
 router.patch(
   '/update',
-  sessionController.checkSession,
+  // sessionController.checkSession,
   petController.updatePet,
   petController.updateVisits,
   (req, res) => {
@@ -35,7 +35,7 @@ router.patch(
 //deletePet :: path="http://localhost:3000/pet/delete"
 router.delete(
   '/delete',
-  sessionController.checkSession,
+  // sessionController.checkSession,
   petController.deletePet,
   (req, res) => {
     return res.status(200).json(res.locals.deletedPet);
