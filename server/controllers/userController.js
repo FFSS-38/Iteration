@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userController = {};
-const { User, Pet } = require('../models/models');
+const { User, Pet, Session } = require('../models/models');
 
 //FirstName, LastName, Email
 userController.createUser = (req, res, next) => {
@@ -98,7 +98,6 @@ userController.logOut = (req, res, next) => {
   } else {
     res.clearCookie('ssid');
     console.log('SSID Cookie cleared');
-    return next();
   }
   Session.findOneAndDelete({ cookieId: ssid })
     .then((data) => {

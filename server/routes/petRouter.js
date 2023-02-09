@@ -6,9 +6,6 @@ const petController = require('../controllers/petController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 
-const cors = require('cors');
-router.use(cors({ origin: 'http://localhost:8080' }));
-
 //createPet path='http://localhost:3000/pet/create'
 router.post(
   '/create',
@@ -20,13 +17,18 @@ router.post(
 );
 
 //updatePet path="http://localhost:3000/pet/update"
+//currently does not send back updatedPet, only new instance of new Visit (lastVisit)
 router.patch(
   '/update',
   sessionController.checkSession,
   petController.updatePet,
   petController.updateVisits,
   (req, res) => {
-    return res.status(200).json(res.locals.updatedPet);
+    const responseObject = {
+      updatedPet: res.locals.updatedPet,
+      lastVisit: res.locals.lastVisit,
+    };
+    return res.status(200).json(responseObject);
   }
 );
 
