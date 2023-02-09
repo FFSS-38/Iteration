@@ -14,7 +14,7 @@ const petSchema = new Schema({
   Weight: { type: Number },
   Breed: { type: String },
   AssignedVet: { type: String },
-  URL: {type: String},
+  URL: { type: String },
   Owner: { type: String, required: true },
 });
 
@@ -30,11 +30,18 @@ const sessionSchema = new Schema({
   createdAt: { type: Date, expires: 30, default: Date.now },
 });
 
+const noteSchema = new Schema({
+  Pet: { type: String, required: true }, //id
+  Date: { type: String, required: true },
+  Note: { type: String, required: true },
+});
+
 module.exports = {
   Pet: mongoose.model('Pet', petSchema),
   User: mongoose.model('User', userSchema),
   Session: mongoose.model('Session', sessionSchema),
   Visit: mongoose.model('Visit', visitSchema),
+  Note: mongoose.model('Note', noteSchema),
 };
 
 // // Adding some notes about the database here will be helpful for future you or other developers.

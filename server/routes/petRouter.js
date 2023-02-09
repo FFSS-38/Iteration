@@ -34,6 +34,27 @@ router.patch(
   }
 );
 
+//getNotes :: path="http://localhost:3000/pet/notes"
+//please send pet _id in body
+router.post(
+  '/notes',
+  // sessionController.checkSession,
+  petController.getNotes,
+  (req, res) => {
+    return res.status(200).json(res.locals.allNotes);
+  }
+);
+
+//updateNotes :: path="http://localhost:3000/pet/notes/new"
+router.post(
+  '/notes/new',
+  // sessionController.checkSession,
+  petController.addNote,
+  (req, res) => {
+    return res.status(200).json(res.locals.newNote);
+  }
+);
+
 //deletePet :: path="http://localhost:3000/pet/delete"
 router.delete(
   '/delete',
