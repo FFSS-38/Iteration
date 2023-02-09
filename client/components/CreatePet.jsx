@@ -13,6 +13,7 @@ const CreatePet = ({user, setPetList, petList}) => {
   const [weight, setWeight] = useState('')
   const [breed, setBreed] = useState('')
   const [vet, setVet] = useState('')
+  const [url, setUrl] = useState('');
   const navigate = useNavigate();
   console.log(user)
 
@@ -27,6 +28,7 @@ const CreatePet = ({user, setPetList, petList}) => {
             Age: age,
             Weight: weight,
             Breed: breed,
+            URL: url,
             AssignedVet: vet
         })
     }) 
@@ -85,6 +87,15 @@ const CreatePet = ({user, setPetList, petList}) => {
             id='newPetVet'
             required
             onChange={(event) => setVet(event.target.value) }
+          />
+        </div>
+        <div>
+          Img URL:
+          <input
+            type="text"
+            id='newPetUrl'
+            required
+            onChange={(event) => setUrl(event.target.value) }
           />
         </div>
       </div>

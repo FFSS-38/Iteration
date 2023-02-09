@@ -1,14 +1,14 @@
 const express = require('express');
 const db = require('../models/models');
-const mongoose = require('mongoose');
-const { User, Pet, Visit } = require('../models/models.js');
+const { User, Pet, Visit, Note } = require('../models/models.js');
 const { ObjectId } = require('mongodb');
+const { notStrictEqual } = require('assert');
 const petController = {};
 
 //returns petObj
 petController.createPet = (req, res, next) => {
   console.log('Trying to create pet.....');
-  const { Name, Age, Weight, Breed, AssignedVet } = req.body;
+  const { Name, Age, Weight, Breed, AssignedVet, URL } = req.body;
   const { ssid } = req.cookies;
   if (!Name || !ssid) {
     return next({
@@ -22,6 +22,7 @@ petController.createPet = (req, res, next) => {
     Age,
     Weight,
     Breed,
+    URL,
     AssignedVet,
     Owner: ssid, //is the _id of UserObj, can betakeben from cookie, does not need to be user input
   })
@@ -92,16 +93,17 @@ petController.deletePet = (req, res, next) => {
 
 petController.updatePet = (req, res, next) => {
   console.log('Trying to update the pet');
-  const { _id, Name, Age, Weight, Breed, AssignedVet } = req.body;
+  const { _id, Name, Age, Weight, Breed, URL, AssignedVet } = req.body;
   //for testing purposes
   // const s_id = _id.toString();
   console.log('req.body:', req.body);
-  if (!Name && !Age && !Weight && !Breed && !AssignedVet) return next();
+  //go to next middleware to check if anything was added for visits
+  if (!Name || !Age || !Weight || !Breed || !AssignedVet || !URL) {
+    return next();
+  }
   Pet.findOneAndUpdate(
-    //for testing puporses
     { _id },
-    //{ _id },
-    { $set: { Name, Age, Weight, Breed, AssignedVet } },
+    { $set: { Name, Age, Weight, Breed, URL, AssignedVet } },
     //returns the new updated pet
     { new: true }
   )
@@ -116,6 +118,7 @@ petController.updatePet = (req, res, next) => {
       } else {
         res.locals.updatedPet = pet;
         console.log('pet info updated', pet);
+        res.locals.updatePet = pet;
         return next();
       }
     })
@@ -166,6 +169,57 @@ petController.updateVisits = (req, res, next) => {
         message: {
           err: 'Cannot update',
         },
+      });
+    });
+};
+
+petController.getNotes = (req, res, next) => {
+  console.log('Looking for all notes...');
+  const { _id } = req.body;
+  if (!_id) {
+    return next({
+      log: 'Error in petController.getNotes, when retrieving _id',
+    });
+  }
+  Note.find({ Pet: _id })
+    .then((notes) => {
+      console.log('these are your pets notes', notes);
+      res.locals.allNotes = notes;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'Error in getNotes, cannot retrieve notes from database',
+        message: 'Cannot retrieve notes.',
+      });
+    });
+};
+
+petController.addNote = (req, res, next) => {
+  console.log('Adding new note...');
+  const { Pet, Date, Note } = req.body;
+  if (!Pet || !Date || !Note) {
+    return next({
+      log: 'Error in petController. update notes, missing pet/date/note input',
+      messgage: 'Missing input',
+    });
+  }
+  const date = new Date(Date);
+  const dateParsed = date.toDateString();
+  console.log('note dateparsed:', dateParsed);
+  if (isNaN(date)) {
+    console.log('Invalid date. Please use the YYYY-MM-DD format');
+    return next();
+  }
+  Note.create({ Pet, Date: dateParsed, Note })
+    .then((newNote) => {
+      console.log('Note Added:', newNote);
+      res.locals.newNote = newNote;
+    })
+    .catch((err) => {
+      return next({
+        log: 'Error in petController.updateNotes, unable to create new note',
+        message: 'Cannot create new note',
       });
     });
 };

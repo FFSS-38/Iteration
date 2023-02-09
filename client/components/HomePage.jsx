@@ -3,15 +3,15 @@ import { useState } from 'react';
 
 import ProfileContainer from './ProfileContainer';
 import ScheduleContainer from './ScheduleContainer';
-import NotebookContainer from './NotebookContainer';
+import { NotebookContainer } from './NotebookContainer';
 
 const HomePage = (props) => {
   const currentPet = props.currentPet;
   return (
-    <div className="homepageContainer">
-      <div className="petNameBanner">{currentPet.Name}'s Homepage</div>
+    <div className='homepageContainer'>
+      <div className='petNameBanner'>{currentPet.Name}'s Homepage</div>
       <ProfileContainer
-        className="profileContainer"
+        className='profileContainer'
         age={currentPet.Age}
         avatar={currentPet.Avatar}
         breed={currentPet.Breed}
@@ -22,13 +22,10 @@ const HomePage = (props) => {
         weight={currentPet.Weight}
       />
       <ScheduleContainer
-        className="scheduleContainer"
+        className='scheduleContainer'
         schedule={currentPet.scheduledEvents}
       />
-      <NotebookContainer
-        className="notebookContainer"
-        notes={currentPet.notes}
-      />
+      <NotebookContainer className='notebookContainer' petObj={currentPet} />
     </div>
   );
 };
