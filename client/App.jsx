@@ -1,6 +1,6 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
+import NavBar from './components/NavBar';
 import Login from './components/Login';
 import HomePage from './components/HomePage';
 import DisplayPet from './components/DisplayPet';
@@ -17,6 +17,8 @@ const App = () => {
   const [currentPet, setCurrentPet] = useState({});
 
   const [failedLoginAttempt, setFailedLoginAttempt] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const attemptLogin = (username, password) => {
     // console.log(username + '  ' + password);
@@ -84,15 +86,16 @@ const App = () => {
   // POST request with req.body containing all inputted text
   // if successful, send back updated user data
   // setState: state.user assigned value of user data (this will cause page to re-render with new pet added to CreatePet)
- const createEvent = () => {};
+  const createEvent = () => {};
   // POST request with req.body containing inputted event data
   // if successful, send back updated current pet document data
   // setState: state.currentPet assigned to new pet data
 
-    return (
+  return (
+    <>
+      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className="router">
         <main>
-          <h1>Wunderpets</h1>
           <Routes>
             <Route
               exact
@@ -101,18 +104,14 @@ const App = () => {
                 <Login
                   attemptLogin={attemptLogin}
                   failedLoginAttempt={failedLoginAttempt}
+                  setIsLoggedIn={setIsLoggedIn}
                 />
               }
             />
             <Route
               exact
               path="/signup"
-              element={
-                <SignupPage
-                user = {user}
-                setUser={setUser}
-                />
-              }
+              element={<SignupPage user={user} setUser={setUser} />}
             />
             <Route
               exact
@@ -136,7 +135,7 @@ const App = () => {
                 <CreatePet
                   // get user from state so we can list their pet(s)
                   user={user}
-                  setPetList = {setPetList}
+                  setPetList={setPetList}
                   // if updating pet, current pet props will be needed; get them from state
                   // if creating a new pet, currentpet won't matter
                   // currentPet={currentPet}
@@ -151,16 +150,14 @@ const App = () => {
               exact
               path="/choose"
               element={
-                <DisplayPet
-                  petList={petList}
-                  choose={() => this.choosePet()}
-                />
+                <DisplayPet petList={petList} choose={() => this.choosePet()} />
               }
             />
           </Routes>
         </main>
       </div>
-    );
-  }
+    </>
+  );
+};
 
 export default App;
