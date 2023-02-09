@@ -28,10 +28,8 @@ const CreatePet = ({ user, setPetList, petList }) => {
             Age: age,
             Weight: weight,
             Breed: breed,
-            LastVisit: visit,
             URL: url,
-            AssignedVet: vet,
-            Owner: user.FirstName //user.FirstName can be removed
+            AssignedVet: vet
         })
     }) 
     .then(resp => resp.json())
@@ -44,7 +42,7 @@ const CreatePet = ({ user, setPetList, petList }) => {
     <div className="create-container">
       <div className="banner">Pet Profile</div>
       <div className="petInputs">
-        <div>Owner: </div>
+        <div>Owner: {user.FirstName}</div>
         <div>
           Name:
           <input
@@ -91,6 +89,7 @@ const CreatePet = ({ user, setPetList, petList }) => {
             onChange={(event) => setVet(event.target.value)}
           />
         </div>
+
         {/* <div>
           Last Visit:&nbsp;
           <input
@@ -99,10 +98,7 @@ const CreatePet = ({ user, setPetList, petList }) => {
             required
             onChange={(event) => setVist(event.target.value) }
           />
-<<<<<<< HEAD
-        </div> */}
-=======
-        </div>
+
         <div>
           Img URL:
           <input
@@ -112,8 +108,18 @@ const CreatePet = ({ user, setPetList, petList }) => {
             onChange={(event) => setUrl(event.target.value) }
           />
         </div>
->>>>>>> dev
       </div>
+
+      <div className='signup-buttons-box'> 
+          <button className="createUpdatePetButton"
+          onClick={() => { handleClick(); navigate('/choose')}}
+          >
+            Save
+          </button>
+          <button className="createUpdatePetButton" onClick={() => navigate('/choose')}>
+            Back
+          </button>
+
       <div className="signup-buttons-box">
         <button className="createUpdatePetButton" onClick={handleClick}>
           Save
@@ -124,6 +130,7 @@ const CreatePet = ({ user, setPetList, petList }) => {
         >
           Back
         </button>
+
       </div>
     </div>
   );
