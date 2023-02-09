@@ -7,7 +7,7 @@ const petController = {};
 //returns petObj
 petController.createPet = (req, res, next) => {
   console.log('Trying to create pet.....');
-  const { Name, Age, Weight, Breed, AssignedVet } = req.body;
+  const { Name, Age, Weight, Breed, AssignedVet, URL } = req.body;
   const { ssid } = req.cookies;
   if (!Name || !ssid) {
     return next({
@@ -21,6 +21,7 @@ petController.createPet = (req, res, next) => {
     Age,
     Weight,
     Breed,
+    URL,
     AssignedVet,
     Owner: ssid, //is the _id of UserObj, can betakeben from cookie, does not need to be user input
   })
@@ -91,17 +92,17 @@ petController.deletePet = (req, res, next) => {
 
 petController.updatePet = (req, res, next) => {
   console.log('Trying to update the pet');
-  const { _id, Name, Age, Weight, Breed, AssignedVet } = req.body;
+  const { _id, Name, Age, Weight, Breed, URL, AssignedVet } = req.body;
   //for testing purposes
   // const s_id = _id.toString();
   console.log('req.body:', req.body);
   //go to next middleware to check if anything was added for visits
-  if (!Name || !Age || !Weight || !Breed || !AssignedVet) {
+  if (!Name || !Age || !Weight || !Breed || !AssignedVet || !URL) {
     return next();
   }
   Pet.findOneAndUpdate(
     { _id },
-    { $set: { Name, Age, Weight, Breed, AssignedVet } },
+    { $set: { Name, Age, Weight, Breed, URL, AssignedVet } },
     //returns the new updated pet
     { new: true }
   )
