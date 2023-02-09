@@ -9,8 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 //only push loginattempt method, push failedLoginAttempt property
 
-const Login = ({user, setUser}) => {
-
+const Login = ({ user, setUser }) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
@@ -37,24 +36,12 @@ const Login = ({user, setUser}) => {
       body: JSON.stringify({
         Email: email,
         Password: password,
-
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if(data.Email === email){
-        setUser(data);
-        navigate('/choose');
-      } else {
-        navigate('/signup')
-      }
-
       }),
-
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.Email === email) {
+          setUser(data);
           setIsLoggedIn(true);
           navigate('/choose');
         } else {
@@ -64,29 +51,29 @@ const Login = ({user, setUser}) => {
   };
 
   return (
-    <div className="login">
-      <div className="user-pass">
+    <div className='login'>
+      <div className='user-pass'>
         <label>Email</label>
         <input
-          className="user-input"
-          type="text"
-          name="username"
+          className='user-input'
+          type='text'
+          name='username'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <label>Password</label>
         <input
-          className="password-input"
-          type="text"
-          name="password"
+          className='password-input'
+          type='text'
+          name='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div className="sign-up">
-          <button className="login-button" onClick={handleClick}>
+        <div className='sign-up'>
+          <button className='login-button' onClick={handleClick}>
             Login
           </button>
-          <button className="signup-button" onClick={() => navigate('/signup')}>
+          <button className='signup-button' onClick={() => navigate('/signup')}>
             Sign Up
           </button>
         </div>
