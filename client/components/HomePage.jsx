@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useState } from 'react';
 
 import ProfileContainer from './ProfileContainer';
-import ScheduleContainer from './ScheduleContainer';
+// import ScheduleContainer from './ScheduleContainer';
 import { NotebookContainer } from './NotebookContainer';
 
 const HomePage = (props) => {
@@ -21,10 +21,10 @@ const HomePage = (props) => {
         vetID={currentPet.Vet}
         weight={currentPet.Weight}
       />
-      <ScheduleContainer
+      {/* <ScheduleContainer
         className='scheduleContainer'
         schedule={currentPet.scheduledEvents}
-      />
+      /> */}
       <NotebookContainer className='notebookContainer' petObj={currentPet} />
     </div>
   );
