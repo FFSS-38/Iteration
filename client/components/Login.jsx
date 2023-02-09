@@ -14,18 +14,23 @@ const Login = ({ user, setUser, setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   //http://localhost:3000/user/checkSession
-  //   fetch('http://localhost:3000/user/checkSession', {
-  //     headers: {
-  //       'Content-Type': 'Application/JSON'
-  //     }
-  //   })
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     console.log(data)
-  //   })
-  // },[])
+  useEffect(() => {
+    fetch('/user/checkSession', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: JSON.stringify({}),
+    })
+      .then((res) => {
+        res.json();
+        if (res.status == 200) {
+          setIsLoggedIn(true);
+          navigate('/choose');
+        }
+      })
+      .then((data) => {});
+  }, []);
 
   const handleClick = () => {
     fetch('/user/login', {
@@ -51,29 +56,29 @@ const Login = ({ user, setUser, setIsLoggedIn }) => {
   };
 
   return (
-    <div className='login'>
-      <div className='user-pass'>
+    <div className="login">
+      <div className="user-pass">
         <label>Email</label>
         <input
-          className='user-input'
-          type='text'
-          name='username'
+          className="user-input"
+          type="text"
+          name="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <label>Password</label>
         <input
-          className='password-input'
-          type='text'
-          name='password'
+          className="password-input"
+          type="text"
+          name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div className='sign-up'>
-          <button className='login-button' onClick={handleClick}>
+        <div className="sign-up">
+          <button className="login-button" onClick={handleClick}>
             Login
           </button>
-          <button className='signup-button' onClick={() => navigate('/signup')}>
+          <button className="signup-button" onClick={() => navigate('/signup')}>
             Sign Up
           </button>
         </div>

@@ -48,7 +48,7 @@ router.get('/logout', userController.logOut, (req, res) => {
 
 //MISC
 // check active session :: path='http://localhost:3000/user/checkSession'
-router.get('/checkSession', sessionController.checkSession, (req, res) => {
+router.post('/checkSession', sessionController.checkSession, (req, res) => {
   return res.sendStatus(200);
 });
 
