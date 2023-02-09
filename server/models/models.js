@@ -26,7 +26,7 @@ const visitSchema = new Schema({
 
 const sessionSchema = new Schema({
   cookieId: { type: String, required: true, unique: true },
-  createdAt: { type: Date, expires: 300, default: Date.now },
+  createdAt: { type: Date, expires: 30, default: Date.now },
 });
 
 module.exports = {

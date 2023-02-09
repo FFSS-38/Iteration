@@ -92,21 +92,10 @@ petController.deletePet = (req, res, next) => {
 
 petController.updatePet = (req, res, next) => {
   console.log('Trying to update the pet');
-  const { _id, Name, Age, Weight, Breed, LastVisit, AssignedVet } = req.body;
+  const { _id, Name, Age, Weight, Breed, AssignedVet } = req.body;
   //for testing purposes
   // const s_id = _id.toString();
   console.log('req.body:', req.body);
-  // if (LastVisit.date) {
-  //   Visit.create({
-  //     Pet: _id,
-  //     Date: LastVisit.date,
-  //     Description: LastVisit.description,
-  //     Vet: LastVisit.vet,
-  //   }).then((visit) => {
-  //     console.log('new visit created', visit);
-  //     res.locals.newVisit = visit;
-  //   });
-  // }
   Pet.findOneAndUpdate(
     //for testing puporses
     { _id },
@@ -124,6 +113,7 @@ petController.updatePet = (req, res, next) => {
           },
         });
       } else {
+        res.locals.updatedPet = pet;
         console.log('pet info updated', pet);
         return next();
       }
@@ -137,21 +127,23 @@ petController.updatePet = (req, res, next) => {
 };
 
 petController.updateVisits = (req, res, next) => {
-  const { newVisit } = res.locals;
-  if (!newVisit) {
-    console.log('Visits were not updated');
+  const { _id, LastVisit } = req.body;
+  console.log('processing request to update visits with', LastVisit);
+  if (!LastVisit || !LastVisit.Date) {
+    console.log('No visits, so visits were not updated');
     return next();
   }
-  Visit.findOneAndUpdate(
-    { Pet: newVisit.Pet },
-    {
-      Date: newVisit.Date,
-      Description: newVisit.Description,
-      Vet: newVisit.Vet,
-    }
-  )
+  Visit.create({
+    $set: {
+      Pet: _id,
+      Date: LastVisit.Date,
+      Description: LastVisit.Description,
+      Vet: LastVisit.Vet,
+    },
+  })
     .exec()
     .then((visit) => {
+      res.locals.lastVisit = visit;
       console.log('visit updated', visit);
     })
     .catch((err) => {

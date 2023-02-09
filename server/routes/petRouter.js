@@ -20,13 +20,15 @@ router.post(
 );
 
 //updatePet path="http://localhost:3000/pet/update"
+//currently does not send back updatedPet, only new instance of new Visit (lastVisit)
 router.patch(
   '/update',
   sessionController.checkSession,
   petController.updatePet,
   petController.updateVisits,
   (req, res) => {
-    return res.status(200).json(res.locals.updatedPet);
+    //{res.locals.updatedPet , res.locals.lastVisit} for sending both
+    return res.status(200).json(res.locals.lastVisit);
   }
 );
 
