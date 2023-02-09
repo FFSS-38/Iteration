@@ -28,10 +28,8 @@ const CreatePet = ({user, setPetList, petList}) => {
             Age: age,
             Weight: weight,
             Breed: breed,
-            LastVisit: visit,
             URL: url,
-            AssignedVet: vet,
-            Owner: user.FirstName //user.FirstName can be removed
+            AssignedVet: vet
         })
     }) 
     .then(resp => resp.json())
@@ -44,7 +42,7 @@ const CreatePet = ({user, setPetList, petList}) => {
     <div className='create-container'>
       <div className="banner">Pet Profile</div>
       <div className="petInputs">
-        <div>Owner: </div>
+        <div>Owner: {user.FirstName}</div>
         <div>
           Name:
           <input
@@ -92,15 +90,6 @@ const CreatePet = ({user, setPetList, petList}) => {
           />
         </div>
         <div>
-          Last Visit:&nbsp;
-          <input
-            type="text"
-            id='newPetVisit'
-            required
-            onChange={(event) => setVist(event.target.value) }
-          />
-        </div>
-        <div>
           Img URL:
           <input
             type="text"
@@ -112,7 +101,7 @@ const CreatePet = ({user, setPetList, petList}) => {
       </div>
       <div className='signup-buttons-box'> 
           <button className="createUpdatePetButton"
-        onClick={handleClick}
+          onClick={() => { handleClick(); navigate('/choose')}}
           >
             Save
           </button>

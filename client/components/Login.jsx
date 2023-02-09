@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 // ** this page was heavily edited to still render without fetch request (mongoDB troubles!) The commented out code at the end of the file is the closest representation of what we initially had/what would work with a successful fetch request
 
 //only push loginattempt method, push failedLoginAttempt property
-const Login = () => {
+const Login = ({user, setUser}) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
@@ -40,6 +40,7 @@ const Login = () => {
     .then(res => res.json())
     .then(data => {
       if(data.Email === email){
+        setUser(data);
         navigate('/choose');
       } else {
         navigate('/signup')

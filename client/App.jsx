@@ -100,8 +100,8 @@ const App = () => {
             path='/'
             element={
               <Login
-                attemptLogin={attemptLogin}
-                failedLoginAttempt={failedLoginAttempt}
+              user = {user}
+              setUser={setUser}
               />
             }
           />
