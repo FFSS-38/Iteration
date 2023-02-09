@@ -34,7 +34,7 @@ router.post(
 //path='http://localhost:3000/user/pets'
 router.get(
   '/pets',
-  sessionController.checkSession,
+  // sessionController.checkSession,
   petController.getUserPets, //return an array of pet names
   (req, res) => {
     return res.status(200).json(res.locals.allPets);
@@ -48,9 +48,9 @@ router.get('/logout', userController.logOut, (req, res) => {
 
 //MISC
 // used to check active session with cookie ssid :: path='http://localhost:3000/user/checkSession'
-router.get('/checkSession', sessionController.checkSession, (req, res) => {
-  return res.sendStatus(200);
-});
+// router.get('/checkSession', sessionController.checkSession, (req, res) => {
+//   return res.sendStatus(200);
+// });
 
 router.delete('/:userId', userController.deleteUser, (req, res) => {
   return res.status(200).json(res.locals.user);

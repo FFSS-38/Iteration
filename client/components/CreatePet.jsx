@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 //This should fetch data from appropriate user upon successful login
 // this should set state to equal the data returned from fetch request
@@ -13,9 +14,10 @@ const CreatePet = ({user, setPetList, petList}) => {
   const [breed, setBreed] = useState('')
   const [visit, setVist] = useState('')
   const [vet, setVet] = useState('')
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    fetch('http://localhost:3000/pet/pets', {
+    fetch('/pet/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'Application/JSON'
@@ -27,7 +29,7 @@ const CreatePet = ({user, setPetList, petList}) => {
             Breed: breed,
             LastVisit: visit,
             AssignedVet: vet,
-            Owner: user//user.FirstName can be removed
+            Owner: user.FirstName //user.FirstName can be removed
         })
     }) 
     .then(resp => resp.json())
@@ -96,27 +98,16 @@ const CreatePet = ({user, setPetList, petList}) => {
             onChange={(event) => setVist(event.target.value) }
           />
         </div>
-        {/* <div>
-          Image URL:{' '}
-          <input type="text" id="newAvatarUrl" value={avatarURL ?? ''} />
-        </div> */}
-        {/* <div>
-          <img className="avatarImage" src={avatarURL ?? ''}></img>
-        </div> */}
       </div>
       <div className='signup-buttons-box'> 
-        <a href="http://localhost:8080/home">
           <button className="createUpdatePetButton"
-        onClick={() => handleClick()}
+        onClick={handleClick}
           >
             Save
           </button>
-        </a>
-        <a href="http://localhost:8080/choose">
-          <button className="createUpdatePetButton">
+          <button className="createUpdatePetButton" onClick={() => navigate('/choose')}>
             Back
           </button>
-        </a>
       </div>
     </div>
   );
