@@ -147,7 +147,11 @@ const App = () => {
             exact
             path='/choose'
             element={
-              <DisplayPet petList={petList} choose={() => this.choosePet()} />
+              <DisplayPet
+                petList={petList}
+                choose={() => this.choosePet()}
+                setCurrentPet={setCurrentPet}
+              />
             }
           />
           <Route
