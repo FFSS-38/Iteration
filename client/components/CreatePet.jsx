@@ -8,32 +8,34 @@ import { useNavigate } from 'react-router';
 
 const CreatePet = ({ user, setPetList, petList }) => {
   const [pet, setPet] = useState({});
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [weight, setWeight] = useState('');
-  const [breed, setBreed] = useState('');
-  // const [visit, setVist] = useState('')
-  const [vet, setVet] = useState('');
+  const [name, setName] = useState('')
+  const [age, setAge] = useState('')
+  const [weight, setWeight] = useState('')
+  const [breed, setBreed] = useState('')
+  const [visit, setVist] = useState('')
+  const [vet, setVet] = useState('')
+  const [url, setUrl] = useState('');
   const navigate = useNavigate();
 
   const handleClick = () => {
     fetch('/pet/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'Application/JSON',
-      },
-      body: JSON.stringify({
-        Name: name,
-        Age: age,
-        Weight: weight,
-        Breed: breed,
-        LastVisit: visit,
-        AssignedVet: vet,
-        Owner: user.FirstName, //user.FirstName can be removed
-      }),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'Application/JSON'
+          },
+        body: JSON.stringify({
+            Name: name,
+            Age: age,
+            Weight: weight,
+            Breed: breed,
+            LastVisit: visit,
+            URL: url,
+            AssignedVet: vet,
+            Owner: user.FirstName //user.FirstName can be removed
+        })
+    }) 
+    .then(resp => resp.json())
+    .then(data => {
         setPet(data);
       });
   };
@@ -97,7 +99,20 @@ const CreatePet = ({ user, setPetList, petList }) => {
             required
             onChange={(event) => setVist(event.target.value) }
           />
+<<<<<<< HEAD
         </div> */}
+=======
+        </div>
+        <div>
+          Img URL:
+          <input
+            type="text"
+            id='newPetUrl'
+            required
+            onChange={(event) => setUrl(event.target.value) }
+          />
+        </div>
+>>>>>>> dev
       </div>
       <div className="signup-buttons-box">
         <button className="createUpdatePetButton" onClick={handleClick}>

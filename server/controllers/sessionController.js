@@ -6,8 +6,13 @@ const sessionController = {};
 
 sessionController.startSession = (req, res, next) => {
   console.log('Starting Session');
-  console.log('resLocals:', res.locals.userObj._id);
-  Session.create({ cookieId: res.locals.userObj._id })
+  let cookieId = res.locals.userObj._id;
+  if (!cookieId) {
+    return next({
+      log: 'Error in sessionController.startSession, unable to retrieve _id from res.locals.userObj',
+    });
+  }
+  Session.create({ cookieId })
     .then((data) => {
       console.log('Successfully created session', data);
       next();
@@ -23,13 +28,21 @@ sessionController.startSession = (req, res, next) => {
 
 //matches cookie with session for active session
 sessionController.checkSession = (req, res, next) => {
+<<<<<<< HEAD
   console.log('in check session');
+=======
+  console.log('checking for session...');
+>>>>>>> dev
   //get cookie and find in db
   const { ssid } = req.cookies;
   console.log('ssid/cookieid', ssid);
   if (!ssid) {
     return next({
+<<<<<<< HEAD
       log: 'Error occurred in the sessionController.checkSession',
+=======
+      log: 'Error occurred in the sessionController.checkSession, no ssid stored in cookie',
+>>>>>>> dev
       status: 400,
       err: { err: 'No cookie found' },
     });
@@ -37,6 +50,7 @@ sessionController.checkSession = (req, res, next) => {
   Session.findOne({ cookieId: ssid })
     .exec()
     .then((data) => {
+<<<<<<< HEAD
       if (!data) {
         return next({
           log: 'Error occured in checkSession; session returned null',
@@ -44,6 +58,15 @@ sessionController.checkSession = (req, res, next) => {
           err: { err: 'No session found' },
         });
       }
+=======
+      // if (!data) {
+      //   return next({
+      //     log: 'Error occured in checkSession; session returned null',
+      //     status: 400,
+      //     err: { err: 'No session found' },
+      //   });
+      // }
+>>>>>>> dev
       console.log('session exists', data);
       return next();
     })

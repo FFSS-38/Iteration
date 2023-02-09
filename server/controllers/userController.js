@@ -5,11 +5,16 @@ const { User, Pet, Session } = require('../models/models');
 
 //FirstName, LastName, Email
 userController.createUser = (req, res, next) => {
-  const { FirstName, LastName, Email, Password, Pets } = req.body;
-  //create error handler to verify valid input
   console.log('in createuser controller: attempting to create');
+  const { FirstName, LastName, Email, Password } = req.body;
+  if (!FirstName || !LastName || !Email || !Password) {
+    return next({
+      log: 'Error in userController.createUser, invalid user inputs',
+      message: 'Invalid inputs.',
+    });
+  }
   // FirstName, LastName, Email,
-  User.create({ FirstName, LastName, Email, Password, Pets })
+  User.create({ FirstName, LastName, Email, Password })
     .then((user) => {
       console.log('Created new user', user);
       res.locals.userObj = user;
@@ -28,6 +33,11 @@ userController.createUser = (req, res, next) => {
 //checks if User and password matches up in db
 userController.verifyUser = (req, res, next) => {
   const { Email, Password } = req.body;
+  if (!Email || !Password) {
+    return next({
+      log: 'Error in userController.verifyUser, missing email or password inputs',
+    });
+  }
   //insert error handler here
   console.log('Trying to verify user with, ', Password);
   User.findOne({ Email })
@@ -88,6 +98,7 @@ userController.getAllUsers = (req, res, next) => {
 
 //clear cookie and session
 userController.logOut = (req, res, next) => {
+  console.log('Loggin out...');
   const { ssid } = req.cookies;
   if (!ssid) {
     return next({
@@ -105,7 +116,9 @@ userController.logOut = (req, res, next) => {
       return next();
     })
     .catch((err) => {
-      log: ' Error occured in session Controller.logout; unable to find session to delete';
+      return next({
+        log: ' Error occured in session Controller.logout; unable to find session to delete',
+      });
     });
 };
 
