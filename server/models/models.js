@@ -14,6 +14,7 @@ const petSchema = new Schema({
   Weight: { type: Number },
   Breed: { type: String },
   AssignedVet: { type: String },
+  URL: {type: String},
   Owner: { type: String, required: true },
 });
 
