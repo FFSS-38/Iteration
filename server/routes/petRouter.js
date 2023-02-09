@@ -34,6 +34,12 @@ router.patch(
   }
 );
 
+//getallVisits 
+//need Pet
+router.post('/visits', (req, res) => {
+  return res.send(200).json(res.locals.allVisits);
+})
+
 //getNotes :: path="http://localhost:3000/pet/notes"
 //please send pet _id in body
 router.post(
@@ -45,7 +51,7 @@ router.post(
   }
 );
 
-//updateNotes :: path="http://localhost:3000/pet/notes/new"
+//addNotes :: path="http://localhost:3000/pet/notes/new"
 router.post(
   '/notes/new',
   // sessionController.checkSession,

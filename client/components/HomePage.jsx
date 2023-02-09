@@ -13,12 +13,12 @@ const HomePage = (props) => {
       <ProfileContainer
         className='profileContainer'
         age={currentPet.Age}
-        avatar={currentPet.Avatar}
+        avatar={currentPet.URL}
         breed={currentPet.Breed}
-        lastVisit={currentPet.lastVisit}
+        // lastVisit={currentPet.lastVisit}
         // owner={user.name}
-        owner={'Mr. Wunderpus'}
-        vetID={currentPet.VetID}
+        owner={currentPet.Owner}
+        vetID={currentPet.Vet}
         weight={currentPet.Weight}
       />
       <ScheduleContainer

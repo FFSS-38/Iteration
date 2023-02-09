@@ -32,7 +32,7 @@ const sessionSchema = new Schema({
 
 const noteSchema = new Schema({
   Pet: { type: String, required: true }, //id
-  Date: { type: String, required: true },
+  // Date: { type: String, required: true },
   Note: { type: String, required: true },
 });
 

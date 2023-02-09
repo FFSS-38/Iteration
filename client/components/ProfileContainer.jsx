@@ -34,7 +34,7 @@ import { useState } from 'react';
 //   }
 // }
 
-const ProfileContainer = ({user, avatar, breed, age, weight, vetID, lastVisit}) => {
+const ProfileContainer = ({user, avatar, breed, age, weight, vet, lastVisit}) => {
   return (
           <>
             <div className="avatarContainer">
@@ -54,7 +54,7 @@ const ProfileContainer = ({user, avatar, breed, age, weight, vetID, lastVisit}) 
             </div>
             {/* what's the data structure for vets? How do we get the vet name from the vet ID?*/}
             <div className="homeCategory">
-              <div className="petAttribute">Vet: {vetID}</div>
+              <div className="petAttribute">Vet: {vet}</div>
               <div className="petAttribute">
                 Last vet visit: {lastVisit}
               </div>
