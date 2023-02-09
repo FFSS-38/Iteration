@@ -13,11 +13,29 @@ const NotebookContainer = ({ notes }) => {
 };
 
 const DisplayNotes = (props) => {
+const date = new Date().toDateString();
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      const note = e.target.value;
+      fetch('/pet/notes/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'Application/JSON',
+        },
+        body: JSON.stringify({ Pet: petObj._id, Date: date, Note: note }),
+      })
+        .then((res) => res.json())
+        .then((results) => {
+          setNotes([...notes, { Date: results.Date, Note: results.Note }]);
+        });
+      // e.target.value = '';
+    }
+  };
   const { petObj } = props;
   console.log('yo pet', petObj);
-  const [notes, setNotes] = useState([
-    { Date: '2023-12-12', Note: 'DUmmyNOtes' },
-  ]);
+  const [notes, setNotes] = useState([]);
+   // post /pet/notes/new
+    // petid, date, content
   // useEffect(() => {
   //   fetch('/pet/notes', {
   //     method: 'POST',
@@ -33,8 +51,9 @@ const DisplayNotes = (props) => {
   //     });
   // });
   return (
+    <>
     <div>
-      <h1>Fabio</h1>
+      <h1>{petObj.Name}</h1>
       {/* <h1>petObj.Name</h1> */}
       <ul>
         {notes.map((note, i) => (
@@ -45,6 +64,14 @@ const DisplayNotes = (props) => {
         ))}
       </ul>
     </div>
+    <div> 
+      <input id='newNote'
+      onKeyDown={handleKeyDown}
+      type = 'text'
+      placeholder='Add a Note'
+      />
+    </div>
+    </>
   );
 };
 export { NotebookContainer, DisplayNotes };

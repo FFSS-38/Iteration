@@ -190,6 +190,18 @@ margin-left: 17px;
   column-gap: 20px;
 }
 
+li {
+  border: none;
+  background-color: whitesmoke;
+  border: 1px solid lightblue;
+  color: black;
+  margin-top: 12px;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 1rem;
+}
+
 article {
   margin: 12px 15px;
   padding: 25px 30px 25px 30px;
@@ -201,6 +213,11 @@ article:hover {
   margin: 12px 15px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.75) 7px 6px 11px -5px;
+}
+
+#newNote {
+  margin-top: 100px;
+  margin-left: 20px;
 }
 
 .tagline {
