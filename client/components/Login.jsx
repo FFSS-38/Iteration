@@ -26,9 +26,8 @@ const Login = () => {
   //   })
   // },[])
 
-
   const handleClick = () => {
-    fetch('http://localhost:3000/user/login', {
+    fetch('/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'Application/JSON'
@@ -38,8 +37,8 @@ const Login = () => {
         Password: password,
       })
     })
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       if(data.Email === email){
         navigate('/choose');
       } else {
