@@ -39,8 +39,7 @@ const Login = ({user, setUser}) => {
         Password: password,
 
       })
-    })
-    .then(res => res.json())
+    }).then(res => res.json())
     .then(data => {
       if(data.Email === email){
         setUser(data);
@@ -49,20 +48,9 @@ const Login = ({user, setUser}) => {
         navigate('/signup')
       }
 
-      }),
-
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.Email === email) {
-          setIsLoggedIn(true);
-          navigate('/choose');
-        } else {
-          navigate('/signup');
-        }
-      });
-  };
-
+      })
+  }
+    
   return (
     <div className="login">
       <div className="user-pass">

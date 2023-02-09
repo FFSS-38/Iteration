@@ -36,8 +36,7 @@ const CreatePet = ({ user, setPetList, petList }) => {
     .then(data => {
         setPet(data);
       });
-  };
-
+    }
   return (
     <div className="create-container">
       <div className="banner">Pet Profile</div>
@@ -89,8 +88,9 @@ const CreatePet = ({ user, setPetList, petList }) => {
             onChange={(event) => setVet(event.target.value)}
           />
         </div>
+        </div>
 
-        {/* <div>
+<div>
           Last Visit:&nbsp;
           <input
             type="text"
@@ -119,22 +119,10 @@ const CreatePet = ({ user, setPetList, petList }) => {
           <button className="createUpdatePetButton" onClick={() => navigate('/choose')}>
             Back
           </button>
-
-      <div className="signup-buttons-box">
-        <button className="createUpdatePetButton" onClick={handleClick}>
-          Save
-        </button>
-        <button
-          className="createUpdatePetButton"
-          onClick={() => navigate('/choose')}
-        >
-          Back
-        </button>
-
-      </div>
-    </div>
-  );
-};
+          </div>
+          </div>
+);
+}
 export default CreatePet;
 
 /*#newPetBreed,
