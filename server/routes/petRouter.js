@@ -12,7 +12,7 @@ router.use(cors({ origin: 'http://localhost:8080' }));
 //createPet :: path='http://localhost:3000/pet/create'
 router.post(
   '/create',
-  sessionController.checkSession,
+  // sessionController.checkSession,
   petController.createPet,
   (req, res) => {
     res.status(200).json(res.locals.petObj);
@@ -22,18 +22,22 @@ router.post(
 //updatePet :: path="http://localhost:3000/pet/update"
 router.patch(
   '/update',
-  sessionController.checkSession,
+  // sessionController.checkSession,
   petController.updatePet,
   petController.updateVisits,
   (req, res) => {
-    return res.status(200).json(res.locals.updatedPet);
+    const responseObject = {
+      updatedPet: res.locals.updatedPet,
+      lastVisit: res.locals.lastVisit,
+    };
+    return res.status(200).json(responseObject);
   }
 );
 
 //deletePet :: path="http://localhost:3000/pet/delete"
 router.delete(
   '/delete',
-  sessionController.checkSession,
+  // sessionController.checkSession,
   petController.deletePet,
   (req, res) => {
     return res.status(200).json(res.locals.deletedPet);

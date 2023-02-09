@@ -19,14 +19,14 @@ const petSchema = new Schema({
 
 const visitSchema = new Schema({
   Pet: { type: String, required: true }, //id
-  Date: { type: Date, required: true },
-  Description: { type: String },
+  Date: { type: String, required: true },
+  Reason: { type: String },
   Vet: { type: String }, //default to assignedVet in funtionality
 });
 
 const sessionSchema = new Schema({
   cookieId: { type: String, required: true, unique: true },
-  createdAt: { type: Date, expires: 300, default: Date.now },
+  createdAt: { type: Date, expires: 30, default: Date.now },
 });
 
 module.exports = {

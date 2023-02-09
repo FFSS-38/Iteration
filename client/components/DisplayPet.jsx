@@ -1,33 +1,34 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const DisplayPet = () => {
   const [petList, setPetList] = useState([]);
-
+  const navigate = useNavigate();
   const handleClick = () => {
-    fetch('http://localhost:3000/user/pets', {
+    fetch('/user/pets', {
+      method: 'GET',
       headers: {
         'Content-Type': 'Application/JSON'
       }
     }) 
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
+      setPetList(data);
+      console.log(petList)
     })
   }
 
   const renderPetCard = (pet) => (
-    <div className="choosePetCard">
+    <div className="choosePetCard" onClick={() => navigate('/home')}>
       <div className="choosePetImage">
-        <a className="petLink" href="http://localhost:8080/home">
           <img
             className="petAvatar"
             src={pet.Avatar}
             id={pet._id}
-            onClick={choose}
+            onClick={() => navigate('/home')}
           />
-        </a>
       </div>
       <div className="choosePetName">{pet.Name}</div>
     </div>
@@ -41,9 +42,7 @@ const DisplayPet = () => {
         <div className="petImages">{petCards}</div>
       </div>
       <div className='pet-button-container'> 
-      <a href="http://localhost:8080/create">
-      <button className='add-pet'>Add a Pet</button>
-      </a>
+      <button className='add-pet' onClick={() => navigate('/create')}>Add a Pet</button>
       <button className='add-pet' onClick={handleClick}>Choose a Pet</button>
       </div>
     </div>
