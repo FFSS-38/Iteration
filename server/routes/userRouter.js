@@ -34,7 +34,7 @@ router.post(
 //path='http://localhost:3000/user/pets'
 router.get(
   '/pets',
-  // sessionController.checkSession,
+  sessionController.checkSession,
   petController.getUserPets, //return an array of pet names
   (req, res) => {
     return res.status(200).json(res.locals.allPets);
