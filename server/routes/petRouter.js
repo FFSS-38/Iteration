@@ -9,7 +9,7 @@ const sessionController = require('../controllers/sessionController');
 const cors = require('cors');
 router.use(cors({ origin: 'http://localhost:8080' }));
 
-//createPet path='http://localhost:3000/pet/create'
+//createPet :: path='http://localhost:3000/pet/create'
 router.post(
   '/create',
   sessionController.checkSession,
@@ -19,7 +19,7 @@ router.post(
   }
 );
 
-//updatePet path="http://localhost:3000/pet/update"
+//updatePet :: path="http://localhost:3000/pet/update"
 router.patch(
   '/update',
   sessionController.checkSession,

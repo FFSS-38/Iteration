@@ -1,6 +1,5 @@
 const express = require('express');
 const db = require('../models/models');
-const mongoose = require('mongoose');
 const { User, Pet, Visit } = require('../models/models.js');
 const { ObjectId } = require('mongodb');
 const petController = {};
@@ -92,25 +91,16 @@ petController.deletePet = (req, res, next) => {
 
 petController.updatePet = (req, res, next) => {
   console.log('Trying to update the pet');
-  const { _id, Name, Age, Weight, Breed, LastVisit, AssignedVet } = req.body;
+  const { _id, Name, Age, Weight, Breed, AssignedVet } = req.body;
   //for testing purposes
   // const s_id = _id.toString();
   console.log('req.body:', req.body);
-  // if (LastVisit.date) {
-  //   Visit.create({
-  //     Pet: _id,
-  //     Date: LastVisit.date,
-  //     Description: LastVisit.description,
-  //     Vet: LastVisit.vet,
-  //   }).then((visit) => {
-  //     console.log('new visit created', visit);
-  //     res.locals.newVisit = visit;
-  //   });
-  // }
+  //go to next middleware to check if anything was added for visits
+  if (!Name || !Age || !Weight || !Breed || !AssignedVet) {
+    return next();
+  }
   Pet.findOneAndUpdate(
-    //for testing puporses
     { _id },
-    //{ _id },
     { $set: { Name, Age, Weight, Breed, AssignedVet } },
     //returns the new updated pet
     { new: true }
@@ -125,6 +115,7 @@ petController.updatePet = (req, res, next) => {
         });
       } else {
         console.log('pet info updated', pet);
+        res.locals.updatePet = pet;
         return next();
       }
     })
@@ -137,6 +128,7 @@ petController.updatePet = (req, res, next) => {
 };
 
 petController.updateVisits = (req, res, next) => {
+  console.log('Trying to update visits...');
   const { newVisit } = res.locals;
   if (!newVisit) {
     console.log('Visits were not updated');

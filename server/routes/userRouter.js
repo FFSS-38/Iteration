@@ -20,7 +20,7 @@ router.post(
   }
 );
 
-// login user, verify, set cookie :: path='http://localhost:3000/user/login'
+// login user :: path='http://localhost:3000/user/login'
 router.post(
   '/login',
   userController.verifyUser,
@@ -31,7 +31,7 @@ router.post(
   }
 );
 
-//path='http://localhost:3000/user/pets'
+//get all user pets :: path='http://localhost:3000/user/pets'
 router.get(
   '/pets',
   sessionController.checkSession,
@@ -41,13 +41,13 @@ router.get(
   }
 );
 
-//path='http://localhost:3000/user/logout'
+//logout :: path='http://localhost:3000/user/logout'
 router.get('/logout', userController.logOut, (req, res) => {
   return res.sendStatus(200);
 });
 
 //MISC
-// used to check active session with cookie ssid :: path='http://localhost:3000/user/checkSession'
+// check active session :: path='http://localhost:3000/user/checkSession'
 router.get('/checkSession', sessionController.checkSession, (req, res) => {
   return res.sendStatus(200);
 });
