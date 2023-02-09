@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 const petRouter = require('./routes/petRouter');
 const userRouter = require('./routes/userRouter');
 const { User, Pet } = require('./models/models');
@@ -27,6 +27,12 @@ const app = express();
 /**
  * Automatically parse urlencoded body content and form data from incoming requests and place it
  */
+app.use(
+  cors({
+    origin: 'http://localhost:8080',
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
