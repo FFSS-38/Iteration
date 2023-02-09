@@ -1,6 +1,5 @@
 const express = require('express');
 const db = require('../models/models');
-const mongoose = require('mongoose');
 const { User, Pet, Visit } = require('../models/models.js');
 const { ObjectId } = require('mongodb');
 const petController = {};
@@ -96,11 +95,12 @@ petController.updatePet = (req, res, next) => {
   //for testing purposes
   // const s_id = _id.toString();
   console.log('req.body:', req.body);
-  if (!Name && !Age && !Weight && !Breed && !AssignedVet) return next();
+  //go to next middleware to check if anything was added for visits
+  if (!Name || !Age || !Weight || !Breed || !AssignedVet) {
+    return next();
+  }
   Pet.findOneAndUpdate(
-    //for testing puporses
     { _id },
-    //{ _id },
     { $set: { Name, Age, Weight, Breed, AssignedVet } },
     //returns the new updated pet
     { new: true }
@@ -116,6 +116,7 @@ petController.updatePet = (req, res, next) => {
       } else {
         res.locals.updatedPet = pet;
         console.log('pet info updated', pet);
+        res.locals.updatePet = pet;
         return next();
       }
     })
