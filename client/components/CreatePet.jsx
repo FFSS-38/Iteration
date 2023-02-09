@@ -5,7 +5,7 @@ import { useState } from 'react';
 // this should set state to equal the data returned from fetch request
 // data to be returned: userData
 
-const CreateUpdatePet = ({user, setPetList, petList}) => {
+const CreatePet = ({user, setPetList, petList}) => {
   const [pet, setPet] = useState({});
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
@@ -66,7 +66,7 @@ const CreateUpdatePet = ({user, setPetList, petList}) => {
           onChange={(event) => setAge(event.target.value) }
           
           />
-          years
+          &nbsp;years
         </div>
         <div>
           Weight:
@@ -76,7 +76,7 @@ const CreateUpdatePet = ({user, setPetList, petList}) => {
             required
             onChange={(event) => setWeight(event.target.value) }
           />
-          lbs.
+          &nbsp;lbs.
         </div>
         <div>
           Vet:
@@ -88,7 +88,7 @@ const CreateUpdatePet = ({user, setPetList, petList}) => {
           />
         </div>
         <div>
-          Last Visit:
+          Last Visit:&nbsp;
           <input
             type="text"
             id='newPetVisit'
@@ -105,13 +105,13 @@ const CreateUpdatePet = ({user, setPetList, petList}) => {
         </div> */}
       </div>
       <div className='signup-buttons-box'> 
-        {/* <a href="http://localhost:8080/home"> */}
+        <a href="http://localhost:8080/home">
           <button className="createUpdatePetButton"
         onClick={() => handleClick()}
           >
             Save
           </button>
-        {/* </a> */}
+        </a>
         <a href="http://localhost:8080/choose">
           <button className="createUpdatePetButton">
             Back
@@ -121,7 +121,7 @@ const CreateUpdatePet = ({user, setPetList, petList}) => {
     </div>
   );
 };
-export default CreateUpdatePet;
+export default CreatePet;
 
 
 /*#newPetBreed,

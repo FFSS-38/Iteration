@@ -27,7 +27,7 @@ router.post(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
-    return res.sendStatus(200);
+    return res.status(200).json(res.locals.userObj);
   }
 );
 

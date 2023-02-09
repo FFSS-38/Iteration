@@ -1,10 +1,10 @@
 import React, {useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import LoginSignupPage from './components/LoginSignupPage';
+import Login from './components/Login';
 import HomePage from './components/HomePage';
-import ChooseCreatePetPage from './components/ChooseCreatePetPage';
-import CreateUpdatePet from './components/CreateUpdatePet';
+import DisplayPet from './components/DisplayPet';
+import CreatePet from './components/CreatePet';
 import './styles.css';
 import SignupPage from './components/SignupPage';
 
@@ -19,7 +19,7 @@ const App = () => {
   const [failedLoginAttempt, setFailedLoginAttempt] = useState(false);
 
   const attemptLogin = (username, password) => {
-    console.log(username + '  ' + password);
+    // console.log(username + '  ' + password);
     // by request of the backend team, parameterize username
     // send pw in body of request
     const endpoint = `http://localhost:3000/api/connect/`;
@@ -83,7 +83,7 @@ const App = () => {
   };
   // POST request with req.body containing all inputted text
   // if successful, send back updated user data
-  // setState: state.user assigned value of user data (this will cause page to re-render with new pet added to ChooseCreatePetPage)
+  // setState: state.user assigned value of user data (this will cause page to re-render with new pet added to CreatePet)
  const createEvent = () => {};
   // POST request with req.body containing inputted event data
   // if successful, send back updated current pet document data
@@ -98,7 +98,7 @@ const App = () => {
               exact
               path="/"
               element={
-                <LoginSignupPage
+                <Login
                   attemptLogin={attemptLogin}
                   failedLoginAttempt={failedLoginAttempt}
                 />
@@ -133,7 +133,7 @@ const App = () => {
               element={
                 // if failedLoginAttempt is true, then redirect to /landing
                 // else render CreateUpdatePet
-                <CreateUpdatePet
+                <CreatePet
                   // get user from state so we can list their pet(s)
                   user={user}
                   setPetList = {setPetList}
@@ -151,7 +151,7 @@ const App = () => {
               exact
               path="/choose"
               element={
-                <ChooseCreatePetPage
+                <DisplayPet
                   petList={petList}
                   choose={() => this.choosePet()}
                 />
