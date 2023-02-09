@@ -1,7 +1,8 @@
 const express = require('express');
 const db = require('../models/models');
-const { User, Pet, Visit } = require('../models/models.js');
+const { User, Pet, Visit, Note } = require('../models/models.js');
 const { ObjectId } = require('mongodb');
+const { notStrictEqual } = require('assert');
 const petController = {};
 
 //returns petObj
@@ -167,6 +168,57 @@ petController.updateVisits = (req, res, next) => {
         message: {
           err: 'Cannot update',
         },
+      });
+    });
+};
+
+petController.getNotes = (req, res, next) => {
+  console.log('Looking for all notes...');
+  const { _id } = req.body;
+  if (!_id) {
+    return next({
+      log: 'Error in petController.getNotes, when retrieving _id',
+    });
+  }
+  Note.find({ Pet: _id })
+    .then((notes) => {
+      console.log('these are your pets notes', notes);
+      res.locals.allNotes = notes;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'Error in getNotes, cannot retrieve notes from database',
+        message: 'Cannot retrieve notes.',
+      });
+    });
+};
+
+petController.addNote = (req, res, next) => {
+  console.log('Adding new note...');
+  const { Pet, Date, Note } = req.body;
+  if (!Pet || !Date || !Note) {
+    return next({
+      log: 'Error in petController. update notes, missing pet/date/note input',
+      messgage: 'Missing input',
+    });
+  }
+  const date = new Date(Date);
+  const dateParsed = date.toDateString();
+  console.log('note dateparsed:', dateParsed);
+  if (isNaN(date)) {
+    console.log('Invalid date. Please use the YYYY-MM-DD format');
+    return next();
+  }
+  Note.create({ Pet, Date: dateParsed, Note })
+    .then((newNote) => {
+      console.log('Note Added:', newNote);
+      res.locals.newNote = newNote;
+    })
+    .catch((err) => {
+      return next({
+        log: 'Error in petController.updateNotes, unable to create new note',
+        message: 'Cannot create new note',
       });
     });
 };
