@@ -96,6 +96,7 @@ petController.updatePet = (req, res, next) => {
   //for testing purposes
   // const s_id = _id.toString();
   console.log('req.body:', req.body);
+  if (!Name && !Age && !Weight && !Breed && !AssignedVet) return next();
   Pet.findOneAndUpdate(
     //for testing puporses
     { _id },
@@ -128,25 +129,37 @@ petController.updatePet = (req, res, next) => {
 
 petController.updateVisits = (req, res, next) => {
   const { _id, LastVisit } = req.body;
-  console.log('processing request to update visits with', LastVisit);
+  console.log('processing request to update visits with', _id, LastVisit.Date);
   if (!LastVisit || !LastVisit.Date) {
     console.log('No visits, so visits were not updated');
     return next();
   }
+
+  const date = new Date(LastVisit.Date);
+  const dateParsed = date.toDateString();
+  console.log('dateparse:', dateParsed);
+  if (isNaN(date)) {
+    console.log('Invalid date. Please use the YYYY-MM-DD format');
+    return next();
+  }
+  let newVet = res.locals.updatedPet.AssignedVet;
+  if (LastVisit.Vet) newVet = LastVisit.Vet;
+  console.log('newVet:', newVet);
+  console.log('Vet:', LastVisit.Vet);
+  console.log('Reason', LastVisit.Reason);
   Visit.create({
-    $set: {
-      Pet: _id,
-      Date: LastVisit.Date,
-      Description: LastVisit.Description,
-      Vet: LastVisit.Vet,
-    },
+    Pet: _id,
+    Date: dateParsed,
+    Reason: LastVisit.Reason,
+    Vet: newVet,
   })
-    .exec()
     .then((visit) => {
       res.locals.lastVisit = visit;
       console.log('visit updated', visit);
+      return next();
     })
     .catch((err) => {
+      console.log(err);
       return next({
         log: 'Error in petController.updateVisits, unable to update',
         status: 418,

@@ -6,9 +6,6 @@ const petController = require('../controllers/petController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 
-const cors = require('cors');
-router.use(cors({ origin: 'http://localhost:8080' }));
-
 //createPet path='http://localhost:3000/pet/create'
 router.post(
   '/create',
@@ -27,8 +24,11 @@ router.patch(
   petController.updatePet,
   petController.updateVisits,
   (req, res) => {
-    //{res.locals.updatedPet , res.locals.lastVisit} for sending both
-    return res.status(200).json(res.locals.lastVisit);
+    const responseObject = {
+      updatedPet: res.locals.updatedPet,
+      lastVisit: res.locals.lastVisit,
+    };
+    return res.status(200).json(responseObject);
   }
 );
 

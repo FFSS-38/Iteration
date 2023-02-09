@@ -19,8 +19,8 @@ const petSchema = new Schema({
 
 const visitSchema = new Schema({
   Pet: { type: String, required: true }, //id
-  Date: { type: Date, required: true },
-  Description: { type: String },
+  Date: { type: String, required: true },
+  Reason: { type: String },
   Vet: { type: String }, //default to assignedVet in funtionality
 });
 
