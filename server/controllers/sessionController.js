@@ -42,13 +42,13 @@ sessionController.checkSession = (req, res, next) => {
   Session.findOne({ cookieId: ssid })
     .exec()
     .then((data) => {
-      if (!data) {
-        return next({
-          log: 'Error occured in checkSession; session returned null',
-          status: 400,
-          err: { err: 'No session found' },
-        });
-      }
+      // if (!data) {
+      //   return next({
+      //     log: 'Error occured in checkSession; session returned null',
+      //     status: 400,
+      //     err: { err: 'No session found' },
+      //   });
+      // }
       console.log('session exists', data);
       return next();
     })
