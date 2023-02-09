@@ -28,13 +28,13 @@ sessionController.startSession = (req, res, next) => {
 
 //matches cookie with session for active session
 sessionController.checkSession = (req, res, next) => {
-  console.log('checking for session...');
+  console.log('in check session');
   //get cookie and find in db
   const { ssid } = req.cookies;
   console.log('ssid/cookieid', ssid);
   if (!ssid) {
     return next({
-      log: 'Error occurred in the sessionController.checkSession, no ssid stored in cookie',
+      log: 'Error occurred in the sessionController.checkSession',
       status: 400,
       err: { err: 'No cookie found' },
     });
@@ -42,13 +42,13 @@ sessionController.checkSession = (req, res, next) => {
   Session.findOne({ cookieId: ssid })
     .exec()
     .then((data) => {
-      // if (!data) {
-      //   return next({
-      //     log: 'Error occured in checkSession; session returned null',
-      //     status: 400,
-      //     err: { err: 'No session found' },
-      //   });
-      // }
+      if (!data) {
+        return next({
+          log: 'Error occured in checkSession; session returned null',
+          status: 400,
+          err: { err: 'No session found' },
+        });
+      }
       console.log('session exists', data);
       return next();
     })

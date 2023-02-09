@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
+import NavBar from './components/NavBar';
 import Login from './components/Login';
 import HomePage from './components/HomePage';
 import DisplayPet from './components/DisplayPet';
@@ -18,6 +18,8 @@ const App = () => {
   const [currentPet, setCurrentPet] = useState({});
 
   const [failedLoginAttempt, setFailedLoginAttempt] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const attemptLogin = (username, password) => {
     // console.log(username + '  ' + password);
@@ -91,77 +93,82 @@ const App = () => {
   // setState: state.currentPet assigned to new pet data
 
   return (
-    <div className='router'>
-      <main>
-        <h1>Wunderpets</h1>
-        <Routes>
-          <Route
-            exact
-            path='/'
-            element={
-              <Login
-                attemptLogin={attemptLogin}
-                failedLoginAttempt={failedLoginAttempt}
-              />
-            }
-          />
-          <Route
-            exact
-            path='/signup'
-            element={<SignupPage user={user} setUser={setUser} />}
-          />
-          <Route
-            exact
-            // what's the endpoint for different pets from the same user? parameterized names?
-            // change as needed
-            path='/home'
-            element={
-              <HomePage
-                user={user}
-                // object with all records for currently selected pet
-                currentPet={currentPet}
-              />
-            }
-          />
-          <Route
-            exact
-            path='/create'
-            element={
-              // if failedLoginAttempt is true, then redirect to /landing
-              // else render CreateUpdatePet
-              <CreatePet
-                // get user from state so we can list their pet(s)
-                user={user}
-                setPetList={setPetList}
-                // if updating pet, current pet props will be needed; get them from state
-                // if creating a new pet, currentpet won't matter
-                // currentPet={currentPet}
-                // method to set currentpet in state
-                // method to create new pet in user's acct
-                // choosePet={choosePet}
-                // createOrUpdatePet={createOrUpdatePet}
-              />
-            }
-          />
-          <Route
-            exact
-            path='/choose'
-            element={
-              <DisplayPet
-                petList={petList}
-                choose={() => this.choosePet()}
-                setCurrentPet={setCurrentPet}
-              />
-            }
-          />
-          <Route
-            exact
-            path='/notes'
-            element={<DisplayNotes petObj={currentPet} />}
-          />
-        </Routes>
-      </main>
-    </div>
+    <>
+      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <div className='router'>
+        <main>
+          <Routes>
+            <Route
+              exact
+              path='/'
+              element={
+                <Login
+                  attemptLogin={attemptLogin}
+                  failedLoginAttempt={failedLoginAttempt}
+                  user={user}
+                  setUser={setUser}
+                  setIsLoggedIn={setIsLoggedIn}
+                />
+              }
+            />
+            <Route
+              exact
+              path='/signup'
+              element={<SignupPage user={user} setUser={setUser} />}
+            />
+            <Route
+              exact
+              // what's the endpoint for different pets from the same user? parameterized names?
+              // change as needed
+              path='/home'
+              element={
+                <HomePage
+                  user={user}
+                  // object with all records for currently selected pet
+                  currentPet={currentPet}
+                />
+              }
+            />
+            <Route
+              exact
+              path='/create'
+              element={
+                // if failedLoginAttempt is true, then redirect to /landing
+                // else render CreateUpdatePet
+                <CreatePet
+                  // get user from state so we can list their pet(s)
+                  user={user}
+                  setPetList={setPetList}
+                  // if updating pet, current pet props will be needed; get them from state
+                  // if creating a new pet, currentpet won't matter
+                  // currentPet={currentPet}
+                  // method to set currentpet in state
+                  // method to create new pet in user's acct
+                  // choosePet={choosePet}
+                  // createOrUpdatePet={createOrUpdatePet}
+                />
+              }
+            />
+            <Route
+              exact
+              path='/choose'
+              element={
+                <DisplayPet
+                  petList={petList}
+                  choose={() => this.choosePet()}
+                  setCurrentPet={setCurrentPet}
+                />
+              }
+            />
+            <Route
+              exact
+              path='/home'
+              element={<DisplayNotes petObj={currentPet} />}
+            />
+          </Routes>
+        </main>
+      </div>
+    </>
   );
 };
 

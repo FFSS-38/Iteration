@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 // this should set state to equal the data returned from fetch request
 // data to be returned: userData
 
-const CreatePet = ({user, setPetList, petList}) => {
+const CreatePet = ({ user, setPetList, petList }) => {
   const [pet, setPet] = useState({});
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
@@ -28,47 +28,44 @@ const CreatePet = ({user, setPetList, petList}) => {
             Age: age,
             Weight: weight,
             Breed: breed,
-            LastVisit: visit,
             URL: url,
-            AssignedVet: vet,
-            Owner: user.FirstName //user.FirstName can be removed
+            AssignedVet: vet
         })
     }) 
     .then(resp => resp.json())
     .then(data => {
         setPet(data);
-    });
+      });
     }
-
   return (
-    <div className='create-container'>
+    <div className="create-container">
       <div className="banner">Pet Profile</div>
       <div className="petInputs">
-        <div>Owner: </div>
+        <div>Owner: {user.FirstName}</div>
         <div>
           Name:
           <input
-            id='newPetName'
+            id="newPetName"
             type="text"
             required
-            onChange={(event) => setName(event.target.value) }
+            onChange={(event) => setName(event.target.value)}
           />
         </div>
         <div>
           Breed:
           <input
-            id='newPetBreed'
+            id="newPetBreed"
             type="text"
             required
             onChange={(event) => setBreed(event.target.value)}
           />
         </div>
         <div>
-          Age: <input 
-          id='newPetAge'
-          type="age" 
-          onChange={(event) => setAge(event.target.value) }
-          
+          Age:{' '}
+          <input
+            id="newPetAge"
+            type="age"
+            onChange={(event) => setAge(event.target.value)}
           />
           &nbsp;years
         </div>
@@ -76,9 +73,9 @@ const CreatePet = ({user, setPetList, petList}) => {
           Weight:
           <input
             type="text"
-            id='newPetWeight'
+            id="newPetWeight"
             required
-            onChange={(event) => setWeight(event.target.value) }
+            onChange={(event) => setWeight(event.target.value)}
           />
           &nbsp;lbs.
         </div>
@@ -86,12 +83,14 @@ const CreatePet = ({user, setPetList, petList}) => {
           Vet:
           <input
             type="text"
-            id='newPetVet'
+            id="newPetVet"
             required
-            onChange={(event) => setVet(event.target.value) }
+            onChange={(event) => setVet(event.target.value)}
           />
         </div>
-        <div>
+        </div>
+
+<div>
           Last Visit:&nbsp;
           <input
             type="text"
@@ -99,7 +98,7 @@ const CreatePet = ({user, setPetList, petList}) => {
             required
             onChange={(event) => setVist(event.target.value) }
           />
-        </div>
+
         <div>
           Img URL:
           <input
@@ -110,21 +109,21 @@ const CreatePet = ({user, setPetList, petList}) => {
           />
         </div>
       </div>
+
       <div className='signup-buttons-box'> 
           <button className="createUpdatePetButton"
-        onClick={handleClick}
+          onClick={() => { handleClick(); navigate('/choose')}}
           >
             Save
           </button>
           <button className="createUpdatePetButton" onClick={() => navigate('/choose')}>
             Back
           </button>
-      </div>
-    </div>
-  );
-};
+          </div>
+          </div>
+);
+}
 export default CreatePet;
-
 
 /*#newPetBreed,
 #newPetName, 

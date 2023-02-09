@@ -33,6 +33,9 @@
     "Password": "hello"
 }
 {
+"_id":"63e450d3475a75115f11ddbb"
+}
+{
     "Name": "fabioz",
     "Age": 2,
     "Weight": 432,
@@ -40,6 +43,37 @@
     "AssignedVet":"me"
 }
 {
-    "_id":"63e4027c3d2b9d80d17f1d5b",
+    "_id":"63e449272a2afcb3d4366ba6",
     "Breed": "hungy"
     }
+
+    {
+    "Pet": "63e449272a2afcb3d4366ba6",
+    "Date": "1999-02-03"
+}
+
+{
+    "_id":"63e449272a2afcb3d4366ba6",
+    "Name":"newname",
+    "Age": 100,
+    "Weight": 200,
+    "Breed": "poodle",
+    "AssignedVet": "Dr. Seuss",
+    "LastVisit": {
+        "Date": "1992-01-31",
+        "Reason": "shots",
+        "Vet": "Dr.Weird"
+    }
+}
+
+{
+    "_id":"63e449272a2afcb3d4366ba6",
+    "Name":"newname",
+    "Age": 100,
+    "Weight": 200,
+    "Breed": "poodle",
+    "AssignedVet": "Dr. Seuss",
+    "LastVisit": {
+        "Date": "2192-07-14"
+    }
+}

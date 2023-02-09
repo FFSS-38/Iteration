@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Rosario&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lobster+Two&display=swap');
 
-
-
 /* RGB FOR BUTTONs */
 body {
+  background-color: #f4f4f9;
+}
+
+.router {
   font-family: 'EB Garamond', serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f4f4f9 ;
+  background-color: #f4f4f9;
+  padding-top: 100px;
 }
 
 h1 {
@@ -42,11 +45,10 @@ h3 {
   align-items: center;
 }
 
-.signup-button, 
+.signup-button,
 .login-button,
 .add-pet,
-.createUpdatePetButton 
-{
+.createUpdatePetButton {
   border: none;
   font-size: 18px;
   margin-top: 14px;
@@ -57,11 +59,11 @@ h3 {
   transition: opacity 0.15s;
 }
 
-.signup-button{
+.signup-button {
   margin-left: 14px;
 }
 
-.signup-button:hover, 
+.signup-button:hover,
 .login-button:hover,
 .add-pet:hover,
 .createUpdatePetButton:hover {
@@ -69,11 +71,10 @@ h3 {
   opacity: 0.8;
 }
 
-.signup-button:active, 
+.signup-button:active,
 .login-button:active,
 .add-pet:active,
-.createUpdatePetButton:active
-{
+.createUpdatePetButton:active {
   cursor: pointer;
   opacity: 0.4;
 }
@@ -97,12 +98,11 @@ h3 {
 
 .pet-container {
   display: flex;
-
 }
 
 .petImages {
   display: grid;
-  grid-template-columns: repeat(3,300px);
+  grid-template-columns: repeat(3, 300px);
 }
 
 .choice-container {
@@ -140,9 +140,8 @@ h3 {
   margin-top: 12px;
 }
 
-
 #newPetBreed,
-#newPetName, 
+#newPetName,
 #newPetWeight,
 #newPetAge,
 #newPetVet,
@@ -168,7 +167,7 @@ h3 {
 }
 
 #newPetWeight {
-margin-left: 17px;
+  margin-left: 17px;
 }
 
 #newPetVet {
@@ -367,7 +366,6 @@ article:hover {
   padding: 0px 25px;
 }
 
-
 .petAvatar {
   width: 40%;
 }
@@ -388,5 +386,3 @@ article:hover {
   align-content: center;
   justify-content: center;
 }
-
-
