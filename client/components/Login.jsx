@@ -2,17 +2,11 @@ import React, { Component, useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// this page needs to include conditional rendering of a div
-// if failedLoginAttempt property in state is true, render a div that displays a message like "Please try logging in again or sign up"
-
-// ** this page was heavily edited to still render without fetch request (mongoDB troubles!) The commented out code at the end of the file is the closest representation of what we initially had/what would work with a successful fetch request
-
-//only push loginattempt method, push failedLoginAttempt property
-
-const Login = ({ user, setUser, setIsLoggedIn }) => {
+const Login = ({ user, setUser, setIsLoggedIn}) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+  const [loginFailed, setLoginFailed] = useState(false);
 
   useEffect(() => {
     fetch('/user/checkSession', {
@@ -50,7 +44,8 @@ const Login = ({ user, setUser, setIsLoggedIn }) => {
           setIsLoggedIn(true);
           navigate('/choose');
         } else {
-          navigate('/signup');
+          // navigate('/signup');
+          setLoginFailed(true);
         }
       });
   };
@@ -69,12 +64,17 @@ const Login = ({ user, setUser, setIsLoggedIn }) => {
         <label>Password</label>
         <input
           className="password-input"
-          type="text"
+          type="password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <div className="sign-up">
+        {loginFailed && (
+          <div className="loginFail">
+            <p style={{ color: 'red' }}>Incorrect Login</p>
+          </div>
+        )}
           <button className="login-button" onClick={handleClick}>
             Login
           </button>

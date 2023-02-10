@@ -1,66 +1,133 @@
 import React, { Component } from 'react';
 import { useState } from 'react';
+import { useEffect } from 'react';
+const ProfileContainer = ({
+  user,
+  avatar,
+  breed,
+  age,
+  weight,
+  vetID,
+  lastVisit,
+  _id
+}) => {
+  const [updatedPet, setUpdatedPet] = useState({
+    _id: _id,
+    Age: age,
+    Weight: weight,
+    Breed: breed,
+    AssignedVet: vetID,
+  });
 
+  // useEffect(() => {
+  //   fetch('/pet/update', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'Application/JSON',
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setUpdatedPet(data);
+  //       console.log('Fetched data', data);
+  //     });
+  // }, []);
+console.log('body is', updatedPet);
+  const handleClick = () => {
+    fetch('/pet/update', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: updatedPet
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("updated:", data)
+        setUpdatedPet(data);
+      });
+  };
 
-// class ProfileContainer extends Component {
-//   render() {
-//     console.log('hi from profile');
-//     return (
-//       <container>
-//         <div className="avatarContainer">
-//           <div>
-//             <img className="avatarImage" src={this.avatar}></img>
-//           </div>
-//         </div>
-//         <div className="homeCategory">
-//           <div className="petAttribute">
-//             Lovingly cared for by: {/*{this.props.users}*/} Mr. Wunderpus
-//           </div>
-//         </div>
-//         <div className="homeCategory">
-//           <div className="petAttribute">Breed: {this.props.breed}</div>
-//           <div className="petAttribute">Age: {this.props.age}</div>
-//           <div className="petAttribute">Weight: {this.props.weight}</div>
-//         </div>
-//         {/* what's the data structure for vets? How do we get the vet name from the vet ID?*/}
-//         <div className="homeCategory">
-//           <div className="petAttribute">Vet: {this.props.vetID}</div>
-//           <div className="petAttribute">
-//             Last vet visit: {this.props.lastVisit}
-//           </div>
-//         </div>
-//       </container>
-//     );
-//   }
-// }
+  // const handleBreedChange = (e) => {
+  //   setUpdatedPet({...updatedPet, Breed:e.target.value})
+  // }
+  // const handleAgeChange = (e) => {
+  //   setUpdatedPet({...updatedPet, Age:e.target.value})
+  // }
+  // const handleWeightChange = (e) => {
+  //   setUpdatedPet({...updatedPet, Weight:e.target.value})
+  // }
+  // const handleVetChange = (e) => {
+  //   setUpdatedPet({...updatedPet, Vet:e.target.value})
+  // }
+  const handleChange = (e) => {
+    setUpdatedPet({ ...updatedPet, [e.target.name]: e.target.value });
+  };
 
-const ProfileContainer = ({user, avatar, breed, age, weight, vet, lastVisit}) => {
   return (
-          <>
-            <div className="avatarContainer">
-              <div>
-                <img className="avatarImage" src={avatar}></img>
-              </div>
-            </div>
-            <div className="homeCategory">
-              <div className="petAttribute">
-                Lovingly cared for by: {user}
-              </div>
-            </div>
-            <div className="homeCategory">
-              <div className="petAttribute">Breed: {breed}</div>
-              <div className="petAttribute">Age: {age}</div>
-              <div className="petAttribute">Weight: {weight}</div>
-            </div>
-            {/* what's the data structure for vets? How do we get the vet name from the vet ID?*/}
-            <div className="homeCategory">
-              <div className="petAttribute">Vet: {vet}</div>
-              <div className="petAttribute">
-                Last vet visit: {lastVisit}
-              </div>
-            </div>
-          </>
-        );
-}
-
+    <>
+      <div className="avatarContainer">
+        <div className="avatar-container">
+          <img className="avatarImage" src={avatar}></img>
+        </div>
+      </div>
+      <div className="homeCategory">
+        <div className="petAttribute">
+          Lovingly cared for by: {user.FirstName}
+        </div>
+      </div>
+      <div className="homeCategory">
+        <div className="petAttribute">
+          <span>Breed:</span>
+          <textarea
+            name="Breed"
+            type="text"
+            maxLength="70"
+            size="10"
+            defaultValue={breed}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div className="petAttribute">
+          <span>Age:</span>
+          <textarea
+            name="Age"
+            type="text"
+            maxLength="70"
+            size="10"
+            defaultValue={age}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div className="petAttribute">
+          <span>Weight:</span>
+          <textarea
+            name="Weight"
+            type="text"
+            maxLength="70"
+            size="10"
+            defaultValue={weight}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+      </div>
+      <div className="homeCategory">
+        <div className="petAttribute">
+          <span>Vet:</span>
+          <textarea
+            name="AssignedVet"
+            type="text"
+            maxLength="70"
+            size="10"
+            defaultValue={vetID}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <button className="signup-button" onClick={handleClick}>
+          Update
+        </button>
+      </div>
+    </>
+  );
+};
 export default ProfileContainer;

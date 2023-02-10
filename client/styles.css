@@ -147,7 +147,8 @@ h3 {
 #newPetVet,
 #newPetVisit,
 #newPetNote,
-#newNote {
+#newNote ,
+#newPetUrl{
   border: none;
   background-color: lightblue;
   margin-top: 12px;
@@ -198,8 +199,15 @@ h3 {
   width: 100px;
 }
 
+.homepage-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
 li {
-  border: none;
+  border: groove;
   background-color: whitesmoke;
   border: 1px solid lightblue;
   color: black;
@@ -388,10 +396,59 @@ article:hover {
   margin-bottom: 20px;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes enlarge {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.5);
+  }
+}
+.choosePetImage:hover {
+  animation: spin 3s ease-in-out infinite;
+}
+.petPicture:hover {
+  animation: enlarge 1s infinite linear;
+}
+
 .petLink {
   height: auto;
   display: flex;
   flex-direction: row;
   align-content: center;
   justify-content: center;
+}
+@keyframes wiggle {
+  0% {
+    transform: rotate(-10deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-90deg);
+  }
+  75% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+.avatar-container {
+  animation: wiggle 3s infinite linear;
+}
+
+.notes-container {
+  overflow-y: scroll;
+  overflow-x: wrap;
 }

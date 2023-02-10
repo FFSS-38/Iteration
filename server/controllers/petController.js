@@ -81,7 +81,7 @@ petController.deletePet = (req, res, next) => {
   }
   Pet.findOneAndDelete({ _id })
     .then((pet) => {
-      consople.log('pet deleted. GOOD BYE', pet);
+      console.log('pet deleted. GOOD BYE', pet);
       res.locals.deletedPet = pet;
       return next();
     })
@@ -96,13 +96,11 @@ petController.deletePet = (req, res, next) => {
 petController.updatePet = (req, res, next) => {
   console.log('Trying to update the pet');
   const { _id, Name, Age, Weight, Breed, URL, AssignedVet } = req.body;
-  //for testing purposes
-  // const s_id = _id.toString();
   console.log('req.body:', req.body);
   //go to next middleware to check if anything was added for visits
-  if (!Name || !Age || !Weight || !Breed || !AssignedVet || !URL) {
-    return next();
-  }
+  // if (!Name && !Age && !Weight && !Breed && !AssignedVet) {
+  //   return next();
+  // }
   Pet.findOneAndUpdate(
     { _id },
     { $set: { Name, Age, Weight, Breed, URL, AssignedVet } },
@@ -225,14 +223,7 @@ petController.addNote = (req, res, next) => {
       messgage: 'Missing input',
     });
   }
-  // const date = new Date(Date);
-  // // const dateParsed = date.toDateString();
-  // console.log('note dateparsed:', dateParsed);
-  // if (isNaN(date)) {
-  //   console.log('Invalid date. Please use the YYYY-MM-DD format');
-  //   return next();
-  // }
-  console.log('before creation')
+  console.log('before creation');
   Note.create({ Pet, Note: addThis })
     .then((newN) => {
       console.log('Note Added:', newN);

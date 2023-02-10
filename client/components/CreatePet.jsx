@@ -2,41 +2,37 @@ import React, { Component } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-//This should fetch data from appropriate user upon successful login
-// this should set state to equal the data returned from fetch request
-// data to be returned: userData
-
 const CreatePet = ({ user, setPetList, petList }) => {
   const [pet, setPet] = useState({});
-  const [name, setName] = useState('')
-  const [age, setAge] = useState('')
-  const [weight, setWeight] = useState('')
-  const [breed, setBreed] = useState('')
-  const [visit, setVist] = useState('')
-  const [vet, setVet] = useState('')
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [weight, setWeight] = useState('');
+  const [breed, setBreed] = useState('');
+  const [visit, setVist] = useState('');
+  const [vet, setVet] = useState('');
   const [url, setUrl] = useState('');
   const navigate = useNavigate();
 
   const handleClick = () => {
     fetch('/pet/create', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'Application/JSON'
-          },
-        body: JSON.stringify({
-            Name: name,
-            Age: age,
-            Weight: weight,
-            Breed: breed,
-            URL: url,
-            AssignedVet: vet
-        })
-    }) 
-    .then(resp => resp.json())
-    .then(data => {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+      },
+      body: JSON.stringify({
+        Name: name,
+        Age: age,
+        Weight: weight,
+        Breed: breed,
+        URL: url,
+        AssignedVet: vet,
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
         setPet(data);
       });
-    }
+  };
   return (
     <div className="create-container">
       <div className="banner">Pet Profile</div>
@@ -88,45 +84,36 @@ const CreatePet = ({ user, setPetList, petList }) => {
             onChange={(event) => setVet(event.target.value)}
           />
         </div>
-        </div>
-
-<div>
-          Last Visit:&nbsp;
-          <input
-            type="text"
-            id='newPetVisit'
-            required
-            onChange={(event) => setVist(event.target.value) }
-          />
-
-        <div>
-          Img URL:
-          <input
-            type="text"
-            id='newPetUrl'
-            required
-            onChange={(event) => setUrl(event.target.value) }
-          />
-        </div>
+      <div>
+        Img URL:
+        <input
+          type="text"
+          id="newPetUrl"
+          required
+          onChange={(event) => setUrl(event.target.value)}
+        />
+      </div>
       </div>
 
-      <div className='signup-buttons-box'> 
-          <button className="createUpdatePetButton"
-          onClick={() => { handleClick(); navigate('/choose')}}
-          >
-            Save
-          </button>
-          <button className="createUpdatePetButton" onClick={() => navigate('/choose')}>
-            Back
-          </button>
-          </div>
-          </div>
-);
-}
-export default CreatePet;
 
-/*#newPetBreed,
-#newPetName, 
-#newPetWeight,
-#newPetAge,
-#newPetVet */
+      <div className="signup-buttons-box">
+        <button
+          className="createUpdatePetButton"
+          onClick={() => {
+            handleClick();
+            navigate('/choose');
+          }}
+        >
+          Save
+        </button>
+        <button
+          className="createUpdatePetButton"
+          onClick={() => navigate('/choose')}
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  );
+};
+export default CreatePet;

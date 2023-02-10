@@ -18,15 +18,6 @@ db.once('open', () => console.log('Connected to MongoDB'));
 const PORT = 3000;
 const app = express();
 
-// const mongoURI =
-//   process.env.NODE_ENV === 'test'
-//     ? 'mongodb://localhost/unit11test'
-//     : 'mongodb://localhost/unit11dev';
-// mongoose.connect(mongoURI);
-
-/**
- * Automatically parse urlencoded body content and form data from incoming requests and place it
- */
 app.use(
   cors({
     origin: 'http://localhost:8080',
@@ -39,54 +30,21 @@ app.use(cookieParser());
 
 app.use('/client', express.static(path.resolve(__dirname, '../client')));
 
-/**
- * --- Express Routes ---
- * Express will attempt to match these routes in the order they are declared here.
- * If a route handler / middleware handles a request and sends a response without
- * calling `next()`, then none of the route handlers after that route will run!
- * This can be very useful for adding authorization to certain routes...
- */
-
-/**
- * root
- */
 app.get('/', (req, res) => {
-  //console.log('working');
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 app.use('/pet', petRouter);
 app.use('/user', userRouter);
 
-/**
- * signup
- * signup.html does not exist atm, translate into new componenet? -RK
- */
 app.get('/signup', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/signup.html'));
 });
 
-// /**
-// * Authorized routes
-// */
-// app.get('/secret', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../client/secret.html'));
-// });
-
-// app.get('/secret/users', userController.getAllUsers, (req, res) => {
-//   res.send( { users: res.locals.users });
-// })
-
-/**
- * 404 handler
- */
 app.use('*', (req, res) => {
   res.status(404).send('Not Found');
 });
 
-/**
- * Global error handler
- */
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',

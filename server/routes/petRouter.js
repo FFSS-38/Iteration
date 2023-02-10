@@ -24,21 +24,17 @@ router.patch(
   '/update',
   sessionController.checkSession,
   petController.updatePet,
-  petController.updateVisits,
+  // petController.updateVisits,
   (req, res) => {
-    const responseObject = {
-      updatedPet: res.locals.updatedPet,
-      lastVisit: res.locals.lastVisit,
-    };
-    return res.status(200).json(responseObject);
+    return res.status(200).json(res.locals.updatedPet);
   }
 );
 
-//getallVisits 
+//getAllVisits
 //need Pet
 router.post('/visits', (req, res) => {
   return res.send(200).json(res.locals.allVisits);
-})
+});
 
 //getNotes :: path="http://localhost:3000/pet/notes"
 //please send pet _id in body

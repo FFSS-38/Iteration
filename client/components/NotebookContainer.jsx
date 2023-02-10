@@ -7,7 +7,9 @@ const NotebookContainer = ({ notes }) => {
     <div className="homeCategory">
       <div className="notebookTitle">Notebook</div>
       {/* <div className='noteBook'>{notes}</div> */}
-      <button className='signup-button' onClick={() => navigate('/notes')}>Edit notes</button>
+      <button className="signup-button" onClick={() => navigate('/notes')}>
+        Edit notes
+      </button>
     </div>
   );
 };
@@ -20,7 +22,7 @@ const DisplayNotes = (props) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       const note = e.target.value;
-      console.log('you entered this', note)
+      console.log('you entered this', note);
       fetch('/pet/notes/new', {
         method: 'POST',
         headers: {
@@ -34,8 +36,8 @@ const DisplayNotes = (props) => {
         .then((res) => res.json())
         .then((results) => {
           setNotes([...notes, { Date: results.Date, Note: results.Note }]);
+          e.target.value = '';
         });
-      // e.target.value = '';
     }
   };
   // post /pet/notes/new
@@ -61,18 +63,20 @@ const DisplayNotes = (props) => {
         {/* <h1>petObj.Name</h1> */}
         <ul>
           {notes.map((note, i) => (
-            <div> 
-             <p>{note.Note}</p> 
+            <div>
+              <p>{note.Note}</p>
             </div>
           ))}
         </ul>
       </div>
-      <div>
-        <input
+      <div className="notes-container">
+        <textarea
           id="newNote"
           onKeyDown={handleKeyDown}
           type="text"
           placeholder="Add a Note"
+          rows="4"
+          cols="50"
         />
       </div>
     </>

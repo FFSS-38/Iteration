@@ -50,7 +50,7 @@ sessionController.checkSession = (req, res, next) => {
         });
       }
       console.log('session exists', data);
-      res.locals.cookie = data.cookieId
+      res.locals.cookie = data.cookieId;
       return next();
     })
     .catch((err) => {
