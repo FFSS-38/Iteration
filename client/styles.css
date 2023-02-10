@@ -1,32 +1,215 @@
 @import url('https://fonts.googleapis.com/css?family=Rosario&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lobster+Two&display=swap');
 
+/* RGB FOR BUTTONs */
 body {
-  min-height: 100vh;
-  padding: 3rem;
-  background: linear-gradient(74deg, rgba(174,207,84,1) 0%, rgba(255,155,0,1) 39%, rgba(255,242,234,1) 72%, rgba(0,156,223,1) 100%);
-  font-family: Rosario, Arial, Helvetica, sans-serif;
+  background-color: #f4f4f9;
 }
+
+.router {
+  font-family: 'EB Garamond', serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f9;
+  padding-top: 100px;
+}
+
 h1 {
-  font-family: 'Lobster Two';
   margin-bottom: 15px;
+  display: flex;
+  font-size: 3rem;
+  justify-content: center;
+  color: #2f4550;
+  margin-left: -10px;
 }
-h2 {
-  font-family: 'Lobster Two';
+
+.user-pass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #92bad0;
+  padding: 10px 8px 10px 8px;
+  border-radius: 10px;
+  color: white;
 }
+
 h3 {
   margin-top: 0;
 }
-input {
-  width: 250px;
-  margin: 25px 5vw 25px 10px;
-  border-radius: 5px;
-  border-style: none;
+
+.sign-up {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-input:focus {
-  box-shadow: rgba(0, 0, 0, 0.75) 7px 6px 5px -5px;
-  border-style: none;
+
+.signup-button,
+.login-button,
+.add-pet,
+.createUpdatePetButton {
+  border: none;
+  font-size: 18px;
+  margin-top: 14px;
+  border-radius: 10px;
+  padding: 6px 12px 6px 12px;
+  color: white;
+  background-color: rgba(29, 160, 242, 0.789);
+  transition: opacity 0.15s;
 }
+
+.signup-button {
+  margin-left: 14px;
+}
+
+.signup-button:hover,
+.login-button:hover,
+.add-pet:hover,
+.createUpdatePetButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.signup-button:active,
+.login-button:active,
+.add-pet:active,
+.createUpdatePetButton:active {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.user-input,
+.password-input {
+  border-radius: 10px;
+  border: none;
+  width: 12rem;
+  height: 1rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.choosePetCard {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.pet-container {
+  display: flex;
+}
+
+.petImages {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+}
+
+.choice-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-pet {
+  margin-top: 40px;
+}
+
+.choosePetName {
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+}
+
+.create-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 0 30px 10px 30px;
+}
+
+.banner {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.createUpdatePetButton {
+  margin-top: 12px;
+}
+
+#newPetBreed,
+#newPetName,
+#newPetWeight,
+#newPetAge,
+#newPetVet,
+#newPetVisit,
+#newPetNote,
+#newNote {
+  border: none;
+  background-color: lightblue;
+  margin-top: 12px;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#newPetName {
+  margin-left: 25px;
+}
+
+#newPetBreed {
+  margin-left: 25px;
+}
+
+#newPetAge {
+  margin-left: 34px;
+}
+
+#newPetWeight {
+  margin-left: 17px;
+}
+
+#newPetVet {
+  margin-left: 43px;
+}
+
+.signUp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.signup-buttons-box {
+  column-gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+.petPicture,
+.avatarImage {
+  border-radius: 50px;
+  height: 100px;
+  width: 100px;
+}
+
+li {
+  border: none;
+  background-color: whitesmoke;
+  border: 1px solid lightblue;
+  color: black;
+  margin-top: 12px;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 1rem;
+}
+
 article {
   margin: 12px 15px;
   padding: 25px 30px 25px 30px;
@@ -40,28 +223,12 @@ article:hover {
   box-shadow: rgba(0, 0, 0, 0.75) 7px 6px 11px -5px;
 }
 
-button {
-  margin: 25px 15px 15px 15px;
-  padding: 0.7em 1.5em 0.7em 1.5em;
-  font-weight: 500;
-  background-color: transparent;
-  border-color: #77d4fc;
-  border-style: solid;
-  border-radius: 5px;
-  letter-spacing: 0.4px;
+#newNote {
+  margin-top: 100px;
+  margin-left: 20px;
 }
-button:hover {
-  padding: 0.7em 1.5em 0.7em 1.5em;
-  font-weight: 500;
-  background-color: #77d4fc;
-  border-color: #77d4fc;
-  border-style: solid;
-  color: white;
-  border-radius: 5px;
-  letter-spacing: 0.4px;
-}
+
 .tagline {
-  font-family: rosario;
   font-size: 1.2em;
   margin-top: 0;
 }
@@ -190,10 +357,9 @@ button:hover {
   background-color: rgba(255, 255, 255, 0.75);
   margin: 25px 25px 0px 25px;
   border-radius: 10px;
-  padding : 25px;
-  
+  padding: 25px;
 }
-.scheduleItem{
+.scheduleItem {
   border-color: #ff9b00;
   border-style: solid;
   border-radius: 20px;
@@ -203,34 +369,17 @@ button:hover {
   padding: 25px 30px;
 }
 
-.petNameBanner{
+.petNameBanner {
   font-weight: 600;
   font-size: 1.2em;
   padding: 0px 25px;
 }
 
-.petImages{
-  margin: 50px;
-  display: flex;
-  flex-direction: row;
-  max-width: 100vw;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.choosePetCard{
-  width: 30%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.petAvatar{
+.petAvatar {
   width: 40%;
 }
 
-.choosePetImage{
+.choosePetImage {
   height: auto;
   display: flex;
   flex-direction: row;
@@ -239,15 +388,10 @@ button:hover {
   margin-bottom: 20px;
 }
 
-.petLink{
+.petLink {
   height: auto;
   display: flex;
   flex-direction: row;
   align-content: center;
   justify-content: center;
-}
-
-.choosePetName{
-  font-family: 'lobster two';
-  font-size: large;
 }

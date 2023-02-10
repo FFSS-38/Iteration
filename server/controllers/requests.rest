@@ -1,0 +1,15 @@
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "Name": "Hello",
+  "Password": "Why",
+  "Pets":["Ay"]
+}
+
+###
+GET http://localhost:3000/user/all
+
+
+###
+DELETE http://localhost:3000/user/63e3110e96e0e81096aca1ce
